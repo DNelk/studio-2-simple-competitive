@@ -342,10 +342,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1331808085}
-  StandingSprite: {fileID: 1412511627}
+  IdleSprite: {fileID: 1412511627}
   StrikingSprite: {fileID: 2019092040}
   GrabbingSprite: {fileID: 41186995}
   BlockingSprite: {fileID: 1142684595}
+  DelayInSeconds: 0.125
   SpeedMultiplier: 10
 --- !u!114 &320533808
 MonoBehaviour:
@@ -360,10 +361,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1604375614}
-  StandingSprite: {fileID: 543125192}
+  IdleSprite: {fileID: 543125192}
   StrikingSprite: {fileID: 807470965}
   GrabbingSprite: {fileID: 463449616}
   BlockingSprite: {fileID: 631704785}
+  DelayInSeconds: 0.125
   SpeedMultiplier: 10
 --- !u!1 &463449616
 GameObject:
