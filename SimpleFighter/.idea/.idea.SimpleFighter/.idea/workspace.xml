@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="eaad37a8-d6bb-419a-8026-1c793c714189" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+              <folding>
+                <marker date="1550348300516" expanded="false" signature="6:133" ph="..." />
+                <marker date="1550348300516" expanded="true" signature="180:4952" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="647:1099" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="715:885" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="923:1093" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="1157:1799" ph="{...}" />
+                <marker date="1550348300516" expanded="false" signature="1805:2229" ph="Horizontal Movement" />
+                <marker date="1550348300516" expanded="true" signature="1858:2214" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="1909:2097" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="2143:2208" ph="{...}" />
+                <marker date="1550348300516" expanded="false" signature="2239:2745" ph="Block Method" />
+                <marker date="1550348300516" expanded="true" signature="2276:2730" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="2327:2530" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="2574:2724" ph="{...}" />
+                <marker date="1550348300516" expanded="false" signature="2751:3316" ph="Strike Method" />
+                <marker date="1550348300516" expanded="true" signature="2824:3301" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="2875:3295" ph="{...}" />
+                <marker date="1550348300516" expanded="false" signature="3322:3887" ph="Grab Method" />
+                <marker date="1550348300516" expanded="true" signature="3391:3872" ph="{...}" />
+                <marker date="1550348300516" expanded="true" signature="3444:3866" ph="{...}" />
+                <marker date="1550348300516" expanded="false" signature="3893:4409" ph="Old Strike Method" />
+                <marker date="1550348300516" expanded="true" signature="3923:4394" ph="/* void Strike() ... */" />
+                <marker date="1550348300516" expanded="false" signature="4419:4950" ph="Old Grab Method" />
+                <marker date="1550348300516" expanded="true" signature="4447:4935" ph="/* void Grab() ... */" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+              <folding>
+                <marker date="1550175131550" expanded="false" signature="6:78" ph="..." />
+                <marker date="1550175131550" expanded="true" signature="120:630" ph="{...}" />
+                <marker date="1550175131550" expanded="true" signature="127:411" ph="Public Variables" />
+                <marker date="1550175131550" expanded="true" signature="417:628" ph="Updates" />
+                <marker date="1550175131550" expanded="true" signature="455:608" ph="{...}" />
+                <marker date="1550175131550" expanded="true" signature="536:602" ph="{...}" />
+                <marker date="1550175131550" expanded="true" signature="756:891" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="UnityExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="AssemblyExplorer" />
+      <pane id="UnityExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+            </path>
+            <path>
+              <item name="Project" type="e068e287:UnityExplorerRootNode" />
+              <item name="Assets" type="48f920db:UnityExplorerNode$AssetsRoot" />
+              <item name="Scripts" type="1045f7f1:UnityExplorerNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-hidden-items" value="false" />
+        <option name="show-project-names" value="true" />
+      </pane>
+      <pane id="SolutionExplorer">
+        <option name="show-all-files" value="false" />
+      </pane>
+      <pane id="FileSystemExplorer" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="28325">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" value="28325" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eaad37a8-d6bb-419a-8026-1c793c714189" name="Default Changelist" comment="" />
+      <created>1550176616145</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1550176616145</updated>
+      <workItem from="1550176618700" duration="564000" />
+      <workItem from="1550177211764" duration="3813000" />
+      <workItem from="1550182387016" duration="10400000" />
+    </task>
+    <task id="LOCAL-00001" summary="Made functional left/right movement, strike, grab and block inputs. Need to make alterations to grab and strike so that the action is not continued by holding down the corresponding buttons.">
+      <created>1550265342838</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1550265342839</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added boundaries and character colliders/rigidbodies.">
+      <created>1550266911968</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1550266911968</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="14777000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17285945" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.28531075" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="NuGet" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.32909605" />
+      <window_info anchor="bottom" id="Unity" order="10" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Unit Tests" order="12" />
+      <window_info anchor="bottom" id="Terminal" order="13" />
+      <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Errors In Solution" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Made functional left/right movement, strike, grab and block inputs. Need to make alterations to grab and strike so that the action is not continued by holding down the corresponding buttons." />
+    <MESSAGE value="Added boundaries and character colliders/rigidbodies." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added boundaries and character colliders/rigidbodies." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding>
+            <marker date="1550175131550" expanded="false" signature="6:78" ph="..." />
+            <marker date="1550175131550" expanded="true" signature="120:630" ph="{...}" />
+            <marker date="1550175131550" expanded="true" signature="127:411" ph="Public Variables" />
+            <marker date="1550175131550" expanded="true" signature="417:628" ph="Updates" />
+            <marker date="1550175131550" expanded="true" signature="455:608" ph="{...}" />
+            <marker date="1550175131550" expanded="true" signature="536:602" ph="{...}" />
+            <marker date="1550175131550" expanded="true" signature="756:891" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+          <folding>
+            <marker date="1550348300516" expanded="false" signature="6:133" ph="..." />
+            <marker date="1550348300516" expanded="true" signature="180:4952" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="647:1099" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="715:885" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="923:1093" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="1157:1799" ph="{...}" />
+            <marker date="1550348300516" expanded="false" signature="1805:2229" ph="Horizontal Movement" />
+            <marker date="1550348300516" expanded="true" signature="1858:2214" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="1909:2097" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="2143:2208" ph="{...}" />
+            <marker date="1550348300516" expanded="false" signature="2239:2745" ph="Block Method" />
+            <marker date="1550348300516" expanded="true" signature="2276:2730" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="2327:2530" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="2574:2724" ph="{...}" />
+            <marker date="1550348300516" expanded="false" signature="2751:3316" ph="Strike Method" />
+            <marker date="1550348300516" expanded="true" signature="2824:3301" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="2875:3295" ph="{...}" />
+            <marker date="1550348300516" expanded="false" signature="3322:3887" ph="Grab Method" />
+            <marker date="1550348300516" expanded="true" signature="3391:3872" ph="{...}" />
+            <marker date="1550348300516" expanded="true" signature="3444:3866" ph="{...}" />
+            <marker date="1550348300516" expanded="false" signature="3893:4409" ph="Old Strike Method" />
+            <marker date="1550348300516" expanded="true" signature="3923:4394" ph="/* void Strike() ... */" />
+            <marker date="1550348300516" expanded="false" signature="4419:4950" ph="Old Grab Method" />
+            <marker date="1550348300516" expanded="true" signature="4447:4935" ph="/* void Grab() ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
