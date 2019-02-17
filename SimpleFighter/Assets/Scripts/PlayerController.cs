@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private string squareName;
     private string triangleName;
     private string circleName;
+    private string hitBoxName;
 
     public float DelayInSeconds = 0.25f;
     public float SpeedMultiplier = 10;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
             squareName = "Square1";
             triangleName = "Triangle1";
             circleName = "Circle1";
+            hitBoxName = "HurtBox2";
         }
         else //reference Controller 2
         {
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
             squareName = "Square2";
             triangleName = "Triangle2";
             circleName = "Circle2";
+            hitBoxName = "HurtBox1";
         }
     }
 
