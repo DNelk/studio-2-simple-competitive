@@ -8,11 +8,13 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PlayerModel Player;
+    public PlayerModel Opponent;
     
     public GameObject IdleSprite;
     public GameObject StrikingSprite;
     public GameObject GrabbingSprite;
     public GameObject BlockingSprite;
+    public GameObject GetHitSprite;
 
     private string axisName;
     private string squareName;
@@ -110,14 +112,7 @@ public class PlayerController : MonoBehaviour
             StrikingSprite.SetActive(true);
             Player.State = PlayerState.Striking;
 
-            Vector2 hitBoxCenter = new Vector2(Player.transform.position.x + StrikeHitBoxDistance, 0);
-            Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter,
-                StrikeHitBoxSize, 0, LayerMask.GetMask(hitBoxName));
-
-            if (hitCol)
-            {
-                Debug.Log("hitCol = " + hitCol.transform.gameObject);
-            }
+            SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
             
             yield return new WaitForSeconds(DelayInSeconds);
             
@@ -138,6 +133,8 @@ public class PlayerController : MonoBehaviour
             GrabbingSprite.SetActive(true);
             Player.State = PlayerState.Grabbing;
             
+            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+            
             yield return new WaitForSeconds(DelayInSeconds);
             
             GrabbingSprite.SetActive(false);
@@ -147,10 +144,41 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    public IEnumerator GetHit(float DelayInSeconds)
+    {
+        IdleSprite.SetActive(false);
+        GetHitSprite.SetActive(true);
+        Player.State = PlayerState.Damage;
+        
+        yield return new WaitForSeconds(DelayInSeconds);
+        
+        GetHitSprite.SetActive(false);
+        IdleSprite.SetActive(true);
+        Player.State = PlayerState.Idle;
+    }
+    
+    public void SpawnHitBox(float distance, Vector2 size, string boxName)
+    {
+        Vector2 hitBoxCenter = new Vector2(Player.transform.position.x + distance, 0);
+        Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter,
+            size, 0, LayerMask.GetMask(hitBoxName));
+
+        if (hitCol)
+        {
+            Debug.Log(boxName + hitCol.transform.gameObject);
+            Opponent.StartCoroutine(GetHit(DelayInSeconds));
+        }
+    }
+    
     private void OnDrawGizmos()
     {
+        //Draw strike hitbox
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
+        
+        //Draw Grab hitbox
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
     }
 
     #region Old Strike Method
