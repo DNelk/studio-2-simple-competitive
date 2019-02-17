@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
 
     public float DelayInSeconds = 0.25f;
     public float SpeedMultiplier = 10;
+    public Vector2 StrikeHitBoxSize;
+    public float StrikeHitBoxDistance = 0;
+    public Vector2 GrabHitBoxSize;
+    public float GrabHitBoxDistance = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -32,7 +36,7 @@ public class PlayerController : MonoBehaviour
             squareName = "Square1";
             triangleName = "Triangle1";
             circleName = "Circle1";
-            hitBoxName = "HurtBox2";
+            hitBoxName = "HurtBoxP2";
         }
         else //reference Controller 2
         {
@@ -40,7 +44,7 @@ public class PlayerController : MonoBehaviour
             squareName = "Square2";
             triangleName = "Triangle2";
             circleName = "Circle2";
-            hitBoxName = "HurtBox1";
+            hitBoxName = "HurtBoxP1";
         }
     }
 
@@ -105,6 +109,15 @@ public class PlayerController : MonoBehaviour
             IdleSprite.SetActive(false);
             StrikingSprite.SetActive(true);
             Player.State = PlayerState.Striking;
+
+            Vector2 hitBoxCenter = new Vector2(Player.transform.position.x + StrikeHitBoxDistance, 0);
+            Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter,
+                StrikeHitBoxSize, 0, LayerMask.GetMask(hitBoxName));
+
+            if (hitCol)
+            {
+                Debug.Log("hitCol = " + hitCol.transform.gameObject);
+            }
             
             yield return new WaitForSeconds(DelayInSeconds);
             
@@ -133,6 +146,12 @@ public class PlayerController : MonoBehaviour
         }
     }
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
+    }
 
     #region Old Strike Method
     /*void Strike()
