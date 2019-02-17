@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PlayerModel Player;
-    public PlayerController Opponent;
+    public PlayerModel Opponent;
     
     public GameObject IdleSprite;
     public GameObject StrikingSprite;
