@@ -397,9 +397,9 @@ MonoBehaviour:
   GetHitSprite: {fileID: 1644129752}
   DelayInSeconds: 0.125
   SpeedMultiplier: 10
-  StrikeHitBoxSize: {x: 2, y: 1}
+  StrikeHitBoxSize: {x: 1.75, y: 1}
   StrikeHitBoxDistance: 1
-  GrabHitBoxSize: {x: 1, y: 1}
+  GrabHitBoxSize: {x: 0.5, y: 1}
   GrabHitBoxDistance: 1
 --- !u!1 &463449616 stripped
 GameObject:
@@ -528,9 +528,9 @@ MonoBehaviour:
   GetHitSprite: {fileID: 308844776}
   DelayInSeconds: 0.125
   SpeedMultiplier: 10
-  StrikeHitBoxSize: {x: 2, y: 1}
+  StrikeHitBoxSize: {x: 1.75, y: 1}
   StrikeHitBoxDistance: -1
-  GrabHitBoxSize: {x: 1, y: 1}
+  GrabHitBoxSize: {x: 0.5, y: 1}
   GrabHitBoxDistance: -1
 --- !u!4 &529208976
 Transform:
