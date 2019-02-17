@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public PlayerModel Player;
-    public PlayerModel Opponent;
+    public PlayerController Opponent;
+    public PlayerModel OpponentState;
     
     public GameObject IdleSprite;
     public GameObject StrikingSprite;
@@ -165,8 +166,16 @@ public class PlayerController : MonoBehaviour
 
         if (hitCol)
         {
-            Debug.Log(boxName + hitCol.transform.gameObject);
-            Opponent.StartCoroutine(GetHit(DelayInSeconds));
+            if (Player.State == PlayerState.Striking && OpponentState.State != PlayerState.Blocking)
+            {
+                Debug.Log(boxName + hitCol.transform.gameObject);
+                StartCoroutine(Opponent.GetHit(DelayInSeconds));
+            }
+            else if (Player.State == PlayerState.Grabbing && OpponentState.State != PlayerState.Striking)
+            {
+                Debug.Log(boxName + hitCol.transform.gameObject);
+                StartCoroutine(Opponent.GetHit(DelayInSeconds));
+            }
         }
     }
     
