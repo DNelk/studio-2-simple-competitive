@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 308844774}
-  Opponent: {fileID: 1604375614}
+  Opponent: {fileID: 0}
   IdleSprite: {fileID: 308844775}
   StrikingSprite: {fileID: 308844779}
   GrabbingSprite: {fileID: 308844778}
@@ -397,10 +397,10 @@ MonoBehaviour:
   GetHitSprite: {fileID: 308844776}
   DelayInSeconds: 0.125
   SpeedMultiplier: 10
-  StrikeHitBoxSize: {x: 0, y: 0}
-  StrikeHitBoxDistance: 0
-  GrabHitBoxSize: {x: 0, y: 0}
-  GrabHitBoxDistance: 0
+  StrikeHitBoxSize: {x: 2, y: 1}
+  StrikeHitBoxDistance: -1
+  GrabHitBoxSize: {x: 1, y: 1}
+  GrabHitBoxDistance: -1
 --- !u!114 &320533808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1604375614}
-  Opponent: {fileID: 308844774}
+  Opponent: {fileID: 0}
   IdleSprite: {fileID: 543125192}
   StrikingSprite: {fileID: 807470965}
   GrabbingSprite: {fileID: 463449616}
