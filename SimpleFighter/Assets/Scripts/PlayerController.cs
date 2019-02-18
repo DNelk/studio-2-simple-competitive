@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public GameObject GetHitSprite;
 
     private string axisName;
+    private string keyAxisName;
     private string squareName;
     private string triangleName;
     private string circleName;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         if (Player.PlayerIndex == 0) //reference Controller 1
         {
             axisName = "Horizontal1";
+            keyAxisName = "KeyboardHorizontal1";
             squareName = "Square1";
             triangleName = "Triangle1";
             circleName = "Circle1";
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
         else //reference Controller 2
         {
             axisName = "Horizontal2";
+            keyAxisName = "KeyboardHorizontal2";
             squareName = "Square2";
             triangleName = "Triangle2";
             circleName = "Circle2";
@@ -56,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking)
             MoveHorizontal();
+            KeyboardMoveHorizontal();
 
         if (Player.State == PlayerState.Idle || Player.State == PlayerState.Striking || Player.State == PlayerState.Walking)
             StartCoroutine(Strike(DelayInSeconds));
@@ -77,6 +81,20 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetAxisRaw(axisName) == 0)
+        {
+            Player.State = PlayerState.Idle;
+        }
+    }
+
+    void KeyboardMoveHorizontal()
+    {
+        if (Input.GetAxisRaw(keyAxisName) != 0)
+        {
+            Player.transform.position += Vector3.right * Input.GetAxisRaw(keyAxisName) * Time.deltaTime * SpeedMultiplier;
+            Player.State = PlayerState.Walking;
+        }
+
+        if (Input.GetAxisRaw(keyAxisName) == 0)
         {
             Player.State = PlayerState.Idle;
         }
@@ -183,7 +201,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     
-    #region Draw Gizmos Region
+    #region Draw Gizmos Method
     private void OnDrawGizmos()
     {
         //Draw strike hitbox
