@@ -290,6 +290,11 @@ PrefabInstance:
       propertyPath: PlayerIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3047782525187067344, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: State
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3047782525187067311, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
       propertyPath: m_GravityScale
@@ -920,6 +925,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782525187067344, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: State
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3047782525187067311, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
