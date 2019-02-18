@@ -145,6 +145,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Get Hit Method
     public IEnumerator GetHit(float DelayInSeconds)
     {
         IdleSprite.SetActive(false);
@@ -157,7 +158,9 @@ public class PlayerController : MonoBehaviour
         IdleSprite.SetActive(true);
         Player.State = PlayerState.Idle;
     }
+    #endregion
     
+    #region Spawn HitBox Method
     public void SpawnHitBox(float distance, Vector2 size, string boxName)
     {
         Vector2 hitBoxCenter = new Vector2(Player.transform.position.x + distance, 0);
@@ -178,7 +181,9 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    #endregion
     
+    #region Draw Gizmos Region
     private void OnDrawGizmos()
     {
         //Draw strike hitbox
@@ -189,6 +194,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
     }
+    #endregion
 
     #region Old Strike Method
     /*void Strike()
