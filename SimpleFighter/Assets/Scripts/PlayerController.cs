@@ -20,8 +20,11 @@ public class PlayerController : MonoBehaviour
     private string axisName;
     private string keyAxisName;
     private string squareName;
+    private string keySquareName;
     private string triangleName;
+    private string keyTriangleName;
     private string circleName;
+    private string keyCircleName;
     private string hitBoxName;
 
     public float DelayInSeconds = 0.25f;
@@ -39,8 +42,11 @@ public class PlayerController : MonoBehaviour
             axisName = "Horizontal1";
             keyAxisName = "KeyboardHorizontal1";
             squareName = "Square1";
+            keySquareName = "KeySquare1";
             triangleName = "Triangle1";
+            keyTriangleName = "KeyTriangle1";
             circleName = "Circle1";
+            keyCircleName = "KeyCircle1";
             hitBoxName = "HurtBoxP2";
         }
         else //reference Controller 2
@@ -48,8 +54,11 @@ public class PlayerController : MonoBehaviour
             axisName = "Horizontal2";
             keyAxisName = "KeyboardHorizontal2";
             squareName = "Square2";
+            keySquareName = "KeySquare2";
             triangleName = "Triangle2";
+            keyTriangleName = "KeyTriangle2";
             circleName = "Circle2";
+            keyCircleName = "KeyCircle2";
             hitBoxName = "HurtBoxP1";
         }
     }
@@ -104,7 +113,7 @@ public class PlayerController : MonoBehaviour
     #region Block Method
     void Block()
     {
-        if (Input.GetButtonDown(circleName))
+        if (Input.GetButtonDown(circleName) || Input.GetButtonDown(keyCircleName))
         {
             Debug.Log("Circle button pressed!");
             IdleSprite.SetActive(false);
@@ -112,7 +121,7 @@ public class PlayerController : MonoBehaviour
             Player.State = PlayerState.Blocking;
         }
 
-        if (Input.GetButtonUp(circleName))
+        if (Input.GetButtonUp(circleName) || Input.GetButtonDown(keyCircleName))
         {
             IdleSprite.SetActive(true);
             BlockingSprite.SetActive(false);
