@@ -175,21 +175,27 @@ public class PlayerController : MonoBehaviour
             //STARTUP
             Player.State = PlayerState.StrikeStartup;
             IdleSprite.SetActive(false);
-            StrikingSprite.SetActive(true);
+            BlockingSprite.SetActive(true); // placeholder for Strike Startup
+            //StrikingSprite.SetActive(true);
             yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
 
             //ACTIVE
             Player.State = PlayerState.Striking;
+            BlockingSprite.SetActive(false); // placeholder for Strike Startup
+            StrikingSprite.SetActive(true);
             SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
             yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
-                //yield return new WaitForSeconds(DelayInSeconds);
+            //yield return new WaitForSeconds(DelayInSeconds);
             
             //RECOVERY
             Player.State = PlayerState.StrikeCooldown;
+            StrikingSprite.SetActive(false);
+            BlockingSprite.SetActive(true); //placeholder for Strike Recovery
             yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
             
             //FAF
-            StrikingSprite.SetActive(false);
+            //StrikingSprite.SetActive(false);
+            BlockingSprite.SetActive(false); //placeholder for Strike Recovery
             IdleSprite.SetActive(true);
             Player.State = PlayerState.Idle;
         }
@@ -206,21 +212,27 @@ public class PlayerController : MonoBehaviour
             //STARTUP
             Player.State = PlayerState.GrabStartup;
             IdleSprite.SetActive(false);
-            GrabbingSprite.SetActive(true);
+            BlockingSprite.SetActive(true); // placeholder for Grab Startup
+            //GrabbingSprite.SetActive(true);
             yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
             
             //ACTIVE
             Player.State = PlayerState.Grabbing;
+            BlockingSprite.SetActive(false); // placeholder for Grab Startup
+            GrabbingSprite.SetActive(true);
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
                 //yield return new WaitForSeconds(DelayInSeconds);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //RECOVERY
             Player.State = PlayerState.GrabCooldown;
+            GrabbingSprite.SetActive(false);
+            BlockingSprite.SetActive(true); // placeholder for Grab Recovery
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //FAF
-            GrabbingSprite.SetActive(false);
+            //GrabbingSprite.SetActive(false);
+            BlockingSprite.SetActive(false); // placeholder for Grab Recovery
             IdleSprite.SetActive(true);
             Player.State = PlayerState.Idle;
         }
