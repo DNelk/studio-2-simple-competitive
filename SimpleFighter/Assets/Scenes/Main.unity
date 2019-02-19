@@ -411,6 +411,7 @@ MonoBehaviour:
   StrikeHitBoxDistance: 1
   GrabHitBoxSize: {x: 0.5, y: 1}
   GrabHitBoxDistance: 1
+  frameCount: 0
 --- !u!1 &463449616 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3047782526192220158, guid: 938b229efac02654f974c8ce7a44f755,
@@ -453,7 +454,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.5313279, g: 0.5448262, b: 0.5660378, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -542,6 +543,7 @@ MonoBehaviour:
   StrikeHitBoxDistance: -1
   GrabHitBoxSize: {x: 0.5, y: 1}
   GrabHitBoxDistance: -1
+  frameCount: 0
 --- !u!4 &529208976
 Transform:
   m_ObjectHideFlags: 0
