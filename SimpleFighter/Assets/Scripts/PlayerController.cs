@@ -243,6 +243,8 @@ public class PlayerController : MonoBehaviour
     public IEnumerator GetHit(float DelayInSeconds)
     {
         IdleSprite.SetActive(false);
+        BlockingSprite.SetActive(false);
+        StrikingSprite.SetActive(false);
         GetHitSprite.SetActive(true);
         Player.State = PlayerState.Damage;
         
