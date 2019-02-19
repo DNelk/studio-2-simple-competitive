@@ -7,16 +7,22 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerModel Player;
-    public PlayerController Opponent;
-    public PlayerModel OpponentState;
-    
+    #region Public Variables
+    public PlayerModel Model;
+    public PlayerModel OpponentModel;
+    public PlayerView View;
+    #endregion
+
+ /*   #region Sprites
     public GameObject IdleSprite;
     public GameObject StrikingSprite;
     public GameObject GrabbingSprite;
     public GameObject BlockingSprite;
     public GameObject GetHitSprite;
-
+    #endregion
+  */
+    
+    #region Control Keys
     private string axisName;
     private string keyAxisName;
     private string squareName;
@@ -26,14 +32,16 @@ public class PlayerController : MonoBehaviour
     private string circleName;
     private string keyCircleName;
     private string hitBoxName;
-
+    #endregion
+    
+    #region Physics
     public float DelayInSeconds = 0.25f;
     public float SpeedMultiplier = 10;
     public Vector2 StrikeHitBoxSize;
     public float StrikeHitBoxDistance = 0;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance = 0;
-
+    #endregion
     
     //testing the below
     public int frameCount;
@@ -54,7 +62,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Player.PlayerIndex == 0) //reference Controller 1
+        if (Model.PlayerIndex == 0) //reference Controller 1
         {
             axisName = "Horizontal1";
             keyAxisName = "KeyboardHorizontal1";
@@ -83,34 +91,34 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking)
+        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking)
             MoveHorizontal();
             KeyboardMoveHorizontal();
 
-        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Striking || Player.State == PlayerState.Walking)
-            StartCoroutine(Strike(DelayInSeconds));
+        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Striking || Model.State == PlayerState.Walking)
+            StartCoroutine(PlayerAction_Strike(DelayInSeconds));
         
-        if(Player.State == PlayerState.Idle || Player.State == PlayerState.Grabbing || Player.State == PlayerState.Walking)
-            StartCoroutine(Grab(DelayInSeconds));
+        if(Model.State == PlayerState.Idle || Model.State == PlayerState.Grabbing || Model.State == PlayerState.Walking)
+            StartCoroutine(PlayerAction_Grab(DelayInSeconds));
         
-        if(Player.State == PlayerState.Idle || Player.State == PlayerState.Blocking || Player.State == PlayerState.Walking)
-            Block();
+        if(Model.State == PlayerState.Idle || Model.State == PlayerState.Blocking || Model.State == PlayerState.Walking)
+            PlayerAction_Block();
     }
 
     #region Horizontal Movement
     void MoveHorizontal()
     {
-        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
+        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
             if (Input.GetAxisRaw(axisName) != 0)
             {
-                Player.transform.position += Vector3.right * Input.GetAxisRaw(axisName) * Time.deltaTime * SpeedMultiplier;
-                Player.State = PlayerState.Walking;
+                View.Translate(Input.GetAxisRaw(axisName), SpeedMultiplier);
+                Model.State = PlayerState.Walking;
             }
 
             if (Input.GetAxisRaw(axisName) == 0)
             {
-                Player.State = PlayerState.Idle;
+                Model.State = PlayerState.Idle;
             }    
         }
         
@@ -118,164 +126,119 @@ public class PlayerController : MonoBehaviour
 
     void KeyboardMoveHorizontal()
     {
-        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
+        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
             if (Input.GetAxisRaw(keyAxisName) != 0)
             {
-                Player.transform.position += Vector3.right * Input.GetAxisRaw(keyAxisName) * Time.deltaTime * SpeedMultiplier;
-                Player.State = PlayerState.Walking;
+                View.Translate(Input.GetAxisRaw(keyAxisName), SpeedMultiplier);
+                Model.State = PlayerState.Walking;
             }
 
             if (Input.GetAxisRaw(keyAxisName) == 0)
             {
-                Player.State = PlayerState.Idle;
+                Model.State = PlayerState.Idle;
             }
         }
     }
     #endregion
     
     #region Block Method
-    void Block()
+    void PlayerAction_Block()
     {
         if (Input.GetButtonDown(circleName) || Input.GetButtonDown(keyCircleName))
         {
             Debug.Log("Circle button pressed!");
             //STARTUP
-            Player.State = PlayerState.BlockStartup;
+            Model.State = PlayerState.BlockStartup;
             //yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //ACTIVE
-            Player.State = PlayerState.Blocking;
-            IdleSprite.SetActive(false);
-            BlockingSprite.SetActive(true);
-            
+            Model.State = PlayerState.Blocking;          
         }
 
         if (Input.GetButtonUp(circleName) || Input.GetButtonDown(keyCircleName))
         {
             //RECOVERY
-            Player.State = PlayerState.BlockCooldown;
+            Model.State = PlayerState.BlockCooldown;
             //yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
             
             //FAF
-            IdleSprite.SetActive(true);
-            BlockingSprite.SetActive(false);
-            Player.State = PlayerState.Idle;
+            Model.State = PlayerState.Idle;
             
         }
     }
     #endregion
 
     #region Strike Method
-    public IEnumerator Strike(float DelayInSeconds)
+    public IEnumerator PlayerAction_Strike(float DelayInSeconds)
     {
         if (Input.GetButtonDown(squareName))
         {
             Debug.Log("Square button pressed!");
             //STARTUP
-            Player.State = PlayerState.StrikeStartup;
-            IdleSprite.SetActive(false);
-            BlockingSprite.SetActive(true); // placeholder for Strike Startup
-            //StrikingSprite.SetActive(true);
+            Model.State = PlayerState.StrikeStartup;
             yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
 
             //ACTIVE
-            Player.State = PlayerState.Striking;
-            BlockingSprite.SetActive(false); // placeholder for Strike Startup
-            StrikingSprite.SetActive(true);
+            Model.State = PlayerState.Striking;
             SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
             yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
             //yield return new WaitForSeconds(DelayInSeconds);
             
             //RECOVERY
-            Player.State = PlayerState.StrikeCooldown;
-            StrikingSprite.SetActive(false);
-            BlockingSprite.SetActive(true); //placeholder for Strike Recovery
+            Model.State = PlayerState.StrikeCooldown;
             yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
             
             //FAF
-            //StrikingSprite.SetActive(false);
-            BlockingSprite.SetActive(false); //placeholder for Strike Recovery
-            IdleSprite.SetActive(true);
-            Player.State = PlayerState.Idle;
+            Model.State = PlayerState.Idle;
         }
     }
     #endregion
 
     #region Grab Method
-    public IEnumerator Grab(float DelayInSeconds)
+    public IEnumerator PlayerAction_Grab(float DelayInSeconds)
     {
         if (Input.GetButtonDown(triangleName))
         {
             Debug.Log("Triangle button pressed!");
 
             //STARTUP
-            Player.State = PlayerState.GrabStartup;
-            IdleSprite.SetActive(false);
-            BlockingSprite.SetActive(true); // placeholder for Grab Startup
-            //GrabbingSprite.SetActive(true);
+            Model.State = PlayerState.GrabStartup;
             yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
             
             //ACTIVE
-            Player.State = PlayerState.Grabbing;
-            BlockingSprite.SetActive(false); // placeholder for Grab Startup
-            GrabbingSprite.SetActive(true);
+            Model.State = PlayerState.Grabbing;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-                //yield return new WaitForSeconds(DelayInSeconds);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //RECOVERY
-            Player.State = PlayerState.GrabCooldown;
-            GrabbingSprite.SetActive(false);
-            BlockingSprite.SetActive(true); // placeholder for Grab Recovery
+            Model.State = PlayerState.GrabCooldown;
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //FAF
-            //GrabbingSprite.SetActive(false);
-            BlockingSprite.SetActive(false); // placeholder for Grab Recovery
-            IdleSprite.SetActive(true);
-            Player.State = PlayerState.Idle;
+            Model.State = PlayerState.Idle;
         }
-    }
-    #endregion
-
-    #region Get Hit Method
-    public IEnumerator GetHit(float DelayInSeconds)
-    {
-        IdleSprite.SetActive(false);
-        BlockingSprite.SetActive(false);
-        StrikingSprite.SetActive(false);
-        GetHitSprite.SetActive(true);
-        Player.State = PlayerState.Damage;
-        
-        //yield return new WaitForSeconds(DelayInSeconds);
-        yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
-        
-        //FAF
-        GetHitSprite.SetActive(false);
-        IdleSprite.SetActive(true);
-        Player.State = PlayerState.Idle;
     }
     #endregion
     
     #region Spawn HitBox Method
     public void SpawnHitBox(float distance, Vector2 size, string boxName)
     {
-        Vector2 hitBoxCenter = new Vector2(Player.transform.position.x + distance, 0);
+        Vector2 hitBoxCenter = new Vector2(View.transform.position.x + distance, 0);
         Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter,
             size, 0, LayerMask.GetMask(hitBoxName));
 
         if (hitCol)
         {
-            if (Player.State == PlayerState.Striking && OpponentState.State != PlayerState.Blocking)
+            if (Model.State == PlayerState.Striking && OpponentModel.State != PlayerState.Blocking)
             {
                 Debug.Log(boxName + hitCol.transform.gameObject);
-                StartCoroutine(Opponent.GetHit(DelayInSeconds));
+                StartCoroutine(OpponentModel.PlayerAction_GetHit(DelayInSeconds));
             }
-            else if (Player.State == PlayerState.Grabbing && OpponentState.State != PlayerState.Striking)
+            else if (Model.State == PlayerState.Grabbing && OpponentModel.State != PlayerState.Striking)
             {
                 Debug.Log(boxName + hitCol.transform.gameObject);
-                StartCoroutine(Opponent.GetHit(DelayInSeconds));
+                StartCoroutine(OpponentModel.PlayerAction_GetHit(DelayInSeconds));
             }
         }
     }
@@ -286,11 +249,11 @@ public class PlayerController : MonoBehaviour
     {
         //Draw strike hitbox
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
+        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
         
         //Draw Grab hitbox
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(new Vector2(Player.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
+        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
     }
     #endregion
 
@@ -302,14 +265,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Square button pressed!");
             IdleSprite.SetActive(false);
             StrikingSprite.SetActive(true);
-            Player.State = PlayerState.Striking;
+            Model.State = PlayerState.Striking;
         }
 
         if (Input.GetButtonUp(squareName))
         {
             IdleSprite.SetActive(true);
             StrikingSprite.SetActive(false);
-            Player.State = PlayerState.Idle;
+            Model.State = PlayerState.Idle;
         }
     }*/
     #endregion
@@ -322,7 +285,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Triangle button pressed!");
             IdleSprite.SetActive(false);
             GrabbingSprite.SetActive(true);
-            Player.State = PlayerState.Grabbing;
+            Model.State = PlayerState.Grabbing;
             
         }
 
@@ -330,7 +293,7 @@ public class PlayerController : MonoBehaviour
         {
             IdleSprite.SetActive(true);
             GrabbingSprite.SetActive(false);
-            Player.State = PlayerState.Idle;
+            Model.State = PlayerState.Idle;
         }
     }*/
     #endregion

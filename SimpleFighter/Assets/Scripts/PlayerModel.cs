@@ -26,6 +26,17 @@ public class PlayerModel : MonoBehaviour
     }
     
     #endregion
+    
+    public IEnumerator PlayerAction_GetHit(float DelayInSeconds)
+    {
+        State = PlayerState.Damage;
+        
+        //yield return new WaitForSeconds(DelayInSeconds);
+        yield return StartCoroutine(PlayerController.WaitFor.Frames(40)); // 40 is an arbitrary number for now
+        
+        //FAF
+        State = PlayerState.Idle;
+    }
 }
 
 //Used to determine what our player is currently doing so that actions and animations don't conflict
