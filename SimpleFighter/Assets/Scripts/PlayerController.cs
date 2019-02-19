@@ -33,6 +33,23 @@ public class PlayerController : MonoBehaviour
     public float StrikeHitBoxDistance = 0;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance = 0;
+
+    
+    //testing the below
+    public int frameCount;
+    public static class WaitFor
+    {
+        public static IEnumerator Frames(int frameCount)
+        {
+            while (frameCount > 0)
+            {
+                frameCount--;
+                yield return null;
+            }
+        }
+    }
+    //testing the above
+    
     
     // Start is called before the first frame update
     void Start()
@@ -83,29 +100,36 @@ public class PlayerController : MonoBehaviour
     #region Horizontal Movement
     void MoveHorizontal()
     {
-        if (Input.GetAxisRaw(axisName) != 0)
+        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
-            Player.transform.position += Vector3.right * Input.GetAxisRaw(axisName) * Time.deltaTime * SpeedMultiplier;
-            Player.State = PlayerState.Walking;
-        }
+            if (Input.GetAxisRaw(axisName) != 0)
+            {
+                Player.transform.position += Vector3.right * Input.GetAxisRaw(axisName) * Time.deltaTime * SpeedMultiplier;
+                Player.State = PlayerState.Walking;
+            }
 
-        if (Input.GetAxisRaw(axisName) == 0)
-        {
-            Player.State = PlayerState.Idle;
+            if (Input.GetAxisRaw(axisName) == 0)
+            {
+                Player.State = PlayerState.Idle;
+            }    
         }
+        
     }
 
     void KeyboardMoveHorizontal()
     {
-        if (Input.GetAxisRaw(keyAxisName) != 0)
+        if (Player.State == PlayerState.Idle || Player.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
-            Player.transform.position += Vector3.right * Input.GetAxisRaw(keyAxisName) * Time.deltaTime * SpeedMultiplier;
-            Player.State = PlayerState.Walking;
-        }
+            if (Input.GetAxisRaw(keyAxisName) != 0)
+            {
+                Player.transform.position += Vector3.right * Input.GetAxisRaw(keyAxisName) * Time.deltaTime * SpeedMultiplier;
+                Player.State = PlayerState.Walking;
+            }
 
-        if (Input.GetAxisRaw(keyAxisName) == 0)
-        {
-            Player.State = PlayerState.Idle;
+            if (Input.GetAxisRaw(keyAxisName) == 0)
+            {
+                Player.State = PlayerState.Idle;
+            }
         }
     }
     #endregion
@@ -116,16 +140,28 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(circleName) || Input.GetButtonDown(keyCircleName))
         {
             Debug.Log("Circle button pressed!");
+            //STARTUP
+            Player.State = PlayerState.BlockStartup;
+            //yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            
+            //ACTIVE
+            Player.State = PlayerState.Blocking;
             IdleSprite.SetActive(false);
             BlockingSprite.SetActive(true);
-            Player.State = PlayerState.Blocking;
+            
         }
 
         if (Input.GetButtonUp(circleName) || Input.GetButtonDown(keyCircleName))
         {
+            //RECOVERY
+            Player.State = PlayerState.BlockCooldown;
+            //yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
+            
+            //FAF
             IdleSprite.SetActive(true);
             BlockingSprite.SetActive(false);
             Player.State = PlayerState.Idle;
+            
         }
     }
     #endregion
@@ -136,14 +172,23 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(squareName))
         {
             Debug.Log("Square button pressed!");
+            //STARTUP
+            Player.State = PlayerState.StrikeStartup;
             IdleSprite.SetActive(false);
             StrikingSprite.SetActive(true);
-            Player.State = PlayerState.Striking;
+            yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
 
+            //ACTIVE
+            Player.State = PlayerState.Striking;
             SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
+            yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
+                //yield return new WaitForSeconds(DelayInSeconds);
             
-            yield return new WaitForSeconds(DelayInSeconds);
+            //RECOVERY
+            Player.State = PlayerState.StrikeCooldown;
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
             
+            //FAF
             StrikingSprite.SetActive(false);
             IdleSprite.SetActive(true);
             Player.State = PlayerState.Idle;
@@ -157,14 +202,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(triangleName))
         {
             Debug.Log("Triangle button pressed!");
+
+            //STARTUP
+            Player.State = PlayerState.GrabStartup;
             IdleSprite.SetActive(false);
             GrabbingSprite.SetActive(true);
+            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            
+            //ACTIVE
             Player.State = PlayerState.Grabbing;
-            
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+                //yield return new WaitForSeconds(DelayInSeconds);
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
-            yield return new WaitForSeconds(DelayInSeconds);
+            //RECOVERY
+            Player.State = PlayerState.GrabCooldown;
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
+            //FAF
             GrabbingSprite.SetActive(false);
             IdleSprite.SetActive(true);
             Player.State = PlayerState.Idle;
@@ -179,8 +234,10 @@ public class PlayerController : MonoBehaviour
         GetHitSprite.SetActive(true);
         Player.State = PlayerState.Damage;
         
-        yield return new WaitForSeconds(DelayInSeconds);
+        //yield return new WaitForSeconds(DelayInSeconds);
+        yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
         
+        //FAF
         GetHitSprite.SetActive(false);
         IdleSprite.SetActive(true);
         Player.State = PlayerState.Idle;
