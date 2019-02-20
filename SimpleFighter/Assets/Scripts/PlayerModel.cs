@@ -59,6 +59,3 @@ public enum PlayerState
     Grounded,
     Idle
 };
-
-//boop
-

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Rewired;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public PlayerModel Model;
     public PlayerModel OpponentModel;
     public PlayerView View;
+    public Player Player;
     #endregion
 
  /*   #region Sprites
@@ -23,14 +25,14 @@ public class PlayerController : MonoBehaviour
   */
     
     #region Control Keys
-    private string axisName;
+    /*private string axisName;
     private string keyAxisName;
     private string squareName;
     private string keySquareName;
     private string triangleName;
     private string keyTriangleName;
     private string circleName;
-    private string keyCircleName;
+    private string keyCircleName;*/
     private string hitBoxName;
     #endregion
     
@@ -62,28 +64,30 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player = ReInput.players.GetPlayer(Model.PlayerIndex);
+        
         if (Model.PlayerIndex == 0) //reference Controller 1
         {
-            axisName = "Horizontal1";
+            /*axisName = "Horizontal1";
             keyAxisName = "KeyboardHorizontal1";
             squareName = "Square1";
             keySquareName = "KeySquare1";
             triangleName = "Triangle1";
             keyTriangleName = "KeyTriangle1";
             circleName = "Circle1";
-            keyCircleName = "KeyCircle1";
+            keyCircleName = "KeyCircle1";*/
             hitBoxName = "HurtBoxP2";
         }
         else //reference Controller 2
         {
-            axisName = "Horizontal2";
+            /*axisName = "Horizontal2";
             keyAxisName = "KeyboardHorizontal2";
             squareName = "Square2";
             keySquareName = "KeySquare2";
             triangleName = "Triangle2";
             keyTriangleName = "KeyTriangle2";
             circleName = "Circle2";
-            keyCircleName = "KeyCircle2";
+            keyCircleName = "KeyCircle2";*/
             hitBoxName = "HurtBoxP1";
         }
     }
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking)
             MoveHorizontal();
-            KeyboardMoveHorizontal();
+            //KeyboardMoveHorizontal();
 
         if (Model.State == PlayerState.Idle || Model.State == PlayerState.Striking || Model.State == PlayerState.Walking)
             StartCoroutine(PlayerAction_Strike(DelayInSeconds));
@@ -110,13 +114,13 @@ public class PlayerController : MonoBehaviour
     {
         if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
-            if (Input.GetAxisRaw(axisName) != 0)
+            if (Player.GetAxis("Horizontal Movement") != 0)
             {
-                View.Translate(Input.GetAxisRaw(axisName), SpeedMultiplier);
+                View.Translate(Player.GetAxis("Horizontal Movement"), SpeedMultiplier);
                 Model.State = PlayerState.Walking;
             }
 
-            if (Input.GetAxisRaw(axisName) == 0)
+            if (Player.GetAxis("Horizontal Movement") == 0)
             {
                 Model.State = PlayerState.Idle;
             }    
@@ -124,7 +128,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void KeyboardMoveHorizontal()
+    /*void KeyboardMoveHorizontal()
     {
         if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
         {
@@ -139,13 +143,13 @@ public class PlayerController : MonoBehaviour
                 Model.State = PlayerState.Idle;
             }
         }
-    }
+    }*/
     #endregion
     
     #region Block Method
     void PlayerAction_Block()
     {
-        if (Input.GetButtonDown(circleName) || Input.GetButtonDown(keyCircleName))
+        if (Player.GetButtonDown("Block"))
         {
             Debug.Log("Circle button pressed!");
             //STARTUP
@@ -156,7 +160,7 @@ public class PlayerController : MonoBehaviour
             Model.State = PlayerState.Blocking;          
         }
 
-        if (Input.GetButtonUp(circleName) || Input.GetButtonDown(keyCircleName))
+        if (Player.GetButtonUp("Block"))
         {
             //RECOVERY
             Model.State = PlayerState.BlockCooldown;
@@ -172,7 +176,7 @@ public class PlayerController : MonoBehaviour
     #region Strike Method
     public IEnumerator PlayerAction_Strike(float DelayInSeconds)
     {
-        if (Input.GetButtonDown(squareName))
+        if (Player.GetButtonDown("Strike"))
         {
             Debug.Log("Square button pressed!");
             //STARTUP
@@ -198,7 +202,7 @@ public class PlayerController : MonoBehaviour
     #region Grab Method
     public IEnumerator PlayerAction_Grab(float DelayInSeconds)
     {
-        if (Input.GetButtonDown(triangleName))
+        if (Player.GetButtonDown("Grab"))
         {
             Debug.Log("Triangle button pressed!");
 
