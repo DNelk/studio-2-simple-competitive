@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour
 
  /*   #region Sprites
     public GameObject IdleSprite;
-    public GameObject StrikingSprite;
-    public GameObject GrabbingSprite;
-    public GameObject BlockingSprite;
+    public GameObject StrikeActiveSprite;
+    public GameObject GrabActiveSprite;
+    public GameObject BlockActiveSprite;
     public GameObject GetHitSprite;
     #endregion
   */
@@ -99,13 +99,13 @@ public class PlayerController : MonoBehaviour
             MoveHorizontal();
             //KeyboardMoveHorizontal();
 
-        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Striking || Model.State == PlayerState.Walking)
+        if (Model.State == PlayerState.Idle || Model.State == PlayerState.StrikeStartup || Model.State == PlayerState.StrikeActive || Model.State == PlayerState.StrikeRecovery || Model.State == PlayerState.Walking)
             StartCoroutine(PlayerAction_Strike(DelayInSeconds));
         
-        if(Model.State == PlayerState.Idle || Model.State == PlayerState.Grabbing || Model.State == PlayerState.Walking)
+        if(Model.State == PlayerState.Idle || Model.State == PlayerState.GrabStartup || Model.State == PlayerState.GrabActive || Model.State == PlayerState.GrabRecovery || Model.State == PlayerState.Walking)
             StartCoroutine(PlayerAction_Grab(DelayInSeconds));
         
-        if(Model.State == PlayerState.Idle || Model.State == PlayerState.Blocking || Model.State == PlayerState.Walking)
+        if(Model.State == PlayerState.Idle || Model.State == PlayerState.BlockStartup || Model.State == PlayerState.BlockActive || Model.State == PlayerState.BlockRecovery || Model.State == PlayerState.Walking)
             PlayerAction_Block();
     }
 
@@ -157,13 +157,13 @@ public class PlayerController : MonoBehaviour
             //yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //ACTIVE
-            Model.State = PlayerState.Blocking;          
+            Model.State = PlayerState.BlockActive;          
         }
 
         if (Player.GetButtonUp("Block"))
         {
             //RECOVERY
-            Model.State = PlayerState.BlockCooldown;
+            Model.State = PlayerState.BlockRecovery;
             //yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
             
             //FAF
@@ -184,13 +184,13 @@ public class PlayerController : MonoBehaviour
             yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
 
             //ACTIVE
-            Model.State = PlayerState.Striking;
+            Model.State = PlayerState.StrikeActive;
             SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
             yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
             //yield return new WaitForSeconds(DelayInSeconds);
             
             //RECOVERY
-            Model.State = PlayerState.StrikeCooldown;
+            Model.State = PlayerState.StrikeRecovery;
             yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
             
             //FAF
@@ -211,12 +211,12 @@ public class PlayerController : MonoBehaviour
             yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
             
             //ACTIVE
-            Model.State = PlayerState.Grabbing;
+            Model.State = PlayerState.GrabActive;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //RECOVERY
-            Model.State = PlayerState.GrabCooldown;
+            Model.State = PlayerState.GrabRecovery;
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
             
             //FAF
@@ -234,12 +234,12 @@ public class PlayerController : MonoBehaviour
 
         if (hitCol)
         {
-            if (Model.State == PlayerState.Striking && OpponentModel.State != PlayerState.Blocking)
+            if (Model.State == PlayerState.StrikeActive && OpponentModel.State != PlayerState.BlockActive)
             {
                 Debug.Log(boxName + hitCol.transform.gameObject);
                 StartCoroutine(OpponentModel.PlayerAction_GetHit(DelayInSeconds));
             }
-            else if (Model.State == PlayerState.Grabbing && OpponentModel.State != PlayerState.Striking)
+            else if (Model.State == PlayerState.GrabActive && OpponentModel.State != PlayerState.StrikeActive)
             {
                 Debug.Log(boxName + hitCol.transform.gameObject);
                 StartCoroutine(OpponentModel.PlayerAction_GetHit(DelayInSeconds));
@@ -268,14 +268,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Square button pressed!");
             IdleSprite.SetActive(false);
-            StrikingSprite.SetActive(true);
-            Model.State = PlayerState.Striking;
+            StrikeActiveSprite.SetActive(true);
+            Model.State = PlayerState.StrikeActive;
         }
 
         if (Input.GetButtonUp(squareName))
         {
             IdleSprite.SetActive(true);
-            StrikingSprite.SetActive(false);
+            StrikeActiveSprite.SetActive(false);
             Model.State = PlayerState.Idle;
         }
     }*/
@@ -288,15 +288,15 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Triangle button pressed!");
             IdleSprite.SetActive(false);
-            GrabbingSprite.SetActive(true);
-            Model.State = PlayerState.Grabbing;
+            GrabActiveSprite.SetActive(true);
+            Model.State = PlayerState.GrabActive;
             
         }
 
         if (Input.GetButtonUp(triangleName))
         {
             IdleSprite.SetActive(true);
-            GrabbingSprite.SetActive(false);
+            GrabActiveSprite.SetActive(false);
             Model.State = PlayerState.Idle;
         }
     }*/

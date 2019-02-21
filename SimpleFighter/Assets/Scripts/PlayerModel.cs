@@ -29,19 +29,30 @@ public class PlayerModel : MonoBehaviour
     
     public IEnumerator PlayerAction_GetHit(float DelayInSeconds)
     {
-        State = PlayerState.Damage;
         
-        //yield return new WaitForSeconds(DelayInSeconds);
+        //STARTUP
+        State = PlayerState.DamageStartup;
+        yield return StartCoroutine(PlayerController.WaitFor.Frames(2));
+        
+        //ACTIVE - this is the window during which a player can input a tech.
+        State = PlayerState.DamageActive;
+        yield return StartCoroutine(PlayerController.WaitFor.Frames(5));
+        
+        //RECOVERY
+        State = PlayerState.DamageRecovery;
         yield return StartCoroutine(PlayerController.WaitFor.Frames(40)); // 40 is an arbitrary number for now
         
         //FAF
-        State = PlayerState.Idle;
+        State = PlayerState.Idle; // for the current prototype, the player returns to Idle here.
+        //State = PlayerState.Grounded; // once it's implemented, the player should transition to the Grounded state.
+        
     }
 }
 
 //Used to determine what our player is currently doing so that actions and animations don't conflict
 public enum PlayerState
 {
+    /*
     Walking,
     Jumping,
     StrikeStartup,
@@ -58,4 +69,46 @@ public enum PlayerState
     Crouching,
     Grounded,
     Idle
+    */
+    
+    Idle,
+    Walking,
+    StrikeStartup,
+    StrikeActive,
+    StrikeRecovery,
+    GrabStartup,
+    GrabActive,
+    GrabRecovery,
+    BlockStartup,
+    BlockActive,
+    BlockRecovery,
+    
+    DamageStartup,
+    DamageActive,
+    DamageRecovery,
+	
+    Grounded,
+	
+    GetupStartup,
+    GetupActive,
+    GetupRecovery,
+	
+    GetupRollStartup,
+    GetupRollActive,
+    GetupRollRecovery,
+	
+    TechInPlaceStartup,
+    TechInPlaceActive,
+    TechInPlaceRecovery,
+	
+    TechRollStartup,
+    TechRollActive,
+    TechRollRecovery,
+	
+    /* Not being used currently
+    Jumping,
+    Special,
+    Crouching,
+    */
+
 };

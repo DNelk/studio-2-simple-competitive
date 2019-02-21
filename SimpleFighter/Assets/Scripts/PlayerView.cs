@@ -46,23 +46,40 @@ public class PlayerView : MonoBehaviour
         switch (Model.State)
         {
             case PlayerState.BlockStartup:
-            case PlayerState.BlockCooldown:
-            case PlayerState.Blocking:
+            case PlayerState.BlockRecovery:
+            case PlayerState.BlockActive:
                 spriteRenderer.sprite = sprites["block"];
                 break;
             case PlayerState.StrikeStartup:
-            case PlayerState.StrikeCooldown:
-            case PlayerState.Striking:
+            case PlayerState.StrikeRecovery:
+            case PlayerState.StrikeActive:
                 spriteRenderer.sprite = sprites["strike"];
                 break;
             case PlayerState.GrabStartup:
-            case PlayerState.GrabCooldown:
-            case PlayerState.Grabbing:
+            case PlayerState.GrabRecovery:
+            case PlayerState.GrabActive:
                 spriteRenderer.sprite = sprites["grab"];
                 break;
-            case PlayerState.Damage:
+            case PlayerState.DamageStartup:
+            case PlayerState.DamageRecovery:
+            case PlayerState.DamageActive:
                 spriteRenderer.sprite = sprites["hurt"];
                 break;
+
+            case PlayerState.Grounded:
+            case PlayerState.GetupStartup:
+            case PlayerState.GetupActive:
+            case PlayerState.GetupRecovery:
+            case PlayerState.GetupRollStartup:
+            case PlayerState.GetupRollActive:
+            case PlayerState.GetupRollRecovery:
+            case PlayerState.TechInPlaceStartup:
+            case PlayerState.TechInPlaceActive:
+            case PlayerState.TechInPlaceRecovery:
+            case PlayerState.TechRollStartup:
+            case PlayerState.TechRollActive:
+            case PlayerState.TechRollRecovery:
+
             case PlayerState.Idle:
             default:
                 spriteRenderer.sprite = sprites["idle"];
