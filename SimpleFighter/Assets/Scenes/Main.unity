@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c056bce2605894160996f3ba11c2233c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 15
+  State: 0
   Health: 10
   Stamina: 10
   PlayerIndex: 1
@@ -913,7 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c056bce2605894160996f3ba11c2233c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 15
+  State: 0
   Health: 10
   Stamina: 10
   PlayerIndex: 0
