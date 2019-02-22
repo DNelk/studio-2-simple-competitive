@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking)
+       /* if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking)
             MoveHorizontal();
             //KeyboardMoveHorizontal();
 
@@ -106,26 +106,64 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(PlayerAction_Grab(DelayInSeconds));
         
         if(Model.State == PlayerState.Idle || Model.State == PlayerState.BlockStartup || Model.State == PlayerState.BlockActive || Model.State == PlayerState.BlockRecovery || Model.State == PlayerState.Walking)
-            PlayerAction_Block();
+            PlayerAction_Block();*/
+
+        switch (Model.State)
+        {
+            case PlayerState.Idle: //can perform any action from idle
+                MoveCheck();
+                StrikeCheck();
+                BlockCheck();
+                break;
+            case PlayerState.Walking: //can perform any action while walking
+                MoveCheck();
+                StrikeCheck();
+                BlockCheck();
+                break;
+            case PlayerState.StrikeStartup: //can't do anything while punching
+            case PlayerState.StrikeActive:
+            case PlayerState.StrikeRecovery:
+                break;
+            case PlayerState.BlockStartup: //can't do anything while blocking
+            case PlayerState.BlockActive:
+            case PlayerState.BlockRecovery:
+                break;
+            case PlayerState.GrabStartup: //can't do anything while grabbing
+            case PlayerState.GrabActive:
+            case PlayerState.GrabRecovery:
+                break;
+            case PlayerState.Grounded: //currently can't do anything while grounded
+                break;
+        }
     }
 
     #region Horizontal Movement
+
+    //Check for inputs during states where the player can move
+    void MoveCheck()
+    {
+        if (Player.GetAxisRaw("Horizontal Movement") != 0)
+        {
+            MoveHorizontal();
+        }
+
+        if (Player.GetAxisRaw("Horizontal Movement") == 0)
+        {
+            StopMoving();
+        }
+    }
+
+    //Move the player
     void MoveHorizontal()
     {
-        if (Model.State == PlayerState.Idle || Model.State == PlayerState.Walking) //moving is not possible unless Idle or Walking
-        {
-            if (Player.GetAxis("Horizontal Movement") != 0)
-            {
-                View.Translate(Player.GetAxis("Horizontal Movement"), SpeedMultiplier);
-                Model.State = PlayerState.Walking;
-            }
+        View.Translate(Player.GetAxis("Horizontal Movement"), SpeedMultiplier);
+        Model.State = PlayerState.Walking;
+    }
 
-            if (Player.GetAxis("Horizontal Movement") == 0)
-            {
-                Model.State = PlayerState.Idle;
-            }    
-        }
-        
+    //Stop moving the player and reset to Idle state
+    void StopMoving()
+    {
+        Model.State = PlayerState.Idle;
     }
 
     /*void KeyboardMoveHorizontal()
@@ -147,55 +185,73 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region Block Method
-    void PlayerAction_Block()
+
+    //Check for block input during viable states
+    void BlockCheck()
     {
         if (Player.GetButtonDown("Block"))
         {
-            Debug.Log("Circle button pressed!");
-            //STARTUP
-            Model.State = PlayerState.BlockStartup;
-            //yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
-            
-            //ACTIVE
-            Model.State = PlayerState.BlockActive;          
+            PlayerAction_Block();
         }
 
         if (Player.GetButtonUp("Block"))
         {
-            //RECOVERY
-            Model.State = PlayerState.BlockRecovery;
-            //yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
-            
-            //FAF
-            Model.State = PlayerState.Idle;
-            
+            PlayerAction_ReleaseBlock();
         }
+    }
+    
+    //Startup block animation
+    //Currently the startup frames don't work
+    void PlayerAction_Block()
+    {
+        Debug.Log("Circle button pressed!");
+        //STARTUP
+        Model.State = PlayerState.BlockStartup;
+        //yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+        //ACTIVE
+        Model.State = PlayerState.BlockActive; 
+    }
+
+    //Go into block recovery and back to idle
+    //Currently the revovery frames don't work
+    void PlayerAction_ReleaseBlock()
+    {
+        //RECOVERY
+        Model.State = PlayerState.BlockRecovery;
+        //yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
+            
+        //FAF
+        Model.State = PlayerState.Idle;
     }
     #endregion
 
     #region Strike Method
-    public IEnumerator PlayerAction_Strike(float DelayInSeconds)
+
+    public void StrikeCheck()
     {
         if (Player.GetButtonDown("Strike"))
         {
-            Debug.Log("Square button pressed!");
-            //STARTUP
+            //STARTUP STRIKE
             Model.State = PlayerState.StrikeStartup;
-            yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
-
-            //ACTIVE
-            Model.State = PlayerState.StrikeActive;
-            SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
-            yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
-            //yield return new WaitForSeconds(DelayInSeconds);
-            
-            //RECOVERY
-            Model.State = PlayerState.StrikeRecovery;
-            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
-            
-            //FAF
-            Model.State = PlayerState.Idle;
+            StartCoroutine(PlayerAction_Strike(DelayInSeconds));
         }
+    }
+    
+    public IEnumerator PlayerAction_Strike(float DelayInSeconds)
+    {
+        Debug.Log("Square button pressed!");
+        yield return StartCoroutine(WaitFor.Frames(5)); // wait
+        //ACTIVE
+        Model.State = PlayerState.StrikeActive;
+        SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
+        yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
+        //yield return new WaitForSeconds(DelayInSeconds);
+        //RECOVERY
+        Model.State = PlayerState.StrikeRecovery;
+        yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
+        //FAF
+        Model.State = PlayerState.Idle;
     }
     #endregion
 
