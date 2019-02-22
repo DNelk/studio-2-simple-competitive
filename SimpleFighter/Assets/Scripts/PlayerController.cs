@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
+using UnityEditor.Experimental.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -70,7 +71,30 @@ public class PlayerController : MonoBehaviour
             case PlayerState.GrabActive:
             case PlayerState.GrabRecovery:
                 break;
-            case PlayerState.Grounded: //currently can't do anything while grounded
+            case PlayerState.DamageStartup: //we got hit, let's resolve this
+                StartCoroutine(PlayerAction_GetHit());
+                break;
+            case PlayerState.DamageActive: //Check for teching!
+                WakeUpCheck();
+                break;
+            case PlayerState.TechInPlaceStartup: //Teching up
+            case PlayerState.TechInPlaceActive:
+            case PlayerState.TechInPlaceRecovery:
+                break;
+            case PlayerState.TechRollStartup: //Tech roll
+            case PlayerState.TechRollActive:
+            case PlayerState.TechRollRecovery:
+                break;
+            case PlayerState.GetupStartup: //Getting up
+            case PlayerState.GetupActive:
+            case PlayerState.GetupRecovery:
+                break;
+            case PlayerState.GetupRollStartup: //Getting up with a roll
+            case PlayerState.GetupRollActive:
+            case PlayerState.GetupRollRecovery:
+                break;
+            case PlayerState.Grounded: //On the ground
+                WakeUpCheck();
                 break;
         }
     }
@@ -78,28 +102,24 @@ public class PlayerController : MonoBehaviour
     #region Horizontal Movement
 
     //Check for inputs during states where the player can move
-    void MoveCheck()
+    private void MoveCheck()
     {
         if (Player.GetAxisRaw("Horizontal Movement") != 0)
-        {
             MoveHorizontal();
-        }
 
         if (Player.GetAxisRaw("Horizontal Movement") == 0)
-        {
             StopMoving();
-        }
     }
 
     //Move the player
-    void MoveHorizontal()
+    private void MoveHorizontal()
     {
         View.Translate(Player.GetAxis("Horizontal Movement"), SpeedMultiplier);
         Model.State = PlayerState.Walking;
     }
 
     //Stop moving the player and reset to Idle state
-    void StopMoving()
+    private void StopMoving()
     {
         Model.State = PlayerState.Idle;
     }
@@ -203,7 +223,8 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     
-    #region Phyisics Methods
+    #region Hitting and Getting Hit
+    //Spawn a hitbox when we get hit
     private void SpawnHitBox(float distance, Vector2 size, string boxName)
     {
         Vector2 hitBoxCenter = new Vector2(View.transform.position.x + distance, 0);
@@ -214,13 +235,76 @@ public class PlayerController : MonoBehaviour
         {
             if (Model.State == PlayerState.StrikeActive && OpponentModel.State != PlayerState.BlockActive)
             {
-                StartCoroutine(OpponentModel.PlayerAction_GetHit());
+               // StartCoroutine(OpponentModel.PlayerAction_GetHit());
+                OpponentModel.State = PlayerState.DamageStartup;
             }
             else if (Model.State == PlayerState.GrabActive && OpponentModel.State != PlayerState.StrikeActive)
             {
-                StartCoroutine(OpponentModel.PlayerAction_GetHit());
+                //StartCoroutine(OpponentModel.PlayerAction_GetHit());
+                OpponentModel.State = PlayerState.DamageStartup;
             }
         }
+    }
+    
+    //What happens when we get hit
+    private IEnumerator PlayerAction_GetHit()
+    {
+        yield return StartCoroutine((WaitFor.Frames(2))); //Wait a sec for hit animation
+        
+        //ACTIVE - this is the window during which a player can input a tech.
+        Model.State = PlayerState.DamageActive;
+        yield return StartCoroutine(WaitFor.Frames(5));
+        
+        //Did we tech in this window? if not, let's process the rest of this
+        if (Model.State == PlayerState.DamageActive)
+        {
+
+            //RECOVERY
+            Model.State = PlayerState.DamageRecovery;
+            yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
+
+            //FAF
+            Model.State = PlayerState.Grounded; // once it's implemented, the player should transition to the Grounded state.
+        }
+
+    }
+    #endregion
+
+    #region Tech Moves and Getting Up
+
+    private void WakeUpCheck()
+    {
+        if (Model.State == PlayerState.DamageActive) //We're teching!
+        {
+            //If we move up
+            if (Player.GetAxisRaw("Up") != 0)
+                StartCoroutine(TechInPlace());
+        
+            //If we move rectilinearly
+            if (Player.GetAxisRaw("Horizontal Movement") != 0)
+                StartCoroutine(TechRoll());
+        }
+        else
+        {
+         
+        }
+    }
+
+    //Tech Up from falling or get up from ground
+    private IEnumerator TechInPlace()
+    {
+        //go into tech in place states
+        Debug.Log("tech up");
+        yield return StartCoroutine(WaitFor.Frames(1));
+    }
+    
+
+    //Tech roll from falling
+    private IEnumerator TechRoll()
+    {
+        //go into tech roll states
+        Debug.Log("tech roll");
+        yield return StartCoroutine(WaitFor.Frames(1));
     }
     #endregion
     
