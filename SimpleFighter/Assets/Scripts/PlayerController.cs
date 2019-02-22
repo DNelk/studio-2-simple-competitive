@@ -113,20 +113,23 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Idle: //can perform any action from idle
                 MoveCheck();
                 StrikeCheck();
+                GrabCheck();
                 BlockCheck();
                 break;
             case PlayerState.Walking: //can perform any action while walking
                 MoveCheck();
                 StrikeCheck();
+                GrabCheck();
                 BlockCheck();
                 break;
             case PlayerState.StrikeStartup: //can't do anything while punching
             case PlayerState.StrikeActive:
             case PlayerState.StrikeRecovery:
                 break;
-            case PlayerState.BlockStartup: //can't do anything while blocking
+            case PlayerState.BlockStartup: //can release blocking while blocking
             case PlayerState.BlockActive:
             case PlayerState.BlockRecovery:
+                BlockCheck();
                 break;
             case PlayerState.GrabStartup: //can't do anything while grabbing
             case PlayerState.GrabActive:
@@ -256,28 +259,33 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Grab Method
-    public IEnumerator PlayerAction_Grab(float DelayInSeconds)
+
+    void GrabCheck()
     {
         if (Player.GetButtonDown("Grab"))
         {
-            Debug.Log("Triangle button pressed!");
-
-            //STARTUP
-            Model.State = PlayerState.GrabStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
-            
-            //ACTIVE
-            Model.State = PlayerState.GrabActive;
-            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
-            
-            //RECOVERY
-            Model.State = PlayerState.GrabRecovery;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
-            
-            //FAF
-            Model.State = PlayerState.Idle;
+            StartCoroutine(PlayerAction_Grab(DelayInSeconds));
         }
+    }
+    
+    public IEnumerator PlayerAction_Grab(float DelayInSeconds)
+    {
+        Debug.Log("Triangle button press");
+        //STARTUP
+        Model.State = PlayerState.GrabStartup;
+        yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+        
+        //ACTIVE
+        Model.State = PlayerState.GrabActive;
+        SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+        //RECOVERY
+        Model.State = PlayerState.GrabRecovery;
+        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+        //FAF
+        Model.State = PlayerState.Idle;
     }
     #endregion
     
