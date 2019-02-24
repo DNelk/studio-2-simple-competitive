@@ -80,15 +80,13 @@ public class PlayerController : MonoBehaviour
             case PlayerState.TechInPlaceStartup: //Teching up
             case PlayerState.TechInPlaceActive:
             case PlayerState.TechInPlaceRecovery:
-                break;
-            case PlayerState.TechRollStartup: //Tech roll
-            case PlayerState.TechRollActive:
-            case PlayerState.TechRollRecovery:
-                break;
             case PlayerState.GetupStartup: //Getting up
             case PlayerState.GetupActive:
             case PlayerState.GetupRecovery:
                 break;
+            case PlayerState.TechRollStartup: //Tech roll
+            case PlayerState.TechRollActive:
+            case PlayerState.TechRollRecovery:
             case PlayerState.GetupRollStartup: //Getting up with a roll
             case PlayerState.GetupRollActive:
             case PlayerState.GetupRollRecovery:
@@ -264,7 +262,7 @@ public class PlayerController : MonoBehaviour
             yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
 
             //FAF
-            Model.State = PlayerState.Grounded; // once it's implemented, the player should transition to the Grounded state.
+            Model.State = PlayerState.Grounded; //transition to the Grounded state.
         }
 
     }
@@ -274,36 +272,103 @@ public class PlayerController : MonoBehaviour
 
     private void WakeUpCheck()
     {
-        if (Model.State == PlayerState.DamageActive) //We're teching!
-        {
-            //If we move up
-            if (Player.GetAxisRaw("Up") != 0)
-                StartCoroutine(TechInPlace());
+        bool tech = Model.State == PlayerState.DamageActive; //Are we teching?
+
+        //If we move up
+        if (Player.GetAxisRaw("Up") != 0)
+            StartCoroutine(PlayerAction_WakeUpInPlace(tech));
         
-            //If we move rectilinearly
-            if (Player.GetAxisRaw("Horizontal Movement") != 0)
-                StartCoroutine(TechRoll());
-        }
-        else
-        {
-         
-        }
+        //If we move rectilinearly
+        if (Player.GetAxisRaw("Horizontal Movement") != 0)
+            StartCoroutine(PlayerAction_WakeUpRoll(tech));
     }
 
     //Tech Up from falling or get up from ground
-    private IEnumerator TechInPlace()
+    private IEnumerator PlayerAction_WakeUpInPlace(bool tech)
     {
-        //go into tech in place states
-        Debug.Log("tech up");
+        if (tech)
+        {            //go into tech in place states
+            //STARTUP
+            Model.State = PlayerState.TechInPlaceStartup;
+            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+        
+            //ACTIVE
+            Model.State = PlayerState.TechInPlaceActive;
+            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //RECOVERY
+            Model.State = PlayerState.TechInPlaceRecovery;
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //FAF
+            Model.State = PlayerState.Idle;
+            Debug.Log("tech up");
+        }
+        else //Go into normal wakeup states
+        {
+            Model.State = PlayerState.GetupStartup;
+            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+        
+            //ACTIVE
+            Model.State = PlayerState.GetupActive;
+            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //RECOVERY
+            Model.State = PlayerState.GetupRecovery;
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //FAF
+            Model.State = PlayerState.Idle;
+            Debug.Log("grounded wakeup");
+        }
+
         yield return StartCoroutine(WaitFor.Frames(1));
     }
     
 
     //Tech roll from falling
-    private IEnumerator TechRoll()
+    private IEnumerator PlayerAction_WakeUpRoll(bool tech)
     {
-        //go into tech roll states
-        Debug.Log("tech roll");
+        if (tech) //go into tech roll states
+        {
+            //STARTUP
+            Model.State = PlayerState.TechRollStartup;
+            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+        
+            //ACTIVE
+            Model.State = PlayerState.TechRollActive;
+            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //RECOVERY
+            Model.State = PlayerState.TechRollRecovery;
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //FAF
+            Model.State = PlayerState.Idle;
+            Debug.Log("tech roll");
+        }
+        else //Go into normal roll states
+        {
+            //STARTUP
+            Model.State = PlayerState.GetupRollStartup;
+            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+        
+            //ACTIVE
+            Model.State = PlayerState.GetupRollActive;
+            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //RECOVERY
+            Model.State = PlayerState.GetupRollRecovery;
+            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        
+            //FAF
+            Model.State = PlayerState.Idle;
+            Debug.Log("grounded roll");
+        }
         yield return StartCoroutine(WaitFor.Frames(1));
     }
     #endregion
