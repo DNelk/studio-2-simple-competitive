@@ -46,43 +46,85 @@ public class PlayerView : MonoBehaviour
         switch (Model.State)
         {
             case PlayerState.BlockStartup:
-            case PlayerState.BlockRecovery:
+                spriteRenderer.sprite = sprites["BlockStartup"];
+                break;
             case PlayerState.BlockActive:
-                spriteRenderer.sprite = sprites["block"];
+                spriteRenderer.sprite = sprites["BlockActive"];
+                break;
+            case PlayerState.BlockRecovery:
+                spriteRenderer.sprite = sprites["BlockRecovery"];
                 break;
             case PlayerState.StrikeStartup:
-            case PlayerState.StrikeRecovery:
+                spriteRenderer.sprite = sprites["StrikeStartup"];
+                break;
             case PlayerState.StrikeActive:
-                spriteRenderer.sprite = sprites["strike"];
+                spriteRenderer.sprite = sprites["StrikeActive"];
+                break;
+            case PlayerState.StrikeRecovery:
+                spriteRenderer.sprite = sprites["StrikeRecovery"];
                 break;
             case PlayerState.GrabStartup:
-            case PlayerState.GrabRecovery:
+                spriteRenderer.sprite = sprites["GrabStartup"];
+                break;
             case PlayerState.GrabActive:
-                spriteRenderer.sprite = sprites["grab"];
+                spriteRenderer.sprite = sprites["GrabActive"];
+                break;
+            case PlayerState.GrabRecovery:
+                spriteRenderer.sprite = sprites["GrabRecovery"];
                 break;
             case PlayerState.DamageStartup:
-            case PlayerState.DamageRecovery:
+                spriteRenderer.sprite = sprites["DamageStartup"];
+                break;
             case PlayerState.DamageActive:
-                spriteRenderer.sprite = sprites["hurt"];
+                spriteRenderer.sprite = sprites["DamageActive"];
+                break;
+            case PlayerState.DamageRecovery:
+                spriteRenderer.sprite = sprites["DamageRecovery"];
                 break;
 
             case PlayerState.Grounded:
+                spriteRenderer.sprite = sprites["Grounded"];
+                break;
             case PlayerState.GetupStartup:
+                spriteRenderer.sprite = sprites["GetupStartup"];
+                break;
             case PlayerState.GetupActive:
+                spriteRenderer.sprite = sprites["GetupActive"];
+                break;
             case PlayerState.GetupRecovery:
+                spriteRenderer.sprite = sprites["GetupRecovery"];
+                break;
             case PlayerState.GetupRollStartup:
+                spriteRenderer.sprite = sprites["GetupRollStartup"];
+                break;
             case PlayerState.GetupRollActive:
+                spriteRenderer.sprite = sprites["GetupRollActive"];
+                break;
             case PlayerState.GetupRollRecovery:
+                spriteRenderer.sprite = sprites["GetupRollRecovery"];
+                break;
             case PlayerState.TechInPlaceStartup:
+                spriteRenderer.sprite = sprites["TechInPlaceStartup"];
+                break;
             case PlayerState.TechInPlaceActive:
+                spriteRenderer.sprite = sprites["TechInPlaceActive"];
+                break;
             case PlayerState.TechInPlaceRecovery:
+                spriteRenderer.sprite = sprites["TechInPlaceRecovery"];
+                break;
             case PlayerState.TechRollStartup:
+                spriteRenderer.sprite = sprites["TechRollStartup"];
+                break;
             case PlayerState.TechRollActive:
+                spriteRenderer.sprite = sprites["TechRollActive"];
+                break;
             case PlayerState.TechRollRecovery:
+                spriteRenderer.sprite = sprites["TechRollRecovery"];
+                break;
 
             case PlayerState.Idle:
             default:
-                spriteRenderer.sprite = sprites["idle"];
+                spriteRenderer.sprite = sprites["Idle"];
                 break;;
         }
     }

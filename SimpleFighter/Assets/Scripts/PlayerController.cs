@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour
     //What happens when we get hit
     private IEnumerator PlayerAction_GetHit()
     {
-        yield return StartCoroutine((WaitFor.Frames(2))); //Wait a sec for hit animation
+        yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
         
         //ACTIVE - this is the window during which a player can input a tech.
         Model.State = PlayerState.DamageActive;
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
 
             //RECOVERY
             Model.State = PlayerState.DamageRecovery;
-            yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
+            yield return StartCoroutine(WaitFor.Frames(20)); // arbitrary number for now
 
             //FAF
             Model.State = PlayerState.Grounded; //transition to the Grounded state.
