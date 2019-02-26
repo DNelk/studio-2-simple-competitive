@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region Physics Vars
-    public float DelayInSeconds = 0.25f;
     public float SpeedMultiplier = 10;
     public float RollMultiplier = 10;
     public float TechRollMultiplier = 15;
@@ -310,7 +309,6 @@ public class PlayerController : MonoBehaviour
         
             //ACTIVE
             Model.State = PlayerState.TechInPlaceActive;
-            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box "); //what is this doing? Are we grabbing while standing?
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
@@ -330,7 +328,6 @@ public class PlayerController : MonoBehaviour
         
             //ACTIVE
             Model.State = PlayerState.GetupActive;
-            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box "); //same question as above. What is this?
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
@@ -359,7 +356,6 @@ public class PlayerController : MonoBehaviour
         
             //ACTIVE
             Model.State = PlayerState.TechRollActive;
-            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
@@ -380,7 +376,6 @@ public class PlayerController : MonoBehaviour
         
             //ACTIVE
             Model.State = PlayerState.GetupRollActive;
-            SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
