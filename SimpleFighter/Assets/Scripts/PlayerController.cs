@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     #region Physics Vars
     public float DelayInSeconds = 0.25f;
     public float SpeedMultiplier = 10;
+    public float RollMultiplier = 10;
+    public float TechRollMultiplier = 15;
+    private float rollDirection;
     public Vector2 StrikeHitBoxSize;
     public float StrikeHitBoxDistance = 0;
     public Vector2 GrabHitBoxSize;
@@ -86,9 +89,13 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.TechRollStartup: //Tech roll
             case PlayerState.TechRollActive:
+                View.Translate(rollDirection, TechRollMultiplier); //move player view during active frames
+                break;
             case PlayerState.TechRollRecovery:
             case PlayerState.GetupRollStartup: //Getting up with a roll
             case PlayerState.GetupRollActive:
+                View.Translate(rollDirection, RollMultiplier); //move player view during active frames
+                break;
             case PlayerState.GetupRollRecovery:
                 break;
             case PlayerState.Grounded: //On the ground
@@ -280,11 +287,16 @@ public class PlayerController : MonoBehaviour
 
         //If we move up
         if (Player.GetAxisRaw("Up") != 0)
+        {
             StartCoroutine(PlayerAction_WakeUpInPlace(tech));
-        
+        }
+
         //If we move rectilinearly
         if (Player.GetAxisRaw("Horizontal Movement") != 0)
+        {
+            rollDirection = Player.GetAxisRaw("Horizontal Movement");
             StartCoroutine(PlayerAction_WakeUpRoll(tech));
+        }
     }
 
     //Tech Up from falling or get up from ground

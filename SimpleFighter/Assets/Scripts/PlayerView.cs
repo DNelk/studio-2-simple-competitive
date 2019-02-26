@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
+
 /*Updates the player's appearances and displays input*/
 public class PlayerView : MonoBehaviour
 {
@@ -37,13 +40,6 @@ public class PlayerView : MonoBehaviour
     public void Translate(float amount, float speed)
     {
         transform.position += Vector3.right * amount * Time.deltaTime * speed;
-    }
-    
-    //Roll the player a set distance
-    public IEnumerator Roll(float distance, float speed)
-    {
-        
-        yield return null;
     }
     #endregion
     
