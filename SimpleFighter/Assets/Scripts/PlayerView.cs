@@ -8,6 +8,7 @@ public class PlayerView : MonoBehaviour
     #region Public Variables
     public PlayerModel Model;
     public SpriteWithKey[] SpritesWithKeys;
+    public BoxCollider2D hitBox;
     #endregion
     
     #region Private Variables

@@ -10,6 +10,8 @@ public class PlayerModel : MonoBehaviour
     public int Health = 10; //How much health the player has
     public int Stamina = 10; //How much stamina the player has
     public int PlayerIndex;
+    public bool IsStruck;
+    public bool IsGrabbed;
     
     #endregion
 

@@ -726,6 +726,11 @@ PrefabInstance:
       propertyPath: Model
       value: 
       objectReference: {fileID: 901222982}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: hitBox
+      value: 
+      objectReference: {fileID: 1326251902}
     - target: {fileID: 114164294, guid: 938b229efac02654f974c8ce7a44f755, type: 3}
       propertyPath: m_RootOrder
       value: 30
@@ -1449,6 +1454,8 @@ MonoBehaviour:
   Health: 10
   Stamina: 10
   PlayerIndex: 1
+  IsStruck: 0
+  IsGrabbed: 0
 --- !u!4 &901222983
 Transform:
   m_ObjectHideFlags: 0
@@ -1725,6 +1732,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
   - key: Idle
     sprite: {fileID: 21300000, guid: 565b4a854b920d9438ed785699c93c6d, type: 3}
+  hitBox: {fileID: 1326251902}
 --- !u!212 &1147786523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1966,6 +1974,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1326251902 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3047782525815426037, guid: 938b229efac02654f974c8ce7a44f755,
+    type: 3}
+  m_PrefabInstance: {fileID: 308844773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1337131007 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3047782525815426037, guid: 938b229efac02654f974c8ce7a44f755,
+    type: 3}
+  m_PrefabInstance: {fileID: 3047782526317484526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1375324902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,6 +2349,8 @@ MonoBehaviour:
   Health: 10
   Stamina: 10
   PlayerIndex: 0
+  IsStruck: 0
+  IsGrabbed: 0
 --- !u!1 &1601639615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,6 +3315,11 @@ PrefabInstance:
       propertyPath: Model
       value: 
       objectReference: {fileID: 1534797229}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: hitBox
+      value: 
+      objectReference: {fileID: 1337131007}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 938b229efac02654f974c8ce7a44f755, type: 3}
 --- !u!4 &3047782526317484527 stripped
