@@ -15,16 +15,6 @@ public class PlayerModel : MonoBehaviour
     
     #endregion
 
-    #region Start
-	
-	void Start()
-	{
-		//cap the frame rate at 60fps
-		Application.targetFrameRate = 60;
-	}
-
-	#endregion
-
     #region Updates
     
     void Update()
