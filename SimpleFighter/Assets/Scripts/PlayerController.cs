@@ -255,7 +255,7 @@ public class PlayerController : MonoBehaviour
     //What happens when we get hit
     private IEnumerator PlayerAction_GetHit()
     {
-        yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
+        //yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
         
         //ACTIVE - this is the window during which a player can input a tech.
         Model.State = PlayerState.DamageActive;
@@ -273,7 +273,6 @@ public class PlayerController : MonoBehaviour
             //FAF
             Model.State = PlayerState.Grounded; //transition to the Grounded state.
         }
-
     }
     #endregion
 
@@ -281,8 +280,12 @@ public class PlayerController : MonoBehaviour
 
     private void WakeUpCheck()
     {
-        bool tech = Model.State == PlayerState.DamageActive; //Are we teching?
-
+        bool tech = false; //Are we teching?
+        if (Model.State == PlayerState.DamageActive)
+        {
+            tech = true;
+            StopCoroutine(PlayerAction_GetHit());
+        }
         //If we move up
         if (Player.GetAxisRaw("Up") != 0)
         {
