@@ -10,6 +10,8 @@ public class PlayerModel : MonoBehaviour
     public int Health = 10; //How much health the player has
     public int Stamina = 10; //How much stamina the player has
     public int PlayerIndex;
+    public bool IsStruck;
+    public bool IsGrabbed;
     
     #endregion
 
@@ -25,30 +27,6 @@ public class PlayerModel : MonoBehaviour
         }
     }
     
-    #endregion
-    
-    #region Player Actions
-    //The only player action outside of model, since it must be accessed on a model-by-model basis
-    public IEnumerator PlayerAction_GetHit()
-    {
-        
-        //STARTUP
-        State = PlayerState.DamageStartup;
-        yield return StartCoroutine(WaitFor.Frames(2));
-        
-        //ACTIVE - this is the window during which a player can input a tech.
-        State = PlayerState.DamageActive;
-        yield return StartCoroutine(WaitFor.Frames(5));
-        
-        //RECOVERY
-        State = PlayerState.DamageRecovery;
-        yield return StartCoroutine(WaitFor.Frames(40)); // 40 is an arbitrary number for now
-        
-        //FAF
-        State = PlayerState.Idle; // for the current prototype, the player returns to Idle here.
-        //State = PlayerState.Grounded; // once it's implemented, the player should transition to the Grounded state.
-        
-    }
     #endregion
 }
 
