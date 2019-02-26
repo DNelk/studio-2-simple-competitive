@@ -299,12 +299,12 @@ public class PlayerController : MonoBehaviour
             //ACTIVE
             Model.State = PlayerState.TechInPlaceActive;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box "); //what is this doing? Are we grabbing while standing?
-            View.hitBox.enabled = true; //reactivate hitbox as player stands
-            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechInPlaceRecovery;
+            View.hitBox.enabled = true; //reactivate hitbox as player stands
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //FAF
@@ -319,12 +319,12 @@ public class PlayerController : MonoBehaviour
             //ACTIVE
             Model.State = PlayerState.GetupActive;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box "); //same question as above. What is this?
-            View.hitBox.enabled = true;
-            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRecovery;
+            View.hitBox.enabled = true;
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //FAF
@@ -348,12 +348,12 @@ public class PlayerController : MonoBehaviour
             //ACTIVE
             Model.State = PlayerState.TechRollActive;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-            View.hitBox.enabled = true;
-            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechRollRecovery;
+            View.hitBox.enabled = true;
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //FAF
@@ -369,12 +369,12 @@ public class PlayerController : MonoBehaviour
             //ACTIVE
             Model.State = PlayerState.GetupRollActive;
             SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-            View.hitBox.enabled = true;
-            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRollRecovery;
+            View.hitBox.enabled = true;
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
             //FAF

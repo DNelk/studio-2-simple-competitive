@@ -38,6 +38,13 @@ public class PlayerView : MonoBehaviour
     {
         transform.position += Vector3.right * amount * Time.deltaTime * speed;
     }
+    
+    //Roll the player a set distance
+    public IEnumerator Roll(float distance, float speed)
+    {
+        
+        yield return null;
+    }
     #endregion
     
     #region Private Methods
