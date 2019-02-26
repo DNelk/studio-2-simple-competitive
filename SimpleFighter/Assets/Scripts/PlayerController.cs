@@ -367,6 +367,7 @@ public class PlayerController : MonoBehaviour
             //FAF
             Model.State = PlayerState.Idle;
             Debug.Log("tech roll");
+            
         }
         else //Go into normal roll states
         {
