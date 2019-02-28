@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
         
         //cap the frame rate at 60fps
         Application.targetFrameRate = 60;
+        
+        Debug.Log("Game Manager instantiated!");
     }
 
     // Update is called once per frame
