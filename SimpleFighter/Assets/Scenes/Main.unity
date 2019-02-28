@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 211094369}
   - component: {fileID: 211094368}
   - component: {fileID: 211094367}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -779,6 +779,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 20.96054
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782525187067310, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3047782525815426037, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
@@ -1422,7 +1427,7 @@ GameObject:
   - component: {fileID: 753813490}
   - component: {fileID: 753813489}
   - component: {fileID: 753813488}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2841,7 +2846,7 @@ GameObject:
   - component: {fileID: 1808357240}
   - component: {fileID: 1808357239}
   - component: {fileID: 1808357238}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3085,7 +3090,7 @@ PrefabInstance:
     - target: {fileID: 2328320698624227230, guid: c33108c7fc9f14f3f9c024847e735293,
         type: 3}
       propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2328320698624227230, guid: c33108c7fc9f14f3f9c024847e735293,
         type: 3}
@@ -3571,6 +3576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782525187067310, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}

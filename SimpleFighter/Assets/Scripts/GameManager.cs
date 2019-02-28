@@ -21,13 +21,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+
+		//DEBUG TOOLS
+
         //fps display here
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;
         fpsText.text = "fps " + Mathf.Floor(fps).ToString();
 
         //PAUSE & UNPAUSE
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire2")) // temporarily set this to right click. Need to fix it to use Rewired.
         {
             if (Time.timeScale == 1.0f)
                 Time.timeScale = 0.0f;
@@ -37,5 +40,8 @@ public class GameManager : MonoBehaviour
             // The fixed delta time will now be 0.02 frames per real-time second
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
         }
+
+
+
     }
 }

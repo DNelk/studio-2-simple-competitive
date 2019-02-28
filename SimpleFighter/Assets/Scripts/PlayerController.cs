@@ -216,11 +216,11 @@ public class PlayerController : MonoBehaviour
         //ACTIVE
         Model.State = PlayerState.GrabActive;
         SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
         
         //RECOVERY
         Model.State = PlayerState.GrabRecovery;
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
         //FAF
         Model.State = PlayerState.Idle;
