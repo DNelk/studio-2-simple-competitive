@@ -217,11 +217,11 @@ public class PlayerController : MonoBehaviour
         //ACTIVE
         Model.State = PlayerState.GrabActive;
         SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
         
         //RECOVERY
         Model.State = PlayerState.GrabRecovery;
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
         //FAF
         Model.State = PlayerState.Idle;
@@ -309,11 +309,11 @@ public class PlayerController : MonoBehaviour
         {            //go into tech in place states
             //STARTUP
             Model.State = PlayerState.TechInPlaceStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.TechInPlaceActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechInPlaceRecovery;
@@ -328,11 +328,11 @@ public class PlayerController : MonoBehaviour
         else //Go into normal wakeup states
         {
             Model.State = PlayerState.GetupStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(24)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.GetupActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(24)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRecovery;
@@ -356,37 +356,38 @@ public class PlayerController : MonoBehaviour
         {
             //STARTUP
             Model.State = PlayerState.TechRollStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.TechRollActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechRollRecovery;
             View.hitBox.enabled = true;
             Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(20)); // wait for frames
         
             //FAF
             Model.State = PlayerState.Idle;
             Debug.Log("tech roll");
+            
         }
         else //Go into normal roll states
         {
             //STARTUP
             Model.State = PlayerState.GetupRollStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.GetupRollActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRollRecovery;
             View.hitBox.enabled = true;
             Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //FAF
             Model.State = PlayerState.Idle;
