@@ -648,7 +648,7 @@ PrefabInstance:
     - target: {fileID: 3047782525187067345, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3047782525187067345, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
@@ -658,7 +658,7 @@ PrefabInstance:
     - target: {fileID: 3047782525187067345, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3047782525187067345, guid: 938b229efac02654f974c8ce7a44f755,
         type: 3}
@@ -977,10 +977,6 @@ MonoBehaviour:
   SpeedMultiplier: 10
   RollMultiplier: 10
   TechRollMultiplier: 15
-  StrikeHitBoxSize: {x: 1.75, y: 1}
-  StrikeHitBoxDistance: -1
-  GrabHitBoxSize: {x: 0.5, y: 1}
-  GrabHitBoxDistance: -1
 --- !u!114 &320533808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,10 +995,6 @@ MonoBehaviour:
   SpeedMultiplier: 10
   RollMultiplier: 10
   TechRollMultiplier: 15
-  StrikeHitBoxSize: {x: 1.75, y: 1}
-  StrikeHitBoxDistance: 1
-  GrabHitBoxSize: {x: 0.5, y: 1}
-  GrabHitBoxDistance: 1
 --- !u!114 &320533809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1858,6 +1850,10 @@ MonoBehaviour:
   - key: Idle
     sprite: {fileID: 21300000, guid: 565b4a854b920d9438ed785699c93c6d, type: 3}
   hitBox: {fileID: 1326251902}
+  StrikeHitBoxSize: {x: 1.75, y: 1}
+  StrikeHitBoxDistance: -1
+  GrabHitBoxSize: {x: 0.5, y: 1}
+  GrabHitBoxDistance: -1
 --- !u!212 &1147786523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3621,6 +3617,36 @@ PrefabInstance:
       propertyPath: hitBox
       value: 
       objectReference: {fileID: 1337131007}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.x
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxDistance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 938b229efac02654f974c8ce7a44f755, type: 3}
 --- !u!4 &3047782526317484527 stripped
