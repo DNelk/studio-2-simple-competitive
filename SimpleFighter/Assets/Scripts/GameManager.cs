@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         fpsText.text = "fps " + Mathf.Floor(fps).ToString();
 
         //PAUSE & UNPAUSE
-        if (Input.GetButtonDown("Fire2")) // temporarily set this to right click. Need to fix it to use Rewired.
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             if (Time.timeScale == 1.0f)
                 Time.timeScale = 0.0f;
