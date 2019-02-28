@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Rewired;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -124,6 +125,11 @@ public class PlayerView : MonoBehaviour
                 break;
             case PlayerState.TechRollRecovery:
                 spriteRenderer.sprite = sprites["TechRollRecovery"];
+                break;
+            case PlayerState.Ko:
+                spriteRenderer.sprite = sprites["KO"];
+                break;
+            case PlayerState.Win:
                 break;
 
             case PlayerState.Idle:

@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     public PlayerModel OpponentModel; //The model of the other player
     public PlayerView View; //Our View
     public Player Player; //Rewired Player reference
+    
+    //this is Palmmy's
+    public HPModel HPbar;
+    public StaminaModel staminaBar;
     #endregion
     
     #region Physics Vars
@@ -26,6 +30,12 @@ public class PlayerController : MonoBehaviour
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance = 0;
     private string hitBoxLayer;
+    
+    //this is palmmy's
+    private int maxHP;
+    private int HPMultiplier = 0;
+    private int maxStamina;
+    private int staminaMultiplier = 0;
     #endregion
 
     // Start is called before the first frame update
@@ -41,6 +51,10 @@ public class PlayerController : MonoBehaviour
         {
             hitBoxLayer = "HurtBoxP1";
         }
+        
+        //this is palmmy's
+        maxHP = Model.Health;
+        maxStamina = Model.Stamina;
     }
 
     // Update is called once per frame
@@ -53,12 +67,16 @@ public class PlayerController : MonoBehaviour
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
+                StaminaRecovery(); //Palmmy Stamina Function
+                HPRecovery();
                 break;
             case PlayerState.Walking: //can perform any action while walking
                 MoveCheck();
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
+                StaminaRecovery(); //Palmmy Stamina Function
+                HPRecovery();
                 break;
             case PlayerState.StrikeStartup: //can't do anything while punching
             case PlayerState.StrikeActive:
@@ -99,6 +117,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Grounded: //On the ground
                 WakeUpCheck();
+                break;
+            case PlayerState.Ko:
+            case PlayerState.Win:
                 break;
         }
     }
@@ -170,14 +191,16 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    //Palmmy add stamina condition here
     #region Striking
 
     private void StrikeCheck()
     {
-        if (Player.GetButtonDown("Strike"))
+        if (Player.GetButtonDown("Strike") && Model.Stamina > 0) //Palmmy add Stamina Condition
         {
             //STARTUP STRIKE
             Model.State = PlayerState.StrikeStartup;
+            staminaBar.performHit(1); //added to use stamina
             StartCoroutine(PlayerAction_Strike());
         }
     }
@@ -193,16 +216,21 @@ public class PlayerController : MonoBehaviour
         Model.State = PlayerState.StrikeRecovery;
         yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         //FAF
-        Model.State = PlayerState.Idle;
+        if (OpponentModel.State != PlayerState.Ko)
+            Model.State = PlayerState.Idle;
+        else
+            Model.State = PlayerState.Win;
     }
     #endregion
 
+    //Palmmuy also add stamina condition here
     #region Grabbing
 
     private void GrabCheck()
     {
-        if (Player.GetButtonDown("Grab"))
+        if (Player.GetButtonDown("Grab") && Model.Stamina > 0) //Palmmy add Stamina Condition
         {
+            staminaBar.performHit(1); //added to use stamina
             StartCoroutine(PlayerAction_Grab());
         }
     }
@@ -223,7 +251,10 @@ public class PlayerController : MonoBehaviour
         yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
         
         //FAF
-        Model.State = PlayerState.Idle;
+        if (OpponentModel.State != PlayerState.Ko)
+            Model.State = PlayerState.Idle;
+        else
+            Model.State = PlayerState.Win;
     }
     #endregion
     
@@ -241,12 +272,14 @@ public class PlayerController : MonoBehaviour
             if (Model.State == PlayerState.StrikeActive && OpponentModel.State != PlayerState.BlockActive)
             {
                // StartCoroutine(OpponentModel.PlayerAction_GetHit());
-                OpponentModel.State = PlayerState.DamageStartup;
+               if (Model.Health > 1)
+                    OpponentModel.State = PlayerState.DamageStartup;
             }
             else if (Model.State == PlayerState.GrabActive && OpponentModel.State != PlayerState.StrikeActive)
             {
                 //StartCoroutine(OpponentModel.PlayerAction_GetHit());
-                OpponentModel.State = PlayerState.DamageStartup;
+                if (Model.Health > 1)
+                    OpponentModel.State = PlayerState.DamageStartup;
             }
         }
     }
@@ -255,23 +288,27 @@ public class PlayerController : MonoBehaviour
     //What happens when we get hit
     private IEnumerator PlayerAction_GetHit()
     {
+        HPbar.getHit(1);
         //yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
-        
-        //ACTIVE - this is the window during which a player can input a tech.
-        Model.State = PlayerState.DamageActive;
-        View.hitBox.enabled = false; //turn off the hitBox for the duration of knockdown
-        Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-        yield return StartCoroutine(WaitFor.Frames(5));
-        
-        //Did we tech in this window? if not, let's process the rest of this
-        if (Model.State == PlayerState.DamageActive)
-        {
-            //RECOVERY
-            Model.State = PlayerState.DamageRecovery;
-            yield return StartCoroutine(WaitFor.Frames(20)); // arbitrary number for now
 
-            //FAF
-            Model.State = PlayerState.Grounded; //transition to the Grounded state.
+        if (Model.State != PlayerState.Ko)
+        {
+            //ACTIVE - this is the window during which a player can input a tech.
+            Model.State = PlayerState.DamageActive;
+            View.hitBox.enabled = false; //turn off the hitBox for the duration of knockdown
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
+            yield return StartCoroutine(WaitFor.Frames(5));
+        
+            //Did we tech in this window? if not, let's process the rest of this
+            if (Model.State == PlayerState.DamageActive)
+            {
+                //RECOVERY
+                Model.State = PlayerState.DamageRecovery;
+                yield return StartCoroutine(WaitFor.Frames(20)); // arbitrary number for now
+
+                //FAF
+                Model.State = PlayerState.Grounded; //transition to the Grounded state.
+            }
         }
     }
     #endregion
@@ -392,6 +429,47 @@ public class PlayerController : MonoBehaviour
         }
         yield return StartCoroutine(WaitFor.Frames(1));
     }
+    #endregion
+    
+    //this is Palmmy's
+    #region StaminaRecovery
+
+    void StaminaRecovery()
+    {
+        if (Model.Stamina < maxStamina)
+        {
+            staminaMultiplier++;
+
+            if (staminaMultiplier == 60) //change this condition to adjust how fast stamina recovery
+            {
+                staminaMultiplier = 0;
+                Model.Stamina++;
+                staminaBar.updateStamina(Model.Stamina);
+                Debug.Log("RecoverStamina");
+            }
+        }
+    }
+
+    #endregion
+    
+    #region HPRecovery
+
+    void HPRecovery()
+    {
+        if (Model.Health < maxHP && Model.Health % 2 != 0)
+        {
+            HPMultiplier++;
+
+            if (HPMultiplier == 120) //change this condition to adjust how fast stamina recovery
+            {
+                HPMultiplier = 0;
+                Model.Health++;
+                HPbar.updateHP(Model.Health);
+                Debug.Log("RecoverHealth");
+            }
+        }
+    }
+
     #endregion
     
     #region Tools
