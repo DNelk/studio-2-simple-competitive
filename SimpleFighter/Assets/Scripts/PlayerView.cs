@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
+using UnityEditor;
 
 /*Updates the player's appearances and displays input*/
 public class PlayerView : MonoBehaviour
@@ -12,11 +11,16 @@ public class PlayerView : MonoBehaviour
     public PlayerModel Model;
     public SpriteWithKey[] SpritesWithKeys;
     public BoxCollider2D hitBox;
+    public Vector2 StrikeHitBoxSize;
+    public float StrikeHitBoxDistance = 0;
+    public Vector2 GrabHitBoxSize;
+    public float GrabHitBoxDistance = 0;
     #endregion
     
     #region Private Variables
     private SpriteRenderer spriteRenderer;
     private Dictionary<string, Sprite> sprites;
+    private int direction; 
     #endregion
     
     private void Start()
@@ -27,6 +31,14 @@ public class PlayerView : MonoBehaviour
         {
             sprites.Add(var.key, var.sprite);
         }
+
+        int rotInt = Mathf.RoundToInt(transform.rotation.eulerAngles.y);
+        if (rotInt == 180)
+            direction = -1;
+        else if (rotInt == 0)
+            direction = 1;
+        else
+            Debug.Log("error: direction not found");
     }
 
     // Update is called once per frame
@@ -39,7 +51,23 @@ public class PlayerView : MonoBehaviour
     //Move the player by amount times speed
     public void Translate(float amount, float speed)
     {
+        float oldX = transform.position.x; //Our old position
+        
         transform.position += Vector3.right * amount * Time.deltaTime * speed;
+        
+        //Update our direction and change our rotation if necessary
+        if (transform.position.x > oldX && direction == -1)
+        {
+            transform.Rotate(0f,-180f,0f);
+            direction = 1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = 1;
+        }
+        if (transform.position.x < oldX && direction == 1)
+        {
+            transform.Rotate(0f,180f,0f);
+            direction = -1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = -1;
+        }
     }
     #endregion
     
@@ -133,6 +161,19 @@ public class PlayerView : MonoBehaviour
         }
     }
 
+    #endregion
+    
+    #region Tools
+    private void OnDrawGizmos()
+    {
+        //Draw strike hitbox
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
+        
+        //Draw Grab hitbox
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(new Vector2(transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
+    }
     #endregion
     
 }

@@ -21,10 +21,6 @@ public class PlayerController : MonoBehaviour
     public float RollMultiplier = 10;
     public float TechRollMultiplier = 15;
     private float rollDirection;
-    public Vector2 StrikeHitBoxSize;
-    public float StrikeHitBoxDistance = 0;
-    public Vector2 GrabHitBoxSize;
-    public float GrabHitBoxDistance = 0;
     private string hitBoxLayer;
     #endregion
 
@@ -188,7 +184,7 @@ public class PlayerController : MonoBehaviour
         yield return StartCoroutine(WaitFor.Frames(5)); // wait
         //ACTIVE
         Model.State = PlayerState.StrikeActive;
-        SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
+        SpawnHitBox(View.StrikeHitBoxDistance, View.StrikeHitBoxSize, "strike box ");
         yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
         //RECOVERY
         Model.State = PlayerState.StrikeRecovery;
@@ -216,7 +212,7 @@ public class PlayerController : MonoBehaviour
         
         //ACTIVE
         Model.State = PlayerState.GrabActive;
-        SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
+        SpawnHitBox(View.GrabHitBoxDistance, View.GrabHitBoxSize, "grab box ");
         yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
         
         //RECOVERY
@@ -398,16 +394,6 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region Tools
-    private void OnDrawGizmos()
-    {
-        //Draw strike hitbox
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
-        
-        //Draw Grab hitbox
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
-    }
     #endregion
 }
 
