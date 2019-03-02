@@ -153,6 +153,9 @@ public class PlayerView : MonoBehaviour
             case PlayerState.TechRollRecovery:
                 spriteRenderer.sprite = sprites["TechRollRecovery"];
                 break;
+            case PlayerState.Ko:
+                spriteRenderer.sprite = sprites["KO"];
+                break;
 
             case PlayerState.Idle:
             default:

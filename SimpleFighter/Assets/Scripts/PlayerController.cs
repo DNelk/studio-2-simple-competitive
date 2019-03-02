@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
 using UnityEditor.Experimental.UIElements;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public PlayerModel OpponentModel; //The model of the other player
     public PlayerView View; //Our View
     public Player Player; //Rewired Player reference
+    public PlayerStatus status; // HP and Stamina manager
     #endregion
     
     #region Physics Vars
@@ -49,12 +51,16 @@ public class PlayerController : MonoBehaviour
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
+                status.HPRecovery();
+                status.StaminaRecovery();
                 break;
             case PlayerState.Walking: //can perform any action while walking
                 MoveCheck();
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
+                status.HPRecovery();
+                status.StaminaRecovery();
                 break;
             case PlayerState.StrikeStartup: //can't do anything while punching
             case PlayerState.StrikeActive:
@@ -95,6 +101,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Grounded: //On the ground
                 WakeUpCheck();
+                break;
+            case PlayerState.Ko: //KO
+            case PlayerState.Win: //Win
                 break;
         }
     }
@@ -170,8 +179,9 @@ public class PlayerController : MonoBehaviour
 
     private void StrikeCheck()
     {
-        if (Player.GetButtonDown("Strike"))
+        if (Player.GetButtonDown("Strike") && Model.Stamina > 0) //also check there is stamina left
         {
+            status.performAction(1); //change number for different amount of Stamina uses
             //STARTUP STRIKE
             Model.State = PlayerState.StrikeStartup;
             StartCoroutine(PlayerAction_Strike());
@@ -189,7 +199,10 @@ public class PlayerController : MonoBehaviour
         Model.State = PlayerState.StrikeRecovery;
         yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         //FAF
-        Model.State = PlayerState.Idle;
+        if (OpponentModel.State != PlayerState.Ko)
+            Model.State = PlayerState.Idle;
+        else
+            Model.State = PlayerState.Win;
     }
     #endregion
 
@@ -197,8 +210,9 @@ public class PlayerController : MonoBehaviour
 
     private void GrabCheck()
     {
-        if (Player.GetButtonDown("Grab"))
+        if (Player.GetButtonDown("Grab") && Model.Stamina > 0) //also check there is stamina left
         {
+            status.performAction(1); //change number for different amount of Stamina uses
             StartCoroutine(PlayerAction_Grab());
         }
     }
@@ -219,7 +233,10 @@ public class PlayerController : MonoBehaviour
         yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
         //FAF
-        Model.State = PlayerState.Idle;
+        if (OpponentModel.State != PlayerState.Ko)
+            Model.State = PlayerState.Idle;
+        else
+            Model.State = PlayerState.Win;
     }
     #endregion
     
@@ -252,23 +269,27 @@ public class PlayerController : MonoBehaviour
     //What happens when we get hit
     private IEnumerator PlayerAction_GetHit()
     {
+        status.getHit(1);
         //yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
-        
-        //ACTIVE - this is the window during which a player can input a tech.
-        Model.State = PlayerState.DamageActive;
-        View.hitBox.enabled = false; //turn off the hitBox for the duration of knockdown
-        Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-        yield return StartCoroutine(WaitFor.Frames(5));
-        
-        //Did we tech in this window? if not, let's process the rest of this
-        if (Model.State == PlayerState.DamageActive)
-        {
-            //RECOVERY
-            Model.State = PlayerState.DamageRecovery;
-            yield return StartCoroutine(WaitFor.Frames(20)); // arbitrary number for now
 
-            //FAF
-            Model.State = PlayerState.Grounded; //transition to the Grounded state.
+        if (Model.State != PlayerState.Ko)
+        {
+            //ACTIVE - this is the window during which a player can input a tech.
+            Model.State = PlayerState.DamageActive;
+            View.hitBox.enabled = false; //turn off the hitBox for the duration of knockdown
+            Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
+            yield return StartCoroutine(WaitFor.Frames(5));
+
+            //Did we tech in this window? if not, let's process the rest of this
+            if (Model.State == PlayerState.DamageActive)
+            {
+                //RECOVERY
+                Model.State = PlayerState.DamageRecovery;
+                yield return StartCoroutine(WaitFor.Frames(20)); // arbitrary number for now
+
+                //FAF
+                Model.State = PlayerState.Grounded; //transition to the Grounded state.
+            }
         }
     }
     #endregion
