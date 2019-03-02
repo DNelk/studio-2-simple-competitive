@@ -66,6 +66,9 @@ public enum PlayerState
     TechRollStartup,
     TechRollActive,
     TechRollRecovery,
+    
+    Ko,
+    Win,
 	
     /* Not being used currently
     Jumping,

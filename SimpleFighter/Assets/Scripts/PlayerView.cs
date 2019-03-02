@@ -10,6 +10,7 @@ public class PlayerView : MonoBehaviour
     #region Public Variables
     public PlayerModel Model;
     public SpriteWithKey[] SpritesWithKeys;
+    public Animator animator;
     public BoxCollider2D hitBox;
     public Vector2 StrikeHitBoxSize;
     public float StrikeHitBoxDistance = 0;
@@ -39,6 +40,8 @@ public class PlayerView : MonoBehaviour
             direction = 1;
         else
             Debug.Log("error: direction not found");
+        
+        animator.enabled = false; //use this for now
     }
 
     // Update is called once per frame
@@ -152,6 +155,13 @@ public class PlayerView : MonoBehaviour
                 break;
             case PlayerState.TechRollRecovery:
                 spriteRenderer.sprite = sprites["TechRollRecovery"];
+                break;
+            case PlayerState.Ko:
+                spriteRenderer.sprite = sprites["KO"];
+                break;
+            case PlayerState.Win:
+                animator.enabled = true;
+                animator.SetBool("isWinning", true);
                 break;
 
             case PlayerState.Idle:
