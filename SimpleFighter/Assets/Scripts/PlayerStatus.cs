@@ -52,7 +52,7 @@ public class PlayerStatus : MonoBehaviour
             {
                 HPbar[Mathf.CeilToInt(i / 2) -1 ].color = Color.red; //paint red on bar with half left
             }
-            //Debug.Log(i/2);   
+            //Debug.Log(i/2);
         }
     }
     
