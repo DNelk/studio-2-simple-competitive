@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 //usage: gets instantiated when the game starts up and persists between loads
 //intent: manage games, matches, victory and loss, character select
@@ -99,10 +100,12 @@ public class GameManager : MonoBehaviour
         if (victor == 0)
         {
             Debug.Log("Player 2 wins!");
+            roundOver = true;
         }
         else if (victor == 1)
         {
             Debug.Log("Player 1 wins!");
+            roundOver = true;
         }
         
         //If one player has enough rounds to win the game, they win!
@@ -111,10 +114,13 @@ public class GameManager : MonoBehaviour
     //Round Start
     private void RoundStart()
     {
+        roundOver = false;
+        
         //Place Characters at starting positions
-        
+
         //Countdown the round
-        
+
         //Countdown ends, give players control
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
