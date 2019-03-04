@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     #region Public Variables
-    
+
+    public float roundStartTime;
     public static GameManager instance = null;
     #endregion
     
@@ -17,6 +18,10 @@ public class GameManager : MonoBehaviour
     private int player2Rounds;
     private int player1Victories;
     private int player2Victories;
+
+    private float timer = 0;
+
+    private bool roundOver = false;
     
     #endregion
 
@@ -48,7 +53,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		
+        if (roundOver)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                RoundStart();
+            }
+        }
     }
     
     //Match Start

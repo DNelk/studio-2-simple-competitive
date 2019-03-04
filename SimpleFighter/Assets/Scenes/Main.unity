@@ -1038,6 +1038,36 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.x
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxDistance
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxDistance
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 114164294, guid: 938b229efac02654f974c8ce7a44f755, type: 3}
       propertyPath: m_RootOrder
       value: 30
