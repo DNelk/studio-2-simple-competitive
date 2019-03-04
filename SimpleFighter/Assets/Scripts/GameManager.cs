@@ -82,9 +82,17 @@ public class GameManager : MonoBehaviour
     }
     
     //Round End
-    private void RoundEnd(int victor)
+    public void RoundEnd(int victor)
     {
-        //When the round ends, check for a victor (0 = draw, 1= p1, 2 = p2) and increment their round counter
+        //When the round ends, check for a victor (0 = P2, 1= p1) and increment their round counter\
+        if (victor == 0)
+        {
+            Debug.Log("Player 2 wins!");
+        }
+        else if (victor == 1)
+        {
+            Debug.Log("Player 1 wins!");
+        }
         
         //If one player has enough rounds to win the game, they win!
     }

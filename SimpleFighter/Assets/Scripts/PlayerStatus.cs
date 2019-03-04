@@ -16,6 +16,7 @@ public class PlayerStatus : MonoBehaviour
     private int HPmultiplier;
     private int maxStamina;
     private int staminaMultiplier;
+    private GameManager gameManager;
     
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,9 @@ public class PlayerStatus : MonoBehaviour
         //start with initial Stamina
         maxStamina = Model.Stamina;
         updateStamina(maxStamina);
+        
+        //hook into game manager
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     
     
@@ -67,7 +71,9 @@ public class PlayerStatus : MonoBehaviour
 
         if (Model.Health <= 0)
         {
+            gameManager.RoundEnd(Model.PlayerIndex);
             Model.State = PlayerState.Ko;
+            
             print(Model.State);
         }
     }
