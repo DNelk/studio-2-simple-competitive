@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         //STARTUP
         Model.State = PlayerState.BlockStartup;
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(3)); // wait for frames
         
         //ACTIVE
         Model.State = PlayerState.BlockActive; 
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
     {
         //RECOVERY
         Model.State = PlayerState.BlockRecovery;
-        yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(22)); // wait for frames
             
         //FAF
         Model.State = PlayerState.Idle;
@@ -226,11 +226,11 @@ public class PlayerController : MonoBehaviour
         //ACTIVE
         Model.State = PlayerState.GrabActive;
         SpawnHitBox(View.GrabHitBoxDistance, View.GrabHitBoxSize, "grab box ");
-        yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
         
         //RECOVERY
         Model.State = PlayerState.GrabRecovery;
-        yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
         
         //FAF
         if (OpponentModel.State != PlayerState.Ko)
