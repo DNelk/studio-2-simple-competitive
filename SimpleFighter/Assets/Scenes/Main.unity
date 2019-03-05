@@ -1028,6 +1028,46 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 1d5455517111dc14eae299724fe08818,
         type: 3}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1147786525}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.x
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: StrikeHitBoxDistance
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+        type: 3}
+      propertyPath: GrabHitBoxDistance
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 114164294, guid: 938b229efac02654f974c8ce7a44f755, type: 3}
       propertyPath: m_RootOrder
       value: 30
@@ -1144,7 +1184,6 @@ GameObject:
   - component: {fileID: 320533806}
   - component: {fileID: 320533808}
   - component: {fileID: 320533807}
-  - component: {fileID: 320533809}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -1181,7 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Model: {fileID: 901222982}
   OpponentModel: {fileID: 1534797229}
-  View: {fileID: 1147786522}
+  View: {fileID: 1147786520}
   status: {fileID: 559684813}
   SpeedMultiplier: 10
   RollMultiplier: 10
@@ -1205,20 +1244,6 @@ MonoBehaviour:
   SpeedMultiplier: 10
   RollMultiplier: 10
   TechRollMultiplier: 15
---- !u!114 &320533809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320533805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e121eb32e29a25346ace3daeb7907e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fpsText: {fileID: 182908751}
-  deltaTime: 0
 --- !u!1 &392327395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1477,75 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &495052245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1395771947444014488, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497106089797325738, guid: 96b007d42e9b869459fc261835bb79d4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 96b007d42e9b869459fc261835bb79d4, type: 3}
 --- !u!1 &504998954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1774,7 @@ MonoBehaviour:
   Model: {fileID: 901222982}
   HPbar:
   - {fileID: 971305164}
-  - {fileID: 696572198}
+  - {fileID: 392327397}
   - {fileID: 1820428932}
   StaminaBar:
   - {fileID: 1257829422}
@@ -2795,11 +2889,11 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 308844773}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1147786522
+--- !u!114 &1147786520 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3047782526317484529, guid: 938b229efac02654f974c8ce7a44f755,
+    type: 3}
+  m_PrefabInstance: {fileID: 308844773}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147786519}
   m_Enabled: 1
@@ -2807,66 +2901,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd579901ed41440b18131e1cfb0b10df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Model: {fileID: 901222982}
-  SpritesWithKeys:
-  - key: BlockStartup
-    sprite: {fileID: 21300000, guid: 8e2c7f4b878e4de4f91f5db6392ad05a, type: 3}
-  - key: BlockActive
-    sprite: {fileID: 21300000, guid: d13b656521902134ca750e4a01964d58, type: 3}
-  - key: BlockRecovery
-    sprite: {fileID: 21300000, guid: d9a8ab3711ab4ad458644263bdb406f8, type: 3}
-  - key: StrikeStartup
-    sprite: {fileID: 21300000, guid: 682ce2ff09ad5f54fb2739b29d383446, type: 3}
-  - key: StrikeActive
-    sprite: {fileID: 21300000, guid: db3eac16e72b92b4c931711f03fb7cd2, type: 3}
-  - key: StrikeRecovery
-    sprite: {fileID: 21300000, guid: 662999acf16191944b29aaf58de6d3a3, type: 3}
-  - key: GrabStartup
-    sprite: {fileID: 21300000, guid: 34435cf99fd105341aaa1c69b4db650c, type: 3}
-  - key: GrabActive
-    sprite: {fileID: 21300000, guid: f46c365180cc2454c92ea56473222998, type: 3}
-  - key: GrabRecovery
-    sprite: {fileID: 21300000, guid: fad33698f302ba94e8b5be2e70051741, type: 3}
-  - key: DamageStartup
-    sprite: {fileID: 21300000, guid: 745cde7b749d1a742950fc798f37b100, type: 3}
-  - key: DamageActive
-    sprite: {fileID: 21300000, guid: 745cde7b749d1a742950fc798f37b100, type: 3}
-  - key: DamageRecovery
-    sprite: {fileID: 21300000, guid: 43ffc2e9d71cec540ad0e7460c6121f1, type: 3}
-  - key: Grounded
-    sprite: {fileID: 21300000, guid: f4fd492111927264dbfa05ab840efc25, type: 3}
-  - key: GetupStartup
-    sprite: {fileID: 21300000, guid: df41a93db1df5744899035824a1b7753, type: 3}
-  - key: GetupActive
-    sprite: {fileID: 21300000, guid: 31cb7ca9af7d5654ea8f293759a42488, type: 3}
-  - key: GetupRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
-  - key: TechInPlaceStartup
-    sprite: {fileID: 21300000, guid: df41a93db1df5744899035824a1b7753, type: 3}
-  - key: TechInPlaceActive
-    sprite: {fileID: 21300000, guid: 31cb7ca9af7d5654ea8f293759a42488, type: 3}
-  - key: TechInPlaceRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
-  - key: TechRollStartup
-    sprite: {fileID: 21300000, guid: 146af27c979bd0c4db99ac993a9b0648, type: 3}
-  - key: TechRollActive
-    sprite: {fileID: 21300000, guid: f68d41e09b178174582a43aba5660448, type: 3}
-  - key: TechRollRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
-  - key: GetupRollStartup
-    sprite: {fileID: 21300000, guid: 146af27c979bd0c4db99ac993a9b0648, type: 3}
-  - key: GetupRollActive
-    sprite: {fileID: 21300000, guid: f68d41e09b178174582a43aba5660448, type: 3}
-  - key: GetupRollRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
-  - key: Idle
-    sprite: {fileID: 21300000, guid: 565b4a854b920d9438ed785699c93c6d, type: 3}
-  animator: {fileID: 1147786525}
-  hitBox: {fileID: 1326251902}
-  StrikeHitBoxSize: {x: 1.75, y: 1}
-  StrikeHitBoxDistance: -1
-  GrabHitBoxSize: {x: 0.5, y: 1}
-  GrabHitBoxDistance: -1
 --- !u!212 &1147786523
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5105,7 +5139,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
