@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
+                View.hitBox.enabled = true; //reactivate hitbox as player stands
                 status.HPRecovery();
                 status.StaminaRecovery();
                 break;
