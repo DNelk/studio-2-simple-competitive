@@ -1223,7 +1223,7 @@ MonoBehaviour:
   View: {fileID: 1147786520}
   status: {fileID: 559684813}
   SpeedMultiplier: 10
-  RollMultiplier: 10
+  RollMultiplier: 17
   TechRollMultiplier: 15
 --- !u!114 &320533808
 MonoBehaviour:
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   View: {fileID: 3047782526317484529}
   status: {fileID: 1403392424}
   SpeedMultiplier: 10
-  RollMultiplier: 10
+  RollMultiplier: 17
   TechRollMultiplier: 15
 --- !u!1 &392327395
 GameObject:
@@ -2954,7 +2954,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e2ce470b0f93c4098ac8b94bb7f49193, type: 3}
-  m_Color: {r: 0.2216981, g: 0.6150531, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
