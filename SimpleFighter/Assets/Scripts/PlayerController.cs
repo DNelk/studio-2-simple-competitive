@@ -68,8 +68,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.BlockStartup: //can release blocking while blocking
             case PlayerState.BlockActive:
-            case PlayerState.BlockRecovery:
                 BlockCheck();
+                break;
+            case PlayerState.BlockRecovery:
                 break;
             case PlayerState.GrabStartup: //can't do anything while grabbing
             case PlayerState.GrabActive:
