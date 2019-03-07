@@ -220,23 +220,23 @@ public class PlayerView : MonoBehaviour
     public void callTechEffect(GameObject effect)
     {
         GameObject Effect = Instantiate(effect,transform.position,transform.rotation);
-        Effect.transform.SetParent(transform,false); //set position and scale to be right
+        Effect.transform.SetParent(transform,false); //set position and scale to playerModel
         Effect.transform.position = new Vector3(transform.position.x,-2.6f,transform.position.z); //move effect to ground
     }
 
     public void callAttackedEffect(GameObject effect)
     {
-        GameObject Effect = Instantiate(effect, transform.position, transform.rotation);
-        Effect.transform.SetParent(transform, false); //set position and scale to be right
+        GameObject Effect = Instantiate(effect);
+        Effect.transform.SetParent(transform, false); //set position and scale to playerModel
         Effect.transform.parent = null; //unattached the effect from Player
     }
 
     public void callBlockedEffect(GameObject effect)
     {
-        GameObject Effect = Instantiate(effect, transform.position, transform.rotation);
-        Effect.transform.SetParent(transform, false);
-        Effect.transform.position += transform.right*1.7f;
-        Effect.transform.parent = null;
+        GameObject Effect = Instantiate(effect);
+        Effect.transform.SetParent(transform, false); //set position and scale to playerModel
+        Effect.transform.position += transform.right*2.5f; //move position to its right a little bit to match the punch aniamtion
+        Effect.transform.parent = null; //unattached the effect from Player
     }
 
     #endregion
