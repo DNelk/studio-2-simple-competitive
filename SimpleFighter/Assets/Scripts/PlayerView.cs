@@ -189,6 +189,7 @@ public class PlayerView : MonoBehaviour
             case PlayerState.Win:
                 animator.enabled = true;
                 animator.SetBool("isWinning", true);
+                spriteRenderer.color = Color.white;
                 break;
 
             case PlayerState.Idle:
