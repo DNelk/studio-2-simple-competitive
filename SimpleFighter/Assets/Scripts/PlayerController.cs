@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     public PlayerView View; //Our View
     public Player Player; //Rewired Player reference
     public PlayerStatus status; // HP and Stamina manager
+    public GameObject blockedEffect;
+    public GameObject attackedEffect;
+    public GameObject tech_GetUp;
+    public GameObject tech_Roll;
     #endregion
     
     #region Physics Vars
@@ -263,6 +267,10 @@ public class PlayerController : MonoBehaviour
                 //StartCoroutine(OpponentModel.PlayerAction_GetHit());
                 OpponentModel.State = PlayerState.DamageStartup;
             }
+            else if (Model.State == PlayerState.StrikeActive && OpponentModel.State == PlayerState.BlockActive)
+            {
+                View.callBlockedEffect(blockedEffect);
+            }
         }
     }
     
@@ -272,6 +280,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PlayerAction_GetHit()
     {
         status.getHit(1);
+        View.callAttackedEffect(attackedEffect);
         //yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
 
         if (Model.State != PlayerState.Ko)
@@ -327,6 +336,7 @@ public class PlayerController : MonoBehaviour
         {            //go into tech in place states
             //STARTUP
             Model.State = PlayerState.TechInPlaceStartup;
+            View.callTechEffect(tech_GetUp); //techEffect
             yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE
@@ -374,6 +384,7 @@ public class PlayerController : MonoBehaviour
         {
             //STARTUP
             Model.State = PlayerState.TechRollStartup;
+            View.callTechEffect(tech_Roll); //techEffect
             yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE

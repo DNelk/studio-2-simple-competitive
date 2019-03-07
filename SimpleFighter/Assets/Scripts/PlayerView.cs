@@ -213,7 +213,33 @@ public class PlayerView : MonoBehaviour
         Gizmos.DrawWireCube(new Vector2(transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
     }
     #endregion
-    
+
+    #region  Effect
+
+    public void callTechEffect(GameObject effect)
+    {
+        GameObject Effect = Instantiate(effect,transform.position,transform.rotation);
+        Effect.transform.SetParent(transform,false); //set position and scale to be right
+        Effect.transform.position = new Vector3(transform.position.x,-2.6f,transform.position.z); //move effect to ground
+    }
+
+    public void callAttackedEffect(GameObject effect)
+    {
+        GameObject Effect = Instantiate(effect, transform.position, transform.rotation);
+        Effect.transform.SetParent(transform, false); //set position and scale to be right
+        Effect.transform.parent = null; //unattached the effect from Player
+    }
+
+    public void callBlockedEffect(GameObject effect)
+    {
+        GameObject Effect = Instantiate(effect, transform.position, transform.rotation);
+        Effect.transform.SetParent(transform, false);
+        Effect.transform.position += transform.right*1.7f;
+        Effect.transform.parent = null;
+    }
+
+    #endregion
+
 }
 
 //Hack so we can set sprites in editor lol sorry 
