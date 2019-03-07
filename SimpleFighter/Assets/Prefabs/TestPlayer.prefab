@@ -1659,6 +1659,85 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1985457901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985457902}
+  - component: {fileID: 1985457903}
+  m_Layer: 0
+  m_Name: basicshadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1985457902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985457901}
+  m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7985525, y: -18.904387, z: 0}
+  m_LocalScale: {x: -5.32368, y: 5.32368, z: 5.32368}
+  m_Children: []
+  m_Father: {fileID: 3047782525187067345}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1985457903
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985457901}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1190170653
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: b103e4bdc23100b48b21e0f2bcfddfe0, type: 3}
+  m_Color: {r: 1, g: 0.400387, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.75, y: 0.44}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &2058734882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,9 +1988,10 @@ GameObject:
   - component: {fileID: 3047782525187067311}
   - component: {fileID: 3047782526317484530}
   - component: {fileID: 3047782526317484529}
+  - component: {fileID: 1736919968}
   m_Layer: 0
   m_Name: TestPlayer
-  m_TagString: Untagged
+  m_TagString: PlayerView
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1957,6 +2037,7 @@ Transform:
   - {fileID: 336917489}
   - {fileID: 1849275849}
   - {fileID: 723123871}
+  - {fileID: 1985457902}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1973,11 +2054,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1558294, y: -2.8946972}
+  m_Offset: {x: 1.1558294, y: -8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25.500002, y: 27.320002}
+    oldSize: {x: 37.96, y: 37.96}
     newSize: {x: 25.500002, y: 27.320002}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2044,7 +2125,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e2ce470b0f93c4098ac8b94bb7f49193, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cf9bb5a19fbb89a42a7232c540fa63d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2070,63 +2151,84 @@ MonoBehaviour:
   Model: {fileID: 0}
   SpritesWithKeys:
   - key: BlockStartup
-    sprite: {fileID: 21300000, guid: 8e2c7f4b878e4de4f91f5db6392ad05a, type: 3}
+    sprite: {fileID: 21300000, guid: c10f92c2ba6e36246973c7d41a2fc4c2, type: 3}
   - key: BlockActive
-    sprite: {fileID: 21300000, guid: d13b656521902134ca750e4a01964d58, type: 3}
+    sprite: {fileID: 21300000, guid: 3a8dc84b66455214cb3b38a9562972e5, type: 3}
   - key: BlockRecovery
-    sprite: {fileID: 21300000, guid: d9a8ab3711ab4ad458644263bdb406f8, type: 3}
+    sprite: {fileID: 21300000, guid: ccaf44e12207e874b957be41c616644b, type: 3}
   - key: StrikeStartup
-    sprite: {fileID: 21300000, guid: 682ce2ff09ad5f54fb2739b29d383446, type: 3}
+    sprite: {fileID: 21300000, guid: d328d80a104c3a14c9ea876bd66e7bc3, type: 3}
   - key: StrikeActive
-    sprite: {fileID: 21300000, guid: db3eac16e72b92b4c931711f03fb7cd2, type: 3}
+    sprite: {fileID: 21300000, guid: 6ed5acc8fbc595d47829ff647261a313, type: 3}
   - key: StrikeRecovery
-    sprite: {fileID: 21300000, guid: 662999acf16191944b29aaf58de6d3a3, type: 3}
+    sprite: {fileID: 21300000, guid: d23c9f5084a2f1749872c685ecaedcc3, type: 3}
   - key: GrabStartup
-    sprite: {fileID: 21300000, guid: 34435cf99fd105341aaa1c69b4db650c, type: 3}
+    sprite: {fileID: 21300000, guid: 3c1087b1ad9686548ab801063423c806, type: 3}
   - key: GrabActive
-    sprite: {fileID: 21300000, guid: f46c365180cc2454c92ea56473222998, type: 3}
+    sprite: {fileID: 21300000, guid: 9382df83dc60f214e964c4848d13ff28, type: 3}
   - key: GrabRecovery
-    sprite: {fileID: 21300000, guid: fad33698f302ba94e8b5be2e70051741, type: 3}
+    sprite: {fileID: 21300000, guid: 121bb289e52df944787178d195431519, type: 3}
   - key: DamageStartup
-    sprite: {fileID: 21300000, guid: 745cde7b749d1a742950fc798f37b100, type: 3}
+    sprite: {fileID: 21300000, guid: ba9f48699eff0db43ac5ca9b7de494db, type: 3}
   - key: DamageActive
-    sprite: {fileID: 21300000, guid: 745cde7b749d1a742950fc798f37b100, type: 3}
+    sprite: {fileID: 21300000, guid: ba9f48699eff0db43ac5ca9b7de494db, type: 3}
   - key: DamageRecovery
-    sprite: {fileID: 21300000, guid: 43ffc2e9d71cec540ad0e7460c6121f1, type: 3}
+    sprite: {fileID: 21300000, guid: fa3375776e4e0904e8910e477a6273e0, type: 3}
   - key: Grounded
-    sprite: {fileID: 21300000, guid: f4fd492111927264dbfa05ab840efc25, type: 3}
+    sprite: {fileID: 21300000, guid: 870a9714054421f469b6ea6baa0aff33, type: 3}
   - key: GetupStartup
-    sprite: {fileID: 21300000, guid: df41a93db1df5744899035824a1b7753, type: 3}
+    sprite: {fileID: 21300000, guid: b4669437dd5151747973041c50d08750, type: 3}
   - key: GetupActive
-    sprite: {fileID: 21300000, guid: 31cb7ca9af7d5654ea8f293759a42488, type: 3}
+    sprite: {fileID: 21300000, guid: 64f99dda9b5f82445a82773ede30c672, type: 3}
   - key: GetupRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
+    sprite: {fileID: 21300000, guid: 5e8fe47a797e83f49839d59e24a5cf80, type: 3}
   - key: TechInPlaceStartup
-    sprite: {fileID: 21300000, guid: df41a93db1df5744899035824a1b7753, type: 3}
+    sprite: {fileID: 21300000, guid: b4669437dd5151747973041c50d08750, type: 3}
   - key: TechInPlaceActive
-    sprite: {fileID: 21300000, guid: 31cb7ca9af7d5654ea8f293759a42488, type: 3}
+    sprite: {fileID: 21300000, guid: 64f99dda9b5f82445a82773ede30c672, type: 3}
   - key: TechInPlaceRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
+    sprite: {fileID: 21300000, guid: 5e8fe47a797e83f49839d59e24a5cf80, type: 3}
   - key: TechRollStartup
-    sprite: {fileID: 21300000, guid: 146af27c979bd0c4db99ac993a9b0648, type: 3}
+    sprite: {fileID: 21300000, guid: 1b911476d2a46584fa158492aed78318, type: 3}
   - key: TechRollActive
-    sprite: {fileID: 21300000, guid: f68d41e09b178174582a43aba5660448, type: 3}
+    sprite: {fileID: 21300000, guid: 8c2383af6d35e544397252c90d37f583, type: 3}
   - key: TechRollRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
+    sprite: {fileID: 21300000, guid: 5e8fe47a797e83f49839d59e24a5cf80, type: 3}
   - key: GetupRollStartup
-    sprite: {fileID: 21300000, guid: 146af27c979bd0c4db99ac993a9b0648, type: 3}
+    sprite: {fileID: 21300000, guid: 1b911476d2a46584fa158492aed78318, type: 3}
   - key: GetupRollActive
-    sprite: {fileID: 21300000, guid: f68d41e09b178174582a43aba5660448, type: 3}
+    sprite: {fileID: 21300000, guid: 8c2383af6d35e544397252c90d37f583, type: 3}
   - key: GetupRollRecovery
-    sprite: {fileID: 21300000, guid: c51debe5bcc9f444299184bdb52a21dd, type: 3}
+    sprite: {fileID: 21300000, guid: 5e8fe47a797e83f49839d59e24a5cf80, type: 3}
   - key: Idle
-    sprite: {fileID: 21300000, guid: 565b4a854b920d9438ed785699c93c6d, type: 3}
-  animator: {fileID: 0}
-  hitBox: {fileID: 0}
-  StrikeHitBoxSize: {x: 0, y: 0}
-  StrikeHitBoxDistance: 0
-  GrabHitBoxSize: {x: 0, y: 0}
-  GrabHitBoxDistance: 0
+    sprite: {fileID: 21300000, guid: cf9bb5a19fbb89a42a7232c540fa63d9, type: 3}
+  - key: KO
+    sprite: {fileID: 21300000, guid: c7ad2289e848bf44abde5c21f180e14a, type: 3}
+  animator: {fileID: 1736919968}
+  hitBox: {fileID: 3047782525815426037}
+  StrikeHitBoxSize: {x: 1.75, y: 1}
+  StrikeHitBoxDistance: 1
+  GrabHitBoxSize: {x: 0.5, y: 1}
+  GrabHitBoxDistance: 1
+--- !u!95 &1736919968
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3047782525187067347}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 45a2a16e3bba23746a2e15db86d36842, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3047782525753930806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2250,7 +2352,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.69645596, y: -2.9168463}
+  m_Offset: {x: 0.69645596, y: -8}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
