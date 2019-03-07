@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Rewired.ComponentControls.Effects;
 using UnityEngine;
 using UnityEditor;
 
@@ -215,7 +216,7 @@ public class PlayerView : MonoBehaviour
     }
     #endregion
 
-    #region  Effect
+    #region Effect
 
     public void callTechEffect(GameObject effect)
     {

@@ -384,7 +384,7 @@ public class PlayerController : MonoBehaviour
         {
             //STARTUP
             Model.State = PlayerState.TechRollStartup;
-            View.callTechEffect(tech_Roll); //techEffect
+            View.callTechEffect(tech_GetUp); //techEffect
             yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE

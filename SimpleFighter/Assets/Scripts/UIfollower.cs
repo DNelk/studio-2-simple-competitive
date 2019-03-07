@@ -1,0 +1,22 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UIfollower : MonoBehaviour
+{
+
+    public GameObject characterUI;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Vector3 UIpos = Camera.main.WorldToScreenPoint(this.transform.position);
+        characterUI.transform.position = UIpos;
+    }
+}

@@ -11,7 +11,8 @@ public class PlayerStatus : MonoBehaviour
     public Player player;
     public Image[] HPbar; //for HP
     public Image[] StaminaBar; //for Stamina
-
+    public Color staminaColor;
+    
     private int maxHP;
     private int HPmultiplier;
     private int maxStamina;
@@ -108,7 +109,7 @@ public class PlayerStatus : MonoBehaviour
         for (int i = 0; i <= stamina; i++)
         {
             if (i != 0)
-                StaminaBar[i-1].color = new Color(1f, 0.8f, 0f, 1f);
+                StaminaBar[i-1].color = staminaColor;
                
             if (i <= maxStamina-1)
                 StaminaBar[i].color = new Color(0, 0, 0, 0.4f);
