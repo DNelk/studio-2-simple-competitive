@@ -9,13 +9,15 @@ public class PlayerStatus : MonoBehaviour
 {
     public PlayerModel Model;
     public Player player;
-    public Image[] HPbar; //for HP
-    public Image[] StaminaBar; //for Stamina
+    public Image HPbar; //for HP
+    public Sprite[] Hp_Sprite;
+    public Mask StaminaBar; //for Stamina
     public Color staminaColor;
     
     private int maxHP;
     private int HPmultiplier;
     private int maxStamina;
+    private float maxStaminaBar;
     private int staminaMultiplier;
     private GameManager gameManager;
     
@@ -29,6 +31,7 @@ public class PlayerStatus : MonoBehaviour
         updateHP(maxHP);
 
         //start with initial Stamina
+        maxStaminaBar = StaminaBar.rectTransform.sizeDelta.x;
         maxStamina = Model.Stamina;
         updateStamina(maxStamina);
         
@@ -41,9 +44,9 @@ public class PlayerStatus : MonoBehaviour
     //HP
     
     #region  UpdateHP
-    public void updateHP(float HP) //update HP
+    public void updateHP(int hp) //update HP
     {
-        for (float i = 0; i <= HP; i++)
+/*        for (float i = 0; i <= HP; i++)
         {
             if (i / 2 == Mathf.CeilToInt(i / 2))
             {
@@ -58,7 +61,8 @@ public class PlayerStatus : MonoBehaviour
                 HPbar[Mathf.CeilToInt(i / 2) -1 ].color = Color.red; //paint red on bar with half left
             }
             //Debug.Log(i/2);
-        }
+        }*/
+        HPbar.sprite = Hp_Sprite[hp];
     }
     
     #endregion
@@ -106,14 +110,15 @@ public class PlayerStatus : MonoBehaviour
 
     public void updateStamina(int stamina)
     {
-        for (int i = 0; i <= stamina; i++)
+/*        for (int i = 0; i <= stamina; i++)
         {
             if (i != 0)
                 StaminaBar[i-1].color = staminaColor;
                
             if (i <= maxStamina-1)
                 StaminaBar[i].color = new Color(0, 0, 0, 0.4f);
-        }
+        }*/
+        StaminaBar.rectTransform.sizeDelta = new Vector2(maxStaminaBar*stamina/6, StaminaBar.rectTransform.sizeDelta.y);
     }
     
     #endregion
