@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Diagnostics;
 
 /*Credit to Mattia Romeo for basis of this code*/
 
@@ -9,6 +9,9 @@ public class StateMachine<TContext>
     //What object we're a state machine to
     private readonly TContext context;
 
+    //Dictionary of states
+    private readonly Dictionary<Type, State> stateCache = new Dictionary<Type, State>();
+    
     //Our current state
     public State CurrentState { get; private set; }
 
@@ -33,6 +36,13 @@ public class StateMachine<TContext>
         
     }
     
+    // Queues transition to a new state
+    public void TransitionTo<TState>() where TState : State
+    {
+        // We do the actual transtion
+        pendingState = GetState<TState>();
+    }
+    
     private void TransitionToPending()
     {
         if (pendingState != null)
@@ -44,6 +54,24 @@ public class StateMachine<TContext>
         }
     }
 
+    private TState GetState<TState>() where TState : State
+    {
+        State state;
+        //See if we've done this state before, if so we pass it back
+        if (stateCache.TryGetValue(typeof(TState), out state))
+        {
+            return (TState) state;
+        }
+        else
+        {
+            var newState = Activator.CreateInstance<TState>();
+            newState.Parent = this;
+            newState.Init();
+            stateCache[typeof(TState)] = newState;
+            return newState;
+        }
+    }
+    
     //Abstract State Class
     public abstract class State
     {
@@ -52,6 +80,12 @@ public class StateMachine<TContext>
         protected TContext Context
         {
             get { return Parent.context; }
+        }
+        
+        // A convenience method for transitioning from inside a state
+        protected void TransitionTo<TState>() where TState : State
+        {
+            Parent.TransitionTo<TState>();
         }
         
         // This is called once when the state is first created (think of it like Unity's Awake)
