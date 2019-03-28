@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public enum inputState
     {
         Walk,
+        Idle,
         Strike,
         Grab,
         Block,
+        EndBlock,
         TechRoll,
         TechUp,
         Roll,
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("HorizontalMovement") == 0)
         {
             //stop walking and switch to idle
+            playerModel.ProcessInput(inputState.Idle);
         }
     }
     
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Strike"))
         {
             //switch to Strike
-            
+            playerModel.ProcessInput(inputState.Strike);
         }
     }
     
@@ -75,6 +78,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Grab"))
         {
             //switch to Grab
+            playerModel.ProcessInput(inputState.Grab);
         }
     }
     
@@ -84,11 +88,13 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Block"))
         {
             //switch to Block
+            playerModel.ProcessInput(inputState.Block);
         }
 
         if (rewiredPlayer.GetButtonUp("Block"))
         {
             //stop blocking, switch to Idle
+            playerModel.ProcessInput(inputState.EndBlock);
         }
     }
     
@@ -98,11 +104,13 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
         {
             //switch to tech roll and go in the correct direction
+            playerModel.ProcessInput(inputState.TechRoll);
         }
         
         else if (rewiredPlayer.GetAxisRaw("VerticalMovement") != 0)
         {
             //if up, Tech Stand
+            playerModel.ProcessInput(inputState.TechUp);
         }
     }
     
@@ -112,11 +120,13 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
         {
             //switch to roll and go in the correct direction
+            playerModel.ProcessInput(inputState.Roll);
         }
         
         else if (rewiredPlayer.GetAxisRaw("VerticalMovement") != 0)
         {
             //if up, Stand
+            playerModel.ProcessInput(inputState.GetUp);
         }
     }
     #endregion
