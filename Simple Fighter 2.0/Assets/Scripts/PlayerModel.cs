@@ -85,7 +85,6 @@ public class PlayerModel : MonoBehaviour
                 case PlayerController.inputState.EndWalk:
                     break;
                 case PlayerController.inputState.Strike:
-                    Debug.Log("Strike!");
                     break;
                 case PlayerController.inputState.Grab:
                     break;
@@ -149,13 +148,10 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.inputState.Walk:
-                    Debug.Log("Walking!");
                     break;
                 case PlayerController.inputState.Strike:
-                    Debug.Log("Strike!");
                     break;
                 case PlayerController.inputState.Grab:
-                    Debug.Log("Grab!");
                     break;
                 case PlayerController.inputState.Block:
                     break;
