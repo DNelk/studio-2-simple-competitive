@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public enum inputState
     {
         Walk,
-        Idle,
+        EndWalk,
         Strike,
         Grab,
         Block,
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("MoveHorizontal") == 0)
         {
             //stop walking and switch to idle
-            playerModel.ProcessInput(inputState.Idle);
+            playerModel.ProcessInput(inputState.EndWalk);
         }
     }
     

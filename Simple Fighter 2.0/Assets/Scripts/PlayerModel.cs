@@ -80,17 +80,65 @@ public class PlayerModel : MonoBehaviour
             base.ProcessInput(input);
             switch (input)
             {
+                case PlayerController.inputState.Walk:
+                    break;
+                case PlayerController.inputState.EndWalk:
+                    break;
                 case PlayerController.inputState.Strike:
                     Debug.Log("Strike!");
+                    break;
+                case PlayerController.inputState.Grab:
+                    break;
+                case PlayerController.inputState.Block:
                     break;
             }
         }
     }
     private class Striking : PlayerState{}
-    private class Blocking : PlayerState{}
+
+    private class Blocking : PlayerState
+    {
+        public override void ProcessInput(PlayerController.inputState input)
+        {
+            base.ProcessInput(input);
+            switch (input)
+            {
+                case PlayerController.inputState.EndBlock:
+                    break;
+            }
+        }
+    }
     private class Grabbing : PlayerState{}
-    private class Falling : PlayerState{}
-    private class Grounded : PlayerState{}
+
+    private class Falling : PlayerState
+    {
+        public override void ProcessInput(PlayerController.inputState input)
+        {
+            base.ProcessInput(input);
+            switch (input)
+            {
+                case PlayerController.inputState.TechRoll:
+                    break;
+                case PlayerController.inputState.TechUp:
+                    break;
+            }
+        }
+    }
+
+    private class Grounded : PlayerState
+    {
+        public override void ProcessInput(PlayerController.inputState input)
+        {
+            base.ProcessInput(input);
+            switch (input)
+            {
+                case PlayerController.inputState.Roll:
+                    break;
+                case PlayerController.inputState.GetUp:
+                    break;
+            }
+        }
+    }
     private class Rolling : PlayerState{}
 
     private class Idle : PlayerState
@@ -100,8 +148,16 @@ public class PlayerModel : MonoBehaviour
             base.ProcessInput(input);
             switch (input)
             {
+                case PlayerController.inputState.Walk:
+                    Debug.Log("Walking!");
+                    break;
                 case PlayerController.inputState.Strike:
                     Debug.Log("Strike!");
+                    break;
+                case PlayerController.inputState.Grab:
+                    Debug.Log("Grab!");
+                    break;
+                case PlayerController.inputState.Block:
                     break;
             }
         }
