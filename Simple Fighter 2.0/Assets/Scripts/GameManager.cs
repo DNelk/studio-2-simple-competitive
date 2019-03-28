@@ -65,7 +65,10 @@ public class GameManager : MonoBehaviour
             players[i].Model = model.AddComponent<PlayerModel>();
             players[i].View = playerGO.AddComponent<PlayerView>();
             players[i].Controller = controller.AddComponent<PlayerController>();
+            
+            //Hookup Components
             players[i].Controller.SetRewiredPlayer(i + 1); //after creating controller, set the player profile
+            players[i].Controller.AssignModel(players[i].Model); //assign the player's model to the controller
         }
     }
     

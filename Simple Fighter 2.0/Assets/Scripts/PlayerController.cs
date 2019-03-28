@@ -10,7 +10,20 @@ public class PlayerController : MonoBehaviour
     #region Private Variables
 
     private Rewired.Player rewiredPlayer; //holds the player profile from Rewired
+    private PlayerModel playerModel; //holds this character's model
     #endregion
+    
+    public enum inputState
+    {
+        Walk,
+        Strike,
+        Grab,
+        Block,
+        TechRoll,
+        TechUp,
+        Roll,
+        GetUp
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +50,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
         {
             //switch to walking
+            playerModel.ProcessInput(inputState.Walk);
         }
 
         if (rewiredPlayer.GetAxisRaw("HorizontalMovement") == 0)
@@ -51,6 +65,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Strike"))
         {
             //switch to Strike
+            
         }
     }
     
@@ -103,6 +118,15 @@ public class PlayerController : MonoBehaviour
         {
             //if up, Stand
         }
+    }
+    #endregion
+    
+    #region Public Functions
+
+    //Assign the character's model to playerModel from the GameManager
+    public void AssignModel(PlayerModel model)
+    {
+        playerModel = model;
     }
     #endregion
 }

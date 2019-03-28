@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class PlayerModel : MonoBehaviour
     private int currentHitPoints;
 
     private StateMachine<PlayerModel> stateMachine;
+
+    
 
     #endregion
 
@@ -49,6 +52,12 @@ public class PlayerModel : MonoBehaviour
         return stateMachine.CurrentState;
     }
 
+    //Called by Controller when an input is received
+    public void ProcessInput(PlayerController.inputState input)
+    {
+        ((PlayerState)stateMachine.CurrentState).ProcessInput(input);
+    }
+    
     #region States
 
     //Base Player State
@@ -56,10 +65,24 @@ public class PlayerModel : MonoBehaviour
     {
         private int timer;
 
-        public virtual void CooldownAnimationEnded(){}     
+        public virtual void CooldownAnimationEnded(){}
+
+        public virtual void ProcessInput(PlayerController.inputState input)
+        {
+            //This function will be overridden by each state to only include the relevant inputs
+        }
     }
 
-    private class Walking : PlayerState{}
+    private class Walking : PlayerState
+    {
+        public override void ProcessInput(PlayerController.inputState input)
+        {
+            base.ProcessInput(input);
+            switch (input)
+            {
+            }
+        }
+    }
     private class Striking : PlayerState{}
     private class Blocking : PlayerState{}
     private class Grabbing : PlayerState{}
