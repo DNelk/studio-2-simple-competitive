@@ -80,6 +80,9 @@ public class PlayerModel : MonoBehaviour
             base.ProcessInput(input);
             switch (input)
             {
+                case PlayerController.inputState.Strike:
+                    Debug.Log("Strike!");
+                    break;
             }
         }
     }

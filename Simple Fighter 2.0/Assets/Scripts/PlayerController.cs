@@ -35,7 +35,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        MoveCheck();
+        StrikeCheck();
+        GrabCheck();
+        BlockCheck();
+        TechCheck();
+        GetUpCheck();
     }
     
     //Called from the GameManager to set which player profile to use
@@ -49,13 +54,13 @@ public class PlayerController : MonoBehaviour
     //Check for inputs during moveable states
     private void MoveCheck()
     {
-        if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
+        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
         {
             //switch to walking
             playerModel.ProcessInput(inputState.Walk);
         }
 
-        if (rewiredPlayer.GetAxisRaw("HorizontalMovement") == 0)
+        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") == 0)
         {
             //stop walking and switch to idle
             playerModel.ProcessInput(inputState.Idle);
@@ -101,13 +106,13 @@ public class PlayerController : MonoBehaviour
     //Check for Tech
     private void TechCheck()
     {
-        if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
+        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
         {
             //switch to tech roll and go in the correct direction
             playerModel.ProcessInput(inputState.TechRoll);
         }
         
-        else if (rewiredPlayer.GetAxisRaw("VerticalMovement") != 0)
+        else if (rewiredPlayer.GetAxisRaw("MoveVertical") != 0)
         {
             //if up, Tech Stand
             playerModel.ProcessInput(inputState.TechUp);
@@ -117,13 +122,13 @@ public class PlayerController : MonoBehaviour
     //Check for Roll
     private void GetUpCheck()
     {
-        if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
+        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
         {
             //switch to roll and go in the correct direction
             playerModel.ProcessInput(inputState.Roll);
         }
         
-        else if (rewiredPlayer.GetAxisRaw("VerticalMovement") != 0)
+        else if (rewiredPlayer.GetAxisRaw("MoveVertical") != 0)
         {
             //if up, Stand
             playerModel.ProcessInput(inputState.GetUp);
