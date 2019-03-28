@@ -90,5 +90,19 @@ public class PlayerController : MonoBehaviour
             //if up, Tech Stand
         }
     }
+    
+    //Check for Roll
+    private void GetUpCheck()
+    {
+        if (rewiredPlayer.GetAxisRaw("HorizontalMovement") != 0)
+        {
+            //switch to roll and go in the correct direction
+        }
+        
+        else if (rewiredPlayer.GetAxisRaw("VerticalMovement") != 0)
+        {
+            //if up, Stand
+        }
+    }
     #endregion
 }
