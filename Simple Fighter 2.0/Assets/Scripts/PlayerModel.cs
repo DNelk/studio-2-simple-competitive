@@ -92,7 +92,20 @@ public class PlayerModel : MonoBehaviour
     private class Falling : PlayerState{}
     private class Grounded : PlayerState{}
     private class Rolling : PlayerState{}
-    private class Idle : PlayerState{}
+
+    private class Idle : PlayerState
+    {
+        public override void ProcessInput(PlayerController.inputState input)
+        {
+            base.ProcessInput(input);
+            switch (input)
+            {
+                case PlayerController.inputState.Strike:
+                    Debug.Log("Strike!");
+                    break;
+            }
+        }
+    }
     private class Victory : PlayerState{}
     #endregion
 }
