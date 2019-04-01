@@ -12,17 +12,18 @@ public class PlayerView : MonoBehaviour
     private BoxCollider2D col;
         
     #endregion
-    
+
+    #region Hitbox Tweaking Vars
     public Vector2 StrikeHitBoxSize;
     public float StrikeHitBoxDistance;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance;
+    #endregion
     
     private void Awake()
     {
         //Create Components
         animator = gameObject.AddComponent<Animator>();
-        
 
         spriteRen = gameObject.AddComponent<SpriteRenderer>();
 
@@ -53,9 +54,14 @@ public class PlayerView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       animator.SetTrigger("isStriking");
+       
     }
     
+    //Allows us to call animator from model -- replace with event system
+    public void SetAnimationState(string state)
+    {
+        animator.SetTrigger(state);
+    }
     #region Tools
     private void OnDrawGizmos()
     {

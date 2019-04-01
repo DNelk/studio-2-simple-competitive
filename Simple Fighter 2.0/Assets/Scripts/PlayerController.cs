@@ -139,9 +139,11 @@ public class PlayerController : MonoBehaviour
     #region Public Functions
 
     //Assign the character's model to playerModel from the GameManager
-    public void AssignModel(PlayerModel model)
+    public PlayerModel PlayerModel
     {
-        playerModel = model;
+        get { return playerModel; }
+        set { playerModel = value; }
     }
+
     #endregion
 }

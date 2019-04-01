@@ -13,8 +13,7 @@ public class PlayerModel : MonoBehaviour
 
     private StateMachine<PlayerModel> stateMachine;
 
-    
-
+    private PlayerView playerView;
     #endregion
 
     #region Public Variables
@@ -47,11 +46,19 @@ public class PlayerModel : MonoBehaviour
         stateMachine.Update();
     }
 
+    #region Getters/Setters
     public StateMachine<PlayerModel>.State GetState()
     {
         return stateMachine.CurrentState;
     }
 
+    public PlayerView PlayerView
+    {
+        get { return playerView; }
+        set { playerView = value; }
+    }
+    #endregion
+    
     //Called by Controller when an input is received
     public void ProcessInput(PlayerController.inputState input)
     {
@@ -63,18 +70,31 @@ public class PlayerModel : MonoBehaviour
     //Base Player State
     private class PlayerState : StateMachine<PlayerModel>.State
     {
-        private int timer;
-
+        protected int timer;
+        protected string animationTrigger;
+        
         public virtual void CooldownAnimationEnded(){}
 
         public virtual void ProcessInput(PlayerController.inputState input)
         {
             //This function will be overridden by each state to only include the relevant inputs
         }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            Context.playerView.SetAnimationState(animationTrigger);
+        }
     }
 
     private class Walking : PlayerState
     {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isWalking";
+        }
+
         public override void ProcessInput(PlayerController.inputState input)
         {
             base.ProcessInput(input);
@@ -83,12 +103,16 @@ public class PlayerModel : MonoBehaviour
                 case PlayerController.inputState.Walk:
                     break;
                 case PlayerController.inputState.EndWalk:
+                    TransitionTo<Idle>();
                     break;
                 case PlayerController.inputState.Strike:
+                    TransitionTo<Striking>();
                     break;
                 case PlayerController.inputState.Grab:
+                    TransitionTo<Grabbing>();
                     break;
                 case PlayerController.inputState.Block:
+                    TransitionTo<Blocking>();
                     break;
             }
         }
@@ -103,6 +127,7 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.inputState.EndBlock:
+                    TransitionTo<Idle>();
                     break;
             }
         }
@@ -148,6 +173,7 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.inputState.Walk:
+                    TransitionTo<Walking>();
                     break;
                 case PlayerController.inputState.Strike:
                     break;
