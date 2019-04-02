@@ -10,6 +10,7 @@ public class PlayerView : MonoBehaviour
     private SpriteRenderer spriteRen;
     private Rigidbody2D rb;
     private BoxCollider2D col;
+    private int direction; 
         
     #endregion
 
@@ -18,6 +19,10 @@ public class PlayerView : MonoBehaviour
     public float StrikeHitBoxDistance;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance;
+    #endregion
+    
+    #region Public Variables
+    public int PlayerIndex;
     #endregion
     
     private void Awake()
@@ -49,18 +54,43 @@ public class PlayerView : MonoBehaviour
         
         col.offset = new Vector2(1.155829f, -2.894697f);
         col.size = new Vector2(5.765483f, 20.96054f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
+        
+        //Set Direction
+        int rotInt = Mathf.RoundToInt(transform.rotation.eulerAngles.y);
+        if (rotInt == 180)
+            direction = -1;
+        else if (rotInt == 0)
+            direction = 1;
+        else
+            Debug.Log("error: direction not found");
     }
     
     //Allows us to call animator from model -- replace with event system
     public void SetAnimationState(string state)
     {
         animator.SetTrigger(state);
+    }
+     
+    //Move the player by amount times speed
+    public void Translate(float amount, float speed)
+    {
+        float oldX = transform.position.x; //Our old position
+        
+        transform.position += Vector3.right * amount * Time.deltaTime * speed;
+        
+        //Update our direction and change our rotation if necessary
+        if (transform.position.x > oldX && direction == -1)
+        {
+            transform.Rotate(0f,-180f,0f);
+            direction = 1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = 1;
+        }
+        if (transform.position.x < oldX && direction == 1)
+        {
+            transform.Rotate(0f,180f,0f);
+            direction = -1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = -1;
+        }
     }
     #region Tools
     private void OnDrawGizmos()

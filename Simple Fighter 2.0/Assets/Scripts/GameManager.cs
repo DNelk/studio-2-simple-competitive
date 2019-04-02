@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
             players[i].Controller.SetRewiredPlayer(i); //after creating controller, set the player profile
             players[i].Controller.PlayerModel = players[i].Model; //assign the player's model to the controller
             players[i].Model.PlayerView = players[i].View;
+            players[i].Model.PlayerIndex = players[i].Controller.PlayerIndex = players[i].View.PlayerIndex = i;
         }
     }
     

@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
         Roll,
         GetUp
     }
+
+    #region Public Variables
+    public int PlayerIndex;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +61,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
         {
             //switch to walking
-            playerModel.ProcessInput(inputState.Walk);
+            playerModel.ProcessInput(inputState.Walk, rewiredPlayer.GetAxisRaw("MoveHorizontal"));
         }
 
         if (rewiredPlayer.GetAxisRaw("MoveHorizontal") == 0)

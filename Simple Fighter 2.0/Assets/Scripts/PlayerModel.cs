@@ -10,7 +10,7 @@ public class PlayerModel : MonoBehaviour
 
     //Current hitpoints
     private int currentHitPoints;
-
+    
     private StateMachine<PlayerModel> stateMachine;
 
     private PlayerView playerView;
@@ -20,7 +20,7 @@ public class PlayerModel : MonoBehaviour
 
     //Character Statistics
     [Range(1, 5)] public int MaxHitPoints;
-    [Range(1, 50)] public float MoveSpeed;
+    [Range(1, 50)] public float MoveSpeed = 10;
     [Range(1, 10)] public int StrikeStartupFrames;
     [Range(1, 10)] public int StrikeActiveFrames;
     [Range(1, 10)] public int StrikeRecoveryFrames;
@@ -30,6 +30,7 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 10)] public int BlockStartupFrames;
     [Range(1, 10)] public int BlockRecoveryFrames;
 
+    public int PlayerIndex;
     #endregion
 
     // Start is called before the first frame update
@@ -47,6 +48,7 @@ public class PlayerModel : MonoBehaviour
     }
 
     #region Getters/Setters
+    
     public StateMachine<PlayerModel>.State GetState()
     {
         return stateMachine.CurrentState;
@@ -57,6 +59,7 @@ public class PlayerModel : MonoBehaviour
         get { return playerView; }
         set { playerView = value; }
     }
+    
     #endregion
     
     //Called by Controller when an input is received
@@ -64,21 +67,25 @@ public class PlayerModel : MonoBehaviour
     {
         ((PlayerState)stateMachine.CurrentState).ProcessInput(input);
     }
+
+    public void ProcessInput(PlayerController.inputState input, float value)
+    {
+        ((PlayerState)stateMachine.CurrentState).ProcessInput(input, value);
+    }
     
     #region States
 
     //Base Player State
     private class PlayerState : StateMachine<PlayerModel>.State
     {
-        protected int timer;
+        protected float timer;
         protected string animationTrigger;
         
         public virtual void CooldownAnimationEnded(){}
 
-        public virtual void ProcessInput(PlayerController.inputState input)
-        {
-            //This function will be overridden by each state to only include the relevant inputs
-        }
+        //Process our input with optional value
+        public virtual void ProcessInput(PlayerController.inputState input){}
+        public virtual void ProcessInput(PlayerController.inputState input, float value){}
 
         public override void OnEnter()
         {
@@ -93,6 +100,12 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             animationTrigger = "isWalking";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            
         }
 
         public override void ProcessInput(PlayerController.inputState input)
@@ -116,8 +129,37 @@ public class PlayerModel : MonoBehaviour
                     break;
             }
         }
+
+        public override void ProcessInput(PlayerController.inputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            ProcessInput(input);
+            Context.PlayerView.Translate(value, Context.MoveSpeed);
+        }
     }
-    private class Striking : PlayerState{}
+
+    private class Striking : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isStriking";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = 0.3f;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= 0.0167f;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
 
     private class Blocking : PlayerState
     {
@@ -176,12 +218,22 @@ public class PlayerModel : MonoBehaviour
                     TransitionTo<Walking>();
                     break;
                 case PlayerController.inputState.Strike:
+                    TransitionTo<Striking>();
                     break;
                 case PlayerController.inputState.Grab:
+                    TransitionTo<Grabbing>();
                     break;
                 case PlayerController.inputState.Block:
+                    TransitionTo<Blocking>();
                     break;
             }
+        }
+        
+        public override void ProcessInput(PlayerController.inputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            ProcessInput(input);
+            Context.PlayerView.Translate(value, Context.MoveSpeed);
         }
     }
     private class Victory : PlayerState{}
