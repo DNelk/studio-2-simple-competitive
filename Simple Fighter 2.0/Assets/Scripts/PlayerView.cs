@@ -50,9 +50,7 @@ public class PlayerView : MonoBehaviour
         transform.localScale *= 0.15844f;
         
         StrikeHitBoxSize = new Vector2(1.75f, 1f);
-        StrikeHitBoxDistance = 1f;
         GrabHitBoxSize = new Vector2(0.5f, 1f);
-        GrabHitBoxDistance = 1f;
         
         //Assign sprite and animator
         spriteRen.sprite = Resources.Load<Sprite>("Textures/NormalStance");
@@ -64,9 +62,15 @@ public class PlayerView : MonoBehaviour
         //Set Direction
         int rotInt = Mathf.RoundToInt(transform.rotation.eulerAngles.y);
         if (rotInt == 180)
-            direction = -1;
-        else if (rotInt == 0)
+        {
             direction = 1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = 1f;
+        }
+        else if (rotInt == 0)
+        {
+            direction = -1;
+            StrikeHitBoxDistance = GrabHitBoxDistance = -1f;
+        }
         else
             Debug.Log("error: direction not found");
     }

@@ -38,8 +38,15 @@ public class PlayerModel : MonoBehaviour
         //Initialize state machine
         stateMachine = new StateMachine<PlayerModel>(this);
         stateMachine.TransitionTo<Idle>();
+        //Initialize event manager
+        EventManager.Instance.AddHandler<ProcessInput>(OnInput);
     }
 
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -56,14 +63,11 @@ public class PlayerModel : MonoBehaviour
     #endregion
     
     //Called by Controller when an input is received
-    public void ProcessInput(PlayerController.inputState input)
+    public void OnInput(ProcessInput evt)
     {
-        ((PlayerState)stateMachine.CurrentState).ProcessInput(input);
-    }
-
-    public void ProcessInput(PlayerController.inputState input, float value)
-    {
-        ((PlayerState)stateMachine.CurrentState).ProcessInput(input, value);
+        if (PlayerIndex != evt.PlayerIndex)
+            return;
+        ((PlayerState)stateMachine.CurrentState).ProcessInput(evt.NewInput, evt.Value);
     }
     
     #region States
@@ -77,8 +81,7 @@ public class PlayerModel : MonoBehaviour
         public virtual void CooldownAnimationEnded(){}
 
         //Process our input with optional value
-        public virtual void ProcessInput(PlayerController.inputState input){}
-        public virtual void ProcessInput(PlayerController.inputState input, float value){}
+        public virtual void ProcessInput(PlayerController.InputState input, float value){}
 
         public override void OnEnter()
         {
@@ -95,33 +98,27 @@ public class PlayerModel : MonoBehaviour
             animationTrigger = "isWalking";
         }
         
-        public override void ProcessInput(PlayerController.inputState input)
+        public override void ProcessInput(PlayerController.InputState input, float value)
         {
-            base.ProcessInput(input);
+            base.ProcessInput(input, value);
             switch (input)
             {
-                case PlayerController.inputState.Walk:
+                case PlayerController.InputState.Walk:
+                    EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
                     break;
-                case PlayerController.inputState.EndWalk:
+                case PlayerController.InputState.EndWalk:
                     TransitionTo<Idle>();
                     break;
-                case PlayerController.inputState.Strike:
+                case PlayerController.InputState.Strike:
                     TransitionTo<Striking>();
                     break;
-                case PlayerController.inputState.Grab:
+                case PlayerController.InputState.Grab:
                     TransitionTo<Grabbing>();
                     break;
-                case PlayerController.inputState.Block:
+                case PlayerController.InputState.Block:
                     TransitionTo<Blocking>();
                     break;
             }
-        }
-
-        public override void ProcessInput(PlayerController.inputState input, float value)
-        {
-            base.ProcessInput(input, value);
-            ProcessInput(input);
-            EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
         }
     }
 
@@ -156,12 +153,12 @@ public class PlayerModel : MonoBehaviour
             animationTrigger = "isBlocking";
         }
 
-        public override void ProcessInput(PlayerController.inputState input)
+        public override void ProcessInput(PlayerController.InputState input, float value)
         {
-            base.ProcessInput(input);
+            base.ProcessInput(input, value);
             switch (input)
             {
-                case PlayerController.inputState.EndBlock:
+                case PlayerController.InputState.EndBlock:
                     TransitionTo<Idle>();
                     break;
             }
@@ -220,16 +217,16 @@ public class PlayerModel : MonoBehaviour
                 TransitionTo<Grounded>();
         }
         
-        public override void ProcessInput(PlayerController.inputState input)
+        public override void ProcessInput(PlayerController.InputState input, float value)
         {
-            base.ProcessInput(input);
+            base.ProcessInput(input, value);
             switch (input)
             {
-                case PlayerController.inputState.Roll:
+                case PlayerController.InputState.Roll:
                     TransitionTo<Rolling>();
                     Context.GetUpSpeed = 15;
                     break;
-                case PlayerController.inputState.GetUp:
+                case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
                     Context.GetUpSpeed = 15;
                     break;
@@ -239,16 +236,16 @@ public class PlayerModel : MonoBehaviour
 
     private class Grounded : PlayerState
     {
-        public override void ProcessInput(PlayerController.inputState input)
+        public override void ProcessInput(PlayerController.InputState input, float value)
         {
-            base.ProcessInput(input);
+            base.ProcessInput(input, value);
             switch (input)
             {
-                case PlayerController.inputState.Roll:
+                case PlayerController.InputState.Roll:
                     TransitionTo<Rolling>();
                     Context.GetUpSpeed = 10;
                     break;
-                case PlayerController.inputState.GetUp:
+                case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
                     Context.GetUpSpeed = 10;
                     break;
@@ -304,33 +301,28 @@ public class PlayerModel : MonoBehaviour
     
     private class Idle : PlayerState
     {
-        public override void ProcessInput(PlayerController.inputState input)
+        public override void ProcessInput(PlayerController.InputState input, float value)
         {
-            base.ProcessInput(input);
+            base.ProcessInput(input, value);
             switch (input)
             {
-                case PlayerController.inputState.Walk:
+                case PlayerController.InputState.Walk:
                     TransitionTo<Walking>();
+                    EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
                     break;
-                case PlayerController.inputState.Strike:
+                case PlayerController.InputState.Strike:
                     TransitionTo<Striking>();
                     break;
-                case PlayerController.inputState.Grab:
+                case PlayerController.InputState.Grab:
                     TransitionTo<Grabbing>();
                     break;
-                case PlayerController.inputState.Block:
+                case PlayerController.InputState.Block:
                     TransitionTo<Blocking>();
                     break;
             }
         }
-        
-        public override void ProcessInput(PlayerController.inputState input, float value)
-        {
-            base.ProcessInput(input, value);
-            ProcessInput(input);
-            EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
-        }
     }
+    
     private class Victory : PlayerState{}
     #endregion
 }

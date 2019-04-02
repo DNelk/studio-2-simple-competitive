@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     #region Public Variables
     
     public static GameManager Instance = null; //Our Singleton
+    public Vector3[] StartingPositions = {new Vector3(-3.5f, 0f, 0f), new Vector3(3.5f, 0f, 0f)};
     
     #endregion
     
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     private void InitPlayers()
     {
         //GameObject[] playerGOs = new GameObject[players.Length];
+        int playerRot = 180;
         for (int i = 0; i < players.Length; i++)
         {
             //Create Player
@@ -66,11 +68,14 @@ public class GameManager : MonoBehaviour
             players[i].View = playerGO.AddComponent<PlayerView>();
             players[i].Controller = controller.AddComponent<PlayerController>();
             
-            //Hookup Components
+            //Init Components
             players[i].Controller.SetRewiredPlayer(i); //after creating controller, set the player profile
-            players[i].Controller.PlayerModel = players[i].Model; //assign the player's model to the controller
             players[i].Model.PlayerIndex = players[i].Controller.PlayerIndex = players[i].View.PlayerIndex = i;
+            players[i].View.transform.position = StartingPositions[i];
+            players[i].View.transform.rotation = Quaternion.Euler(0,playerRot,0);
+            playerRot -= 180;
         }
+        
     }
     
     #endregion

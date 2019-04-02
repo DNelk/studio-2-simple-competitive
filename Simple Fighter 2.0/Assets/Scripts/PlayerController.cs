@@ -11,10 +11,9 @@ public class PlayerController : MonoBehaviour
     #region Private Variables
 
     private Rewired.Player rewiredPlayer; //holds the player profile from Rewired
-    private PlayerModel playerModel; //holds this character's model
     #endregion
     
-    public enum inputState
+    public enum InputState
     {
         Walk,
         EndWalk,
@@ -29,11 +28,6 @@ public class PlayerController : MonoBehaviour
     #region Public Variables
     public int PlayerIndex;
     #endregion
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -52,20 +46,26 @@ public class PlayerController : MonoBehaviour
     }
     
     #region Input Functions
+
+    private void SendInput(InputState state, float value)
+    {
+        EventManager.Instance.Fire(new ProcessInput(state, value, PlayerIndex));
+    }
     
     //Check for inputs during moveable states
     private void MoveCheck()
     {
-        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
+        float axisRaw = rewiredPlayer.GetAxisRaw("MoveHorizontal");
+        if (axisRaw != 0)
         {
             //switch to walking
-            playerModel.ProcessInput(inputState.Walk, rewiredPlayer.GetAxisRaw("MoveHorizontal"));
+            SendInput(InputState.Walk, axisRaw);
         }
 
-        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") == 0)
+        if (axisRaw == 0)
         {
             //stop walking and switch to idle
-            playerModel.ProcessInput(inputState.EndWalk);
+            SendInput(InputState.EndWalk, axisRaw);
         }
     }
     
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Strike"))
         {
             //switch to Strike
-            playerModel.ProcessInput(inputState.Strike);
+            SendInput(InputState.Strike, 0f);
         }
     }
     
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Grab"))
         {
             //switch to Grab
-            playerModel.ProcessInput(inputState.Grab);
+            SendInput(InputState.Grab, 0f);
         }
     }
     
@@ -95,41 +95,35 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Block"))
         {
             //switch to Block
-            playerModel.ProcessInput(inputState.Block);
+            SendInput(InputState.Block, 0f);
         }
 
         if (rewiredPlayer.GetButtonUp("Block"))
         {
             //stop blocking, switch to Idle
-            playerModel.ProcessInput(inputState.EndBlock);
+            SendInput(InputState.EndBlock, 0f);
         }
     }
     
     //Check for Roll
     private void GetUpCheck()
     {
+        float axisRaw = rewiredPlayer.GetAxisRaw("MoveHorizontal");
         if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
         {
             //switch to roll and go in the correct direction
-            playerModel.ProcessInput(inputState.Roll);
+            SendInput(InputState.Roll, axisRaw);
         }
         
         else if (rewiredPlayer.GetAxisRaw("MoveVertical") != 0)
         {
             //if up, Stand
-            playerModel.ProcessInput(inputState.GetUp);
+            SendInput(InputState.GetUp, axisRaw);
         }
     }
     #endregion
     
     #region Public Functions
-
-    //Assign the character's model to playerModel from the GameManager
-    public PlayerModel PlayerModel
-    {
-        get { return playerModel; }
-        set { playerModel = value; }
-    }
 
     #endregion
 }

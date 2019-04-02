@@ -61,17 +61,17 @@ public class Events : MonoBehaviour
     //Process Input Event
     public class ProcessInput : GameEvent
     {
-        public PlayerController.inputState NewInput { get; }
+        public PlayerController.InputState NewInput { get; }
         public float Value { get; }
         public int PlayerIndex { get; }
 
-        public ProcessInput(PlayerController.inputState newInput, int playerIndex)
+        public ProcessInput(PlayerController.InputState newInput, int playerIndex)
         {
             NewInput = newInput;
             PlayerIndex = playerIndex;
         }
 
-        public ProcessInput(PlayerController.inputState newInput, float value, int playerIndex)
+        public ProcessInput(PlayerController.InputState newInput, float value, int playerIndex)
         {
             NewInput = newInput;
             Value = value;
