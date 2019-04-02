@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Events;
 
 public class PlayerView : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlayerView : MonoBehaviour
     public int PlayerIndex;
     #endregion
     
+    
+    
     private void Awake()
     {
         //Create Components
@@ -34,13 +37,16 @@ public class PlayerView : MonoBehaviour
 
         rb = gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+        rb.isKinematic = true;
 
         col = gameObject.AddComponent<BoxCollider2D>();
     }
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        EventManager.Instance.AddHandler<AnimationChange>(OnAnimationChange);
+        EventManager.Instance.AddHandler<TranslatePos>(Translate);
         transform.localScale *= 0.15844f;
         
         StrikeHitBoxSize = new Vector2(1.75f, 1f);
@@ -64,16 +70,28 @@ public class PlayerView : MonoBehaviour
         else
             Debug.Log("error: direction not found");
     }
-    
-    //Allows us to call animator from model -- replace with event system
-    public void SetAnimationState(string state)
+
+    private void OnDestroy()
     {
-        animator.SetTrigger(state);
+        EventManager.Instance.RemoveHandler<AnimationChange>(OnAnimationChange);
+    }
+
+    //Allows us to call animator from model -- replace with event system
+    public void OnAnimationChange(AnimationChange evt)
+    {
+        if (evt.PlayerIndex != PlayerIndex)
+            return;
+        animator.SetTrigger(evt.AnimTrigger);
     }
      
     //Move the player by amount times speed
-    public void Translate(float amount, float speed)
+    public void Translate(TranslatePos evt)
     {
+        if (PlayerIndex != evt.PlayerIndex)
+            return;
+        
+        float amount = evt.RawAxis;
+        float speed = evt.Speed;
         float oldX = transform.position.x; //Our old position
         
         transform.position += Vector3.right * amount * Time.deltaTime * speed;

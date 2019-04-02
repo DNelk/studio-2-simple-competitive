@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using static Events;
 
 //Receives inputs from the controller and passes them to the Model
 public class PlayerController : MonoBehaviour
@@ -21,8 +22,6 @@ public class PlayerController : MonoBehaviour
         Grab,
         Block,
         EndBlock,
-        TechRoll,
-        TechUp,
         Roll,
         GetUp
     }
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
         StrikeCheck();
         GrabCheck();
         BlockCheck();
-        TechCheck();
         GetUpCheck();
     }
     
@@ -104,22 +102,6 @@ public class PlayerController : MonoBehaviour
         {
             //stop blocking, switch to Idle
             playerModel.ProcessInput(inputState.EndBlock);
-        }
-    }
-    
-    //Check for Tech
-    private void TechCheck()
-    {
-        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") != 0)
-        {
-            //switch to tech roll and go in the correct direction
-            playerModel.ProcessInput(inputState.TechRoll);
-        }
-        
-        else if (rewiredPlayer.GetAxisRaw("MoveVertical") != 0)
-        {
-            //if up, Tech Stand
-            playerModel.ProcessInput(inputState.TechUp);
         }
     }
     

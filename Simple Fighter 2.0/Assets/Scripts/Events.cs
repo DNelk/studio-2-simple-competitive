@@ -26,10 +26,11 @@ public class Events : MonoBehaviour
         public float RawAxis { get; }
         public int PlayerIndex { get; }
 
-        public TranslatePos(float rawAxis, float speed)
+        public TranslatePos(float rawAxis, float speed, int playerIndex)
         {
             Speed = speed;
             RawAxis = rawAxis;
+            PlayerIndex = playerIndex;
         }
     }
     

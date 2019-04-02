@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Events;
 
 public class PlayerModel : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class PlayerModel : MonoBehaviour
     private int currentHitPoints;
     
     private StateMachine<PlayerModel> stateMachine;
-
-    private PlayerView playerView;
     #endregion
 
     #region Public Variables
@@ -29,7 +28,7 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 10)] public int GrabRecoveryFrames;
     [Range(1, 10)] public int BlockStartupFrames;
     [Range(1, 10)] public int BlockRecoveryFrames;
-
+    [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
     #endregion
 
@@ -48,18 +47,12 @@ public class PlayerModel : MonoBehaviour
     }
 
     #region Getters/Setters
-    
+
     public StateMachine<PlayerModel>.State GetState()
     {
         return stateMachine.CurrentState;
     }
 
-    public PlayerView PlayerView
-    {
-        get { return playerView; }
-        set { playerView = value; }
-    }
-    
     #endregion
     
     //Called by Controller when an input is received
@@ -90,7 +83,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            Context.playerView.SetAnimationState(animationTrigger);
+            EventManager.Instance.Fire(new Events.AnimationChange(animationTrigger, Context.PlayerIndex));
         }
     }
 
@@ -101,13 +94,7 @@ public class PlayerModel : MonoBehaviour
             base.Init();
             animationTrigger = "isWalking";
         }
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            
-        }
-
+        
         public override void ProcessInput(PlayerController.inputState input)
         {
             base.ProcessInput(input);
@@ -134,7 +121,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.ProcessInput(input, value);
             ProcessInput(input);
-            Context.PlayerView.Translate(value, Context.MoveSpeed);
+            EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
         }
     }
 
@@ -163,6 +150,12 @@ public class PlayerModel : MonoBehaviour
 
     private class Blocking : PlayerState
     {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isBlocking";
+        }
+
         public override void ProcessInput(PlayerController.inputState input)
         {
             base.ProcessInput(input);
@@ -173,19 +166,72 @@ public class PlayerModel : MonoBehaviour
                     break;
             }
         }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            EventManager.Instance.Fire(new Events.AnimationChange("endBlock", Context.PlayerIndex));
+            
+        }
     }
-    private class Grabbing : PlayerState{}
+
+    private class Grabbing : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isGrabbing";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = 0.3f;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= 0.0167f;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
 
     private class Falling : PlayerState
     {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "gotStriked";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = 0.3f;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= 0.0167f;
+            if(timer <= 0)
+                TransitionTo<Grounded>();
+        }
+        
         public override void ProcessInput(PlayerController.inputState input)
         {
             base.ProcessInput(input);
             switch (input)
             {
-                case PlayerController.inputState.TechRoll:
+                case PlayerController.inputState.Roll:
+                    TransitionTo<Rolling>();
+                    Context.GetUpSpeed = 15;
                     break;
-                case PlayerController.inputState.TechUp:
+                case PlayerController.inputState.GetUp:
+                    TransitionTo<GetUp>();
+                    Context.GetUpSpeed = 15;
                     break;
             }
         }
@@ -199,14 +245,63 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.inputState.Roll:
+                    TransitionTo<Rolling>();
+                    Context.GetUpSpeed = 10;
                     break;
                 case PlayerController.inputState.GetUp:
+                    TransitionTo<GetUp>();
+                    Context.GetUpSpeed = 10;
                     break;
             }
         }
     }
-    private class Rolling : PlayerState{}
 
+    private class Rolling : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isRolling";
+        }
+        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = 0.3f;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= 0.0167f;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
+    private class GetUp : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isGettingUp";
+        }
+        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = 0.3f;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= 0.0167f;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+    
     private class Idle : PlayerState
     {
         public override void ProcessInput(PlayerController.inputState input)
@@ -233,7 +328,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.ProcessInput(input, value);
             ProcessInput(input);
-            Context.PlayerView.Translate(value, Context.MoveSpeed);
+            EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
         }
     }
     private class Victory : PlayerState{}
