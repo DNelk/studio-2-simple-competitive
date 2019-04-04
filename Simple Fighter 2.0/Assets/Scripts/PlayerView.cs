@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 using static Events;
 
@@ -78,6 +79,7 @@ public class PlayerView : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.Instance.RemoveHandler<AnimationChange>(OnAnimationChange);
+        EventManager.Instance.RemoveHandler<TranslatePos>(Translate);
     }
 
     //Allows us to call animator from model -- replace with event system
@@ -112,6 +114,17 @@ public class PlayerView : MonoBehaviour
             transform.Rotate(0f,180f,0f);
             direction = -1;
             StrikeHitBoxDistance = GrabHitBoxDistance = -1;
+        }
+    }
+
+    public void OnHitBoxActive(HitBoxActive evt)
+    {
+        Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance, 0);
+        Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0);
+
+        if (hitCol)
+        {
+            EventManager.Instance.Fire(new HitOpponent(PlayerIndex));
         }
     }
     #region Tools

@@ -124,9 +124,14 @@ public class PlayerModel : MonoBehaviour
 
     private class Striking : PlayerState
     {
+        private float maxTime;
+        private float activeWindowEnter;
+        private float activeWindowExit;
+        
         public override void Init()
         {
             base.Init();
+            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             animationTrigger = "isStriking";
         }
 
@@ -134,12 +139,17 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = 0.3f;
+            maxTime = timer;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
+            if (timer <= activeWindowEnter)
+            {
+                //Activate the hitbox
+            }
             if(timer <= 0)
                 TransitionTo<Idle>();
         }

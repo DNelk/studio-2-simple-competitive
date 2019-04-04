@@ -33,6 +33,19 @@ public class Events : MonoBehaviour
             PlayerIndex = playerIndex;
         }
     }
+
+    //Called from model when the hitboxes become active
+    public class HitBoxActive : GameEvent
+    {
+        public float HitBoxDistance { get; }
+        public Vector2 HitBoxSize { get; }
+
+        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize)
+        {
+            HitBoxDistance = hitBoxDistance;
+            HitBoxSize = hitBoxSize;
+        }   
+    }
     
     //Get Hit Event
     public class HitOpponent : GameEvent
