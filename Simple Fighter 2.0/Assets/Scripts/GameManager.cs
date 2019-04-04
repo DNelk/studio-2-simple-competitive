@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,13 +13,28 @@ public class GameManager : MonoBehaviour
     
     #endregion
     
-    #region Private Variables
-    
+    #region Gameplay Variables
+   
     private Player[] players;
 
     private GameObject model;
     private GameObject controller;
     private GameObject view;
+    #endregion
+
+    #region UI Variables
+
+    private GameObject uiCanvas;
+    private GameObject[] healthBars;
+    
+    #endregion
+    
+    
+    #region Round Information
+
+    public int TotalRounds = 3;
+    public int roundNum;
+    private int setNum;
     
     #endregion
     
@@ -32,6 +48,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         
         DontDestroyOnLoad(gameObject);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
+        healthBars = new GameObject[2];
+        roundNum = 1;
         Init();
     }
 
@@ -41,7 +60,7 @@ public class GameManager : MonoBehaviour
         model = GameObject.Find("Model");
         view = GameObject.Find("View");
         controller = GameObject.Find("Controller");
-        
+        uiCanvas = GameObject.Find("Canvas");
         if (players == null)
         {
             players = new Player[2];
@@ -74,17 +93,50 @@ public class GameManager : MonoBehaviour
             players[i].View.transform.position = StartingPositions[i];
             players[i].View.transform.rotation = Quaternion.Euler(0,playerRot,0);
             playerRot -= 180;
+            
+            //Create UI
+            healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
+            healthBars[i].transform.SetParent(uiCanvas.transform);
         }
-        
+    }
+    
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
     }
     
     #endregion
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r")){
             SceneManager.LoadScene("LevelName");
+            roundNum++;
+        }
     }
+
+    #region Events
+
+    private void OnHealthChanged(HealthChanged evt)
+    {
+        int index = evt.PlayerIndex;
+        int newHealth = evt.NewHealth;
+        HealthBar healthBar = healthBars[index].GetComponent<HealthBar>();
+        healthBar.UpdateHealth(newHealth);
+        if (newHealth <= 0)
+            EndRound(index);
+    }
+
+    #endregion
+
+    #region Round Management
+
+    private void EndRound(int losingPlayerIndex)
+    {
+        
+    }
+
+    #endregion
 }
 
 //Object that holds a player's model, view and controller for referencing as a group
