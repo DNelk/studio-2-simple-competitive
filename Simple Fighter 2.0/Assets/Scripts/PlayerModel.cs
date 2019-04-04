@@ -61,7 +61,8 @@ public class PlayerModel : MonoBehaviour
     }
 
     #endregion
-    
+
+    #region Public Functions
     //Called by Controller when an input is received
     public void OnInput(ProcessInput evt)
     {
@@ -69,7 +70,13 @@ public class PlayerModel : MonoBehaviour
             return;
         ((PlayerState)stateMachine.CurrentState).ProcessInput(evt.NewInput, evt.Value);
     }
-    
+
+    //Gets called when we win
+    public void WinRound()
+    {
+        stateMachine.TransitionTo<Victory>();    
+    }
+    #endregion
     #region States
 
     //Base Player State

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     #region UI Variables
 
-    private Transform uiCanvas;
+    private GameObject uiCanvas;
     private GameObject[] healthBars;
     
     #endregion
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     #region Round Information
 
     public int TotalRounds = 3;
-    private int roundNum;
+    public int roundNum;
     private int setNum;
     
     #endregion
@@ -48,17 +48,19 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         
         DontDestroyOnLoad(gameObject);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
+        healthBars = new GameObject[2];
+        roundNum = 1;
         Init();
     }
 
     //Set up variables
     private void Init()
     {
-        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         model = GameObject.Find("Model");
         view = GameObject.Find("View");
         controller = GameObject.Find("Controller");
-        
+        uiCanvas = GameObject.Find("Canvas");
         if (players == null)
         {
             players = new Player[2];
@@ -91,8 +93,11 @@ public class GameManager : MonoBehaviour
             players[i].View.transform.position = StartingPositions[i];
             players[i].View.transform.rotation = Quaternion.Euler(0,playerRot,0);
             playerRot -= 180;
+            
+            //Create UI
+            healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
+            healthBars[i].transform.SetParent(uiCanvas.transform);
         }
-        
     }
     
     private void OnDestroy()
@@ -104,13 +109,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown("r"))
+        if (Input.GetKeyDown("r")){
             SceneManager.LoadScene("LevelName");
+            roundNum++;
+        }
     }
 
     #region Events
 
     private void OnHealthChanged(HealthChanged evt)
+    {
+        int index = evt.PlayerIndex;
+        int newHealth = evt.NewHealth;
+        HealthBar healthBar = healthBars[index].GetComponent<HealthBar>();
+        healthBar.UpdateHealth(newHealth);
+        if (newHealth <= 0)
+            EndRound(index);
+    }
+
+    #endregion
+
+    #region Round Management
+
+    private void EndRound(int losingPlayerIndex)
     {
         
     }
