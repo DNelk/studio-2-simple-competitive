@@ -39,11 +39,13 @@ public class Events : MonoBehaviour
     {
         public float HitBoxDistance { get; }
         public Vector2 HitBoxSize { get; }
+        public int PlayerIndex { get; }
 
-        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize)
+        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize, int playerIndex)
         {
             HitBoxDistance = hitBoxDistance;
             HitBoxSize = hitBoxSize;
+            PlayerIndex = playerIndex;
         }   
     }
     

@@ -48,6 +48,7 @@ public class PlayerView : MonoBehaviour
     {
         EventManager.Instance.AddHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.AddHandler<TranslatePos>(Translate);
+        EventManager.Instance.AddHandler<HitBoxActive>(OnHitBoxActive);
         transform.localScale *= 0.15844f;
         
         StrikeHitBoxSize = new Vector2(1.75f, 1f);
@@ -80,6 +81,7 @@ public class PlayerView : MonoBehaviour
     {
         EventManager.Instance.RemoveHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.RemoveHandler<TranslatePos>(Translate);
+        EventManager.Instance.RemoveHandler<HitBoxActive>(OnHitBoxActive);
     }
 
     //Allows us to call animator from model -- replace with event system
@@ -119,6 +121,9 @@ public class PlayerView : MonoBehaviour
 
     public void OnHitBoxActive(HitBoxActive evt)
     {
+        if (evt.PlayerIndex != PlayerIndex)
+            return;
+        Debug.Log("HitBox Active " + PlayerIndex);
         Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance, 0);
         Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0);
 

@@ -20,12 +20,16 @@ public class PlayerModel : MonoBehaviour
     //Character Statistics
     [Range(1, 5)] public int MaxHitPoints;
     [Range(1, 50)] public float MoveSpeed = 10;
-    [Range(1, 10)] public int StrikeStartupFrames;
-    [Range(1, 10)] public int StrikeActiveFrames;
-    [Range(1, 10)] public int StrikeRecoveryFrames;
-    [Range(1, 10)] public int GrabStartupFrames;
-    [Range(1, 10)] public int GrabActiveFrames;
-    [Range(1, 10)] public int GrabRecoveryFrames;
+    [Range(1, 10)] public float StrikeStartupFrames = .1f;
+    [Range(1, 10)] public float StrikeActiveFrames = .1f;
+    public float StrikeHitBoxDistance = 1;
+    public Vector2 StrikeHitBoxSize = new Vector2(10, 10);
+    [Range(1, 10)] public int StrikeRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
+    [Range(1, 10)] public float GrabStartupFrames = .1f;
+    [Range(1, 10)] public float GrabActiveFrames = .1f;
+    [Range(1, 10)] public int GrabRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
+    public float GrabHitBoxDistance = 1;
+    public Vector2 GrabHitBoxSize = new Vector2(10, 10);
     [Range(1, 10)] public int BlockStartupFrames;
     [Range(1, 10)] public int BlockRecoveryFrames;
     [Range(1, 50)] public float GetUpSpeed = 10;
@@ -40,11 +44,14 @@ public class PlayerModel : MonoBehaviour
         stateMachine.TransitionTo<Idle>();
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
+        EventManager.Instance.AddHandler<HitOpponent>(OnHit);
     }
 
     private void OnDestroy()
     {
+        //Unhookup the Event Manager
         EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
+        EventManager.Instance.RemoveHandler<HitOpponent>(OnHit);
     }
     
     // Update is called once per frame
@@ -68,6 +75,15 @@ public class PlayerModel : MonoBehaviour
         if (PlayerIndex != evt.PlayerIndex)
             return;
         ((PlayerState)stateMachine.CurrentState).ProcessInput(evt.NewInput, evt.Value);
+    }
+    
+    //Called by View when a hit is detected
+    //NOTE: The OTHER Player's view Fires this event. That is fine, but it is important to note
+    public void OnHit(HitOpponent evt)
+    {
+        if (PlayerIndex == evt.PlayerIndex) //The event is fired from the OTHER player, so if it is our own player index, we do not act on this
+            return;
+        stateMachine.TransitionTo<Falling>();
     }
     
     #region States
@@ -131,7 +147,6 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             animationTrigger = "isStriking";
         }
 
@@ -140,15 +155,23 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = 0.3f;
             maxTime = timer;
+            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
+            activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
-            if (timer <= activeWindowEnter)
+            if (timer <= activeWindowEnter && timer > activeWindowExit)
             {
-                //Activate the hitbox
+                //Active
+                Debug.Log("Fire hitbox active event " + Context.PlayerIndex);
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex));
+            }
+            else if (timer <= activeWindowExit)
+            {
+                //Recovery
             }
             if(timer <= 0)
                 TransitionTo<Idle>();
@@ -177,16 +200,20 @@ public class PlayerModel : MonoBehaviour
         public override void OnExit()
         {
             base.OnExit();
-            EventManager.Instance.Fire(new Events.AnimationChange("endBlock", Context.PlayerIndex));
-            
+            EventManager.Instance.Fire(new Events.AnimationChange("endBlock", Context.PlayerIndex));          
         }
     }
 
     private class Grabbing : PlayerState
     {
+        private float maxTime;
+        private float activeWindowEnter;
+        private float activeWindowExit;
+        
         public override void Init()
         {
             base.Init();
+            
             animationTrigger = "isGrabbing";
         }
 
@@ -194,12 +221,24 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = 0.3f;
+            maxTime = timer;
+            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
+            activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
+            if (timer <= activeWindowEnter && timer > activeWindowExit)
+            {
+                //Active
+                EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex));
+            }
+            else if (timer <= activeWindowExit)
+            {
+                //Recovery
+            }
             if(timer <= 0)
                 TransitionTo<Idle>();
         }
