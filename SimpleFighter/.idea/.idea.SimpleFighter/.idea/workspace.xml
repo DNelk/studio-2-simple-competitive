@@ -2,9 +2,104 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eaad37a8-d6bb-419a-8026-1c793c714189" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/BottomRow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/BottomRow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/FightRing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/FightRing.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/LightGrid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/LightGrid.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Lights3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/MiddleRow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/MiddleRow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/Round3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/RoundGrid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/RoundGrid.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/TopRow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Background/TopRow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Start-Up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Block Start-Up.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Grabbed Thrown.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Grabbed Thrown.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Grabbed main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Grabbed main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Striked Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Striked Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Striked Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Get Striked Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Start-Up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/GetUp Start-Up.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Missed Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Missed Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Missed Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Missed Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Start-Up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Start-Up.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Main-3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grab Success Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grounded.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Grounded.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/KO.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/KO.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/NormalStance.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/NormalStance.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Roll Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Roll Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Roll Start-Up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Roll Start-Up.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_attacked.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_attacked.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_block.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_block.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_grab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_grab.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_punch.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_punch.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_stance.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/SnC_characterFirstDraft_stance.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Square.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Square.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Main.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Recovery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Recovery.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Start-Up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/Strike Start-Up.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae01.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae02.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Images/WInning frmae03.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scenes/Animation_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scenes/Animation_Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/PlayerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/PlayerView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleFighter/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,56 +107,191 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="158030464">
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="22" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="22" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="4888" />
+          <entry key="txt" value="1007" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="4888" />
+          <entry key="PLAIN_TEXT" value="1007" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="6" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="5" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="3" />
+          <entry key="git.branch.create.new" value="3" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+            <state relative-caret-position="270">
+              <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
               <folding>
-                <marker date="1550348300516" expanded="false" signature="6:133" ph="..." />
-                <marker date="1550348300516" expanded="true" signature="180:4952" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="647:1099" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="715:885" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="923:1093" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="1157:1799" ph="{...}" />
-                <marker date="1550348300516" expanded="false" signature="1805:2229" ph="Horizontal Movement" />
-                <marker date="1550348300516" expanded="true" signature="1858:2214" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="1909:2097" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="2143:2208" ph="{...}" />
-                <marker date="1550348300516" expanded="false" signature="2239:2745" ph="Block Method" />
-                <marker date="1550348300516" expanded="true" signature="2276:2730" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="2327:2530" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="2574:2724" ph="{...}" />
-                <marker date="1550348300516" expanded="false" signature="2751:3316" ph="Strike Method" />
-                <marker date="1550348300516" expanded="true" signature="2824:3301" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="2875:3295" ph="{...}" />
-                <marker date="1550348300516" expanded="false" signature="3322:3887" ph="Grab Method" />
-                <marker date="1550348300516" expanded="true" signature="3391:3872" ph="{...}" />
-                <marker date="1550348300516" expanded="true" signature="3444:3866" ph="{...}" />
-                <marker date="1550348300516" expanded="false" signature="3893:4409" ph="Old Strike Method" />
-                <marker date="1550348300516" expanded="true" signature="3923:4394" ph="/* void Strike() ... */" />
-                <marker date="1550348300516" expanded="false" signature="4419:4950" ph="Old Grab Method" />
-                <marker date="1550348300516" expanded="true" signature="4447:4935" ph="/* void Grab() ... */" />
+                <marker date="1552590186059" expanded="false" signature="6:78" ph="..." />
+                <marker date="1552590186059" expanded="true" signature="120:683" ph="{...}" />
+                <marker date="1552590186059" expanded="false" signature="127:464" ph="Public Variables" />
+                <marker date="1552590186059" expanded="true" signature="470:681" ph="Updates" />
+                <marker date="1552590186059" expanded="true" signature="508:661" ph="{...}" />
+                <marker date="1552590186059" expanded="true" signature="589:655" ph="{...}" />
+                <marker date="1552590186059" expanded="true" signature="809:1443" ph="{...}" />
+                <marker date="1552590186059" expanded="true" signature="1366:1441" ph="/* Not being used currently ... */" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+            <state relative-caret-position="4155">
+              <caret line="277" column="9" selection-start-line="277" selection-start-column="9" selection-end-line="277" selection-end-column="9" />
               <folding>
-                <marker date="1550175131550" expanded="false" signature="6:78" ph="..." />
-                <marker date="1550175131550" expanded="true" signature="120:630" ph="{...}" />
-                <marker date="1550175131550" expanded="true" signature="127:411" ph="Public Variables" />
-                <marker date="1550175131550" expanded="true" signature="417:628" ph="Updates" />
-                <marker date="1550175131550" expanded="true" signature="455:608" ph="{...}" />
-                <marker date="1550175131550" expanded="true" signature="536:602" ph="{...}" />
-                <marker date="1550175131550" expanded="true" signature="756:891" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="6:224" ph="..." />
+                <marker date="1552590186058" expanded="true" signature="271:14333" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="278:579" ph="Public Variables" />
+                <marker date="1552590186058" expanded="true" signature="589:808" ph="Physics Vars" />
+                <marker date="1552590186058" expanded="true" signature="879:1180" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="1018:1077" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="1115:1174" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="1238:3989" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="1273:3983" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="3995:4645" ph="Horizontal Movement" />
+                <marker date="1552590186058" expanded="true" signature="4115:4302" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="4359:4494" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="4578:4630" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="4655:5732" ph="Blocking" />
+                <marker date="1552590186058" expanded="true" signature="4751:4995" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="4800:4870" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="4912:4989" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="5005:5076" ph="/* Startup block animation ... */" />
+                <marker date="1552590186058" expanded="true" signature="5121:5348" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="5354:5442" ph="/* Go into block recovery and back to idle ... */" />
+                <marker date="1552590186058" expanded="true" signature="5494:5717" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="5738:6819" ph="Striking" />
+                <marker date="1552590186058" expanded="true" signature="5786:6141" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="5892:6135" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="6192:6804" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="6825:7909" ph="Grabbing" />
+                <marker date="1552590186058" expanded="true" signature="6871:7140" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="6975:7134" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="7189:7894" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="7919:10019" ph="Hitting and Getting Hit" />
+                <marker date="1552590186058" expanded="true" signature="8072:8873" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="8301:8867" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="8418:8582" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="8693:8857" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="8969:10004" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="9136:9998" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="9671:9988" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10025:14293" ph="Tech Moves and Getting Up" />
+                <marker date="1552590186058" expanded="true" signature="10090:10687" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10194:10289" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10355:10437" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10532:10681" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10799:12499" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10823:11663" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="10845:10897" ph="/* go into tech in place states ... */" />
+                <marker date="1552590186058" expanded="true" signature="11707:12436" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="12593:14278" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="12644:13412" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="13454:14216" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="14303:14331" ph="Tools" />
+                <marker date="1552590186058" expanded="false" signature="14335:14597" ph="Helper Classes" />
+                <marker date="1552590186058" expanded="true" signature="14408:14585" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="14463:14583" ph="{...}" />
+                <marker date="1552590186058" expanded="true" signature="14500:14577" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerStatus.cs">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/GameManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="27" column="14" selection-end-line="31" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerView.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-887">
+              <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="17" selection-end-column="40" />
+              <folding>
+                <marker date="1552590186060" expanded="false" signature="6:97" ph="..." />
+                <marker date="1552590186060" expanded="true" signature="194:7913" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="206:538" ph="Public Variables" />
+                <marker date="1552590186060" expanded="false" signature="548:707" ph="Private Variables" />
+                <marker date="1552590186060" expanded="true" signature="737:1303" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="917:983" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="1361:1395" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="1401:2192" ph="Public Methods" />
+                <marker date="1552590186060" expanded="true" signature="1520:2177" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="1813:1962" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="2021:2171" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="2202:7477" ph="Private Methods" />
+                <marker date="1552590186060" expanded="false" signature="2256:7461" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="2291:7455" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="7487:7906" ph="Tools" />
+                <marker date="1552590186060" expanded="true" signature="7532:7891" ph="{...}" />
+                <marker date="1552590186060" expanded="true" signature="8015:8067" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/CameraManager.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="735">
+              <caret line="57" column="59" selection-start-line="57" selection-start-column="59" selection-end-line="57" selection-end-column="59" />
+              <folding>
+                <marker date="1551215374745" expanded="false" signature="6:78" ph="..." />
+                <marker date="1551215374745" expanded="true" signature="80:174" ph="/* Moves and resizes as players move ... */" />
+                <marker date="1551215374745" expanded="true" signature="218:1685" ph="{...}" />
+                <marker date="1551215374745" expanded="false" signature="225:342" ph="Private Variables" />
+                <marker date="1551215374745" expanded="true" signature="348:508" ph="Public Variables" />
+                <marker date="1551215374745" expanded="true" signature="591:722" ph="{...}" />
+                <marker date="1551215374745" expanded="true" signature="753:1683" ph="{...}" />
+                <marker date="1551215374745" expanded="true" signature="1036:1440" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -69,30 +299,89 @@
       </file>
     </leaf>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>opponent</find>
+      <find>model</find>
+      <find>Opponent</find>
+      <find>player</find>
+      <find>waitfor</find>
+      <find>hitBoxName</find>
+      <find>FrameCount</find>
+      <find>WaitFor</find>
+      <find>frameCount</find>
+      <find>delayinseconds</find>
+      <find>SpawnHitBox</find>
+      <find>hitBox</find>
+      <find>debug</find>
+      <find>enabled</find>
+      <find>stop</find>
+      <find>PlayerAction_GetHit</find>
+      <find>grounded</find>
+      <find>PlayerAction_WakeUpRoll</find>
+      <find>spawnhi</find>
+      <find>StrikeHitBoxDistance</find>
+      <find>hitBoxLayer</find>
+      <find>rollDirection</find>
+      <find>spawn</find>
+      <find>strike</find>
+      <find>playeraction_gra</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Model</replace>
+      <replace>hitBoxLayer</replace>
+    </replaceStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="Dylan_CharacterFlip" />
+      </map>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerStatus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/a8/d03ccec6/UnitySynchronizationContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/75/62c661b7/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../CORN/Assets/CornGameTile.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/89/8161c77e/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/Assets/PlayerView.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerView.cs" />
+        <option value="$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="627" />
+    <option name="y" value="149" />
+    <option name="width" value="1440" />
+    <option name="height" value="824" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="UnityExplorer" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AssemblyExplorer" />
       <pane id="UnityExplorer">
         <subPane>
           <expand>
@@ -109,12 +398,12 @@
           <select />
         </subPane>
         <option name="show-hidden-items" value="false" />
-        <option name="show-project-names" value="true" />
       </pane>
+      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <option name="show-all-files" value="false" />
       </pane>
-      <pane id="FileSystemExplorer" />
+      <pane id="AssemblyExplorer" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -137,17 +426,19 @@
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
-      <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="28325">
-      <option name="allowRunningInParallel" value="false" />
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="10966">
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="28325" />
+      <option name="pid" value="10966" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor" />
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor &amp; Play" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -162,6 +453,11 @@
       <workItem from="1550176618700" duration="564000" />
       <workItem from="1550177211764" duration="3813000" />
       <workItem from="1550182387016" duration="10400000" />
+      <workItem from="1550782822738" duration="10325000" />
+      <workItem from="1551203139239" duration="11731000" />
+      <workItem from="1551384147049" duration="4504000" />
+      <workItem from="1552589948750" duration="1299000" />
+      <workItem from="1553805754602" duration="1143000" />
     </task>
     <task id="LOCAL-00001" summary="Made functional left/right movement, strike, grab and block inputs. Need to make alterations to grab and strike so that the action is not continued by holding down the corresponding buttons.">
       <created>1550265342838</created>
@@ -177,11 +473,74 @@
       <option name="project" value="LOCAL" />
       <updated>1550266911968</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="-Created PlayerView&#10;-Moved Sprite code to PlayerView&#10;-Moved getHit to PlayerModel">
+      <created>1550612801375</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1550612801375</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix: Blocking is now two coroutines and functions with correct timing&#10;Cleanup: Removed lots of old code that was commented out&#10;Cleanup: Consolidated regions by action type&#10;Cleanup: Moved WaitFor to outside of PlayerController class">
+      <created>1550864367651</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1550864367652</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added: Up to rewired inputs&#10;Added: Tech method stubs&#10;Moved: Checking hit from model &gt; controller">
+      <created>1550868049944</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1550868049944</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changed &quot;TechRoll&quot; and &quot;TechInPlace&quot; to &quot;WakeUpRoll&quot; and &quot;WakeUpInPlace&quot;&#10;added boolean to indicate if wakeup is a tech&#10;added placeholder state changes and yields">
+      <created>1550971750606</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1550971750607</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Removed some code that was mistakenly copy/pasted">
+      <created>1551205512290</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1551205512290</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added dynamic camera zooming">
+      <created>1551213040915</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1551213040915</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added dynamic camera zooming">
+      <created>1551215979472</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1551215979472</updated>
+    </task>
+    <task id="LOCAL-00010" summary="FIX: Tech moves no longer go back into gethit">
+      <created>1551218436004</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1551218436004</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added: PlayerView.Translate() now checks if direction was changed and rotates accordingly&#10;Moved: Hitbox size and center, hitbox gizmos moved to PlayerView">
+      <created>1551388920341</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1551388920342</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14777000" />
+    <option name="totallyTimeSpent" value="52395000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -193,9 +552,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="627" y="149" width="1440" height="824" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17285945" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.0" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -203,18 +563,19 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.28531075" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49919224" weight="0.28434065" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="NuGet" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.32909605" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.58082974" visible="true" weight="0.31284153" />
       <window_info anchor="bottom" id="Unity" order="10" />
-      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Unit Tests" order="12" />
       <window_info anchor="bottom" id="Terminal" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.41917023" side_tool="true" visible="true" weight="0.31284153" />
+      <window_info anchor="bottom" id="Messages" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -254,10 +615,21 @@
       </map>
     </option>
   </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Made functional left/right movement, strike, grab and block inputs. Need to make alterations to grab and strike so that the action is not continued by holding down the corresponding buttons." />
     <MESSAGE value="Added boundaries and character colliders/rigidbodies." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added boundaries and character colliders/rigidbodies." />
+    <MESSAGE value="-Created PlayerView&#10;-Moved Sprite code to PlayerView&#10;-Moved getHit to PlayerModel" />
+    <MESSAGE value="Fix: Blocking is now two coroutines and functions with correct timing&#10;Cleanup: Removed lots of old code that was commented out&#10;Cleanup: Consolidated regions by action type&#10;Cleanup: Moved WaitFor to outside of PlayerController class" />
+    <MESSAGE value="Added: Up to rewired inputs&#10;Added: Tech method stubs&#10;Moved: Checking hit from model &gt; controller" />
+    <MESSAGE value="Changed &quot;TechRoll&quot; and &quot;TechInPlace&quot; to &quot;WakeUpRoll&quot; and &quot;WakeUpInPlace&quot;&#10;added boolean to indicate if wakeup is a tech&#10;added placeholder state changes and yields" />
+    <MESSAGE value="Removed some code that was mistakenly copy/pasted" />
+    <MESSAGE value="Added dynamic camera zooming" />
+    <MESSAGE value="FIX: Tech moves no longer go back into gethit" />
+    <MESSAGE value="Added: PlayerView.Translate() now checks if direction was changed and rotates accordingly&#10;Moved: Hitbox size and center, hitbox gizmos moved to PlayerView" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added: PlayerView.Translate() now checks if direction was changed and rotates accordingly&#10;Moved: Hitbox size and center, hitbox gizmos moved to PlayerView" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -270,51 +642,163 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../CORN/Assets/CornGameTile.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-205" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/PlayerView.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/a8/d03ccec6/UnitySynchronizationContext.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="82" column="6" selection-start-line="82" selection-start-column="6" selection-end-line="82" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/89/8161c77e/SetupCoroutine.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5E75CE60-D3D6-41D8-A691-66F7B0E8643E/75/62c661b7/MonoBehaviour.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="118" column="6" selection-start-line="118" selection-start-column="6" selection-end-line="118" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/PlayerModel1.cs" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerModel.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        <state relative-caret-position="270">
+          <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
           <folding>
-            <marker date="1550175131550" expanded="false" signature="6:78" ph="..." />
-            <marker date="1550175131550" expanded="true" signature="120:630" ph="{...}" />
-            <marker date="1550175131550" expanded="true" signature="127:411" ph="Public Variables" />
-            <marker date="1550175131550" expanded="true" signature="417:628" ph="Updates" />
-            <marker date="1550175131550" expanded="true" signature="455:608" ph="{...}" />
-            <marker date="1550175131550" expanded="true" signature="536:602" ph="{...}" />
-            <marker date="1550175131550" expanded="true" signature="756:891" ph="{...}" />
+            <marker date="1552590186059" expanded="false" signature="6:78" ph="..." />
+            <marker date="1552590186059" expanded="true" signature="120:683" ph="{...}" />
+            <marker date="1552590186059" expanded="false" signature="127:464" ph="Public Variables" />
+            <marker date="1552590186059" expanded="true" signature="470:681" ph="Updates" />
+            <marker date="1552590186059" expanded="true" signature="508:661" ph="{...}" />
+            <marker date="1552590186059" expanded="true" signature="589:655" ph="{...}" />
+            <marker date="1552590186059" expanded="true" signature="809:1443" ph="{...}" />
+            <marker date="1552590186059" expanded="true" signature="1366:1441" ph="/* Not being used currently ... */" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        <state relative-caret-position="4155">
+          <caret line="277" column="9" selection-start-line="277" selection-start-column="9" selection-end-line="277" selection-end-column="9" />
           <folding>
-            <marker date="1550348300516" expanded="false" signature="6:133" ph="..." />
-            <marker date="1550348300516" expanded="true" signature="180:4952" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="647:1099" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="715:885" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="923:1093" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="1157:1799" ph="{...}" />
-            <marker date="1550348300516" expanded="false" signature="1805:2229" ph="Horizontal Movement" />
-            <marker date="1550348300516" expanded="true" signature="1858:2214" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="1909:2097" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="2143:2208" ph="{...}" />
-            <marker date="1550348300516" expanded="false" signature="2239:2745" ph="Block Method" />
-            <marker date="1550348300516" expanded="true" signature="2276:2730" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="2327:2530" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="2574:2724" ph="{...}" />
-            <marker date="1550348300516" expanded="false" signature="2751:3316" ph="Strike Method" />
-            <marker date="1550348300516" expanded="true" signature="2824:3301" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="2875:3295" ph="{...}" />
-            <marker date="1550348300516" expanded="false" signature="3322:3887" ph="Grab Method" />
-            <marker date="1550348300516" expanded="true" signature="3391:3872" ph="{...}" />
-            <marker date="1550348300516" expanded="true" signature="3444:3866" ph="{...}" />
-            <marker date="1550348300516" expanded="false" signature="3893:4409" ph="Old Strike Method" />
-            <marker date="1550348300516" expanded="true" signature="3923:4394" ph="/* void Strike() ... */" />
-            <marker date="1550348300516" expanded="false" signature="4419:4950" ph="Old Grab Method" />
-            <marker date="1550348300516" expanded="true" signature="4447:4935" ph="/* void Grab() ... */" />
+            <marker date="1552590186058" expanded="true" signature="6:224" ph="..." />
+            <marker date="1552590186058" expanded="true" signature="271:14333" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="278:579" ph="Public Variables" />
+            <marker date="1552590186058" expanded="true" signature="589:808" ph="Physics Vars" />
+            <marker date="1552590186058" expanded="true" signature="879:1180" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="1018:1077" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="1115:1174" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="1238:3989" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="1273:3983" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="3995:4645" ph="Horizontal Movement" />
+            <marker date="1552590186058" expanded="true" signature="4115:4302" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="4359:4494" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="4578:4630" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="4655:5732" ph="Blocking" />
+            <marker date="1552590186058" expanded="true" signature="4751:4995" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="4800:4870" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="4912:4989" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="5005:5076" ph="/* Startup block animation ... */" />
+            <marker date="1552590186058" expanded="true" signature="5121:5348" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="5354:5442" ph="/* Go into block recovery and back to idle ... */" />
+            <marker date="1552590186058" expanded="true" signature="5494:5717" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="5738:6819" ph="Striking" />
+            <marker date="1552590186058" expanded="true" signature="5786:6141" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="5892:6135" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="6192:6804" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="6825:7909" ph="Grabbing" />
+            <marker date="1552590186058" expanded="true" signature="6871:7140" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="6975:7134" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="7189:7894" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="7919:10019" ph="Hitting and Getting Hit" />
+            <marker date="1552590186058" expanded="true" signature="8072:8873" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="8301:8867" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="8418:8582" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="8693:8857" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="8969:10004" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="9136:9998" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="9671:9988" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10025:14293" ph="Tech Moves and Getting Up" />
+            <marker date="1552590186058" expanded="true" signature="10090:10687" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10194:10289" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10355:10437" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10532:10681" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10799:12499" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10823:11663" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="10845:10897" ph="/* go into tech in place states ... */" />
+            <marker date="1552590186058" expanded="true" signature="11707:12436" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="12593:14278" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="12644:13412" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="13454:14216" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="14303:14331" ph="Tools" />
+            <marker date="1552590186058" expanded="false" signature="14335:14597" ph="Helper Classes" />
+            <marker date="1552590186058" expanded="true" signature="14408:14585" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="14463:14583" ph="{...}" />
+            <marker date="1552590186058" expanded="true" signature="14500:14577" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerStatus.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/CameraManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="57" column="59" selection-start-line="57" selection-start-column="59" selection-end-line="57" selection-end-column="59" />
+          <folding>
+            <marker date="1551215374745" expanded="false" signature="6:78" ph="..." />
+            <marker date="1551215374745" expanded="true" signature="80:174" ph="/* Moves and resizes as players move ... */" />
+            <marker date="1551215374745" expanded="true" signature="218:1685" ph="{...}" />
+            <marker date="1551215374745" expanded="false" signature="225:342" ph="Private Variables" />
+            <marker date="1551215374745" expanded="true" signature="348:508" ph="Public Variables" />
+            <marker date="1551215374745" expanded="true" signature="591:722" ph="{...}" />
+            <marker date="1551215374745" expanded="true" signature="753:1683" ph="{...}" />
+            <marker date="1551215374745" expanded="true" signature="1036:1440" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Simple Fighter 2.0/Assets/Scripts/GameManager.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="14" selection-end-line="31" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/PlayerView.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-887">
+          <caret line="14" column="4" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="17" selection-end-column="40" />
+          <folding>
+            <marker date="1552590186060" expanded="false" signature="6:97" ph="..." />
+            <marker date="1552590186060" expanded="true" signature="194:7913" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="206:538" ph="Public Variables" />
+            <marker date="1552590186060" expanded="false" signature="548:707" ph="Private Variables" />
+            <marker date="1552590186060" expanded="true" signature="737:1303" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="917:983" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="1361:1395" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="1401:2192" ph="Public Methods" />
+            <marker date="1552590186060" expanded="true" signature="1520:2177" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="1813:1962" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="2021:2171" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="2202:7477" ph="Private Methods" />
+            <marker date="1552590186060" expanded="false" signature="2256:7461" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="2291:7455" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="7487:7906" ph="Tools" />
+            <marker date="1552590186060" expanded="true" signature="7532:7891" ph="{...}" />
+            <marker date="1552590186060" expanded="true" signature="8015:8067" ph="{...}" />
           </folding>
         </state>
       </provider>
