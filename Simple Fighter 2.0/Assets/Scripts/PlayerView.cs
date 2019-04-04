@@ -38,7 +38,7 @@ public class PlayerView : MonoBehaviour
 
         rb = gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
-        rb.isKinematic = true;
+        rb.isKinematic = false;
 
         col = gameObject.AddComponent<BoxCollider2D>();
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,13 +13,28 @@ public class GameManager : MonoBehaviour
     
     #endregion
     
-    #region Private Variables
-    
+    #region Gameplay Variables
+   
     private Player[] players;
 
     private GameObject model;
     private GameObject controller;
     private GameObject view;
+    #endregion
+
+    #region UI Variables
+
+    private Transform uiCanvas;
+    private GameObject[] healthBars;
+    
+    #endregion
+    
+    
+    #region Round Information
+
+    public int TotalRounds = 3;
+    private int roundNum;
+    private int setNum;
     
     #endregion
     
@@ -38,6 +54,7 @@ public class GameManager : MonoBehaviour
     //Set up variables
     private void Init()
     {
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         model = GameObject.Find("Model");
         view = GameObject.Find("View");
         controller = GameObject.Find("Controller");
@@ -78,6 +95,11 @@ public class GameManager : MonoBehaviour
         
     }
     
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
+    }
+    
     #endregion
     // Update is called once per frame
     private void Update()
@@ -85,6 +107,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown("r"))
             SceneManager.LoadScene("LevelName");
     }
+
+    #region Events
+
+    private void OnHealthChanged(HealthChanged evt)
+    {
+        
+    }
+
+    #endregion
 }
 
 //Object that holds a player's model, view and controller for referencing as a group
