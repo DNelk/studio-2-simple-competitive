@@ -239,9 +239,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Children:
-  - {fileID: 278441352856363952}
-  - {fileID: 278441352095390973}
   - {fileID: 278441351668177791}
+  - {fileID: 278441352095390973}
+  - {fileID: 278441352856363952}
 --- !u!1 &278441352856363952
 GameObject:
   m_ObjectHideFlags: 0
