@@ -18,7 +18,8 @@ public class PlayerModel : MonoBehaviour
     #region Public Variables
 
     //Character Statistics
-    [Range(1, 5)] public int MaxHitPoints;
+    [Range(1, 6)] public int MaxHitPoints = 6;
+    public int CurrentHitPoints;
     [Range(1, 50)] public float MoveSpeed = 10;
     [Range(1, 10)] public float StrikeStartupFrames = .1f;
     [Range(1, 10)] public float StrikeActiveFrames = .1f;
@@ -41,12 +42,20 @@ public class PlayerModel : MonoBehaviour
     {
         //Initialize state machine
         stateMachine = new StateMachine<PlayerModel>(this);
-        stateMachine.TransitionTo<Idle>();
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        
+        Init();
     }
 
+    //Init our variables
+    public void Init()
+    {
+        currentHitPoints = MaxHitPoints;
+        stateMachine.TransitionTo<Idle>();
+    }
+    
     private void OnDestroy()
     {
         //Unhookup the Event Manager

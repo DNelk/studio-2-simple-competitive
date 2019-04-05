@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
             
             //Create UI
             healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
-            healthBars[i].transform.SetParent(uiCanvas.transform);
+            healthBars[i].transform.SetParent(uiCanvas.transform, false);
         }
     }
     
@@ -136,6 +136,12 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private void StartRound()
+    {
+        players = null;
+        InitPlayers();
+    }
+    
     #endregion
 }
 
