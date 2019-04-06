@@ -12,7 +12,8 @@ public class PlayerView : MonoBehaviour
     private SpriteRenderer spriteRen;
     private Rigidbody2D rb;
     private BoxCollider2D col;
-    private int direction; 
+    private int direction;
+    private int opponentLayer;
         
     #endregion
 
@@ -41,6 +42,7 @@ public class PlayerView : MonoBehaviour
         rb.isKinematic = false;
 
         col = gameObject.AddComponent<BoxCollider2D>();
+        
     }
     
     // Start is called before the first frame update
@@ -75,6 +77,22 @@ public class PlayerView : MonoBehaviour
         }
         else
             Debug.Log("error: direction not found");
+        
+        //Set View layer for Hit Detection
+        if (PlayerIndex == 0)
+        {
+            gameObject.layer = LayerMask.NameToLayer("1PBox");
+            opponentLayer = LayerMask.GetMask("2PBox");
+        }
+        else if (PlayerIndex == 1)
+        {
+            gameObject.layer = LayerMask.NameToLayer("2PBox");
+            opponentLayer = LayerMask.GetMask("1PBox");
+        }
+        else
+        {
+            Debug.Log("LAYER NOT SET FOR VIEW " + PlayerIndex);
+        }
     }
 
     private void OnDestroy()
@@ -125,7 +143,7 @@ public class PlayerView : MonoBehaviour
             return;
         Debug.Log("HitBox Active " + PlayerIndex);
         Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance, 0);
-        Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0);
+        Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0, opponentLayer);
 
         if (hitCol)
         {
