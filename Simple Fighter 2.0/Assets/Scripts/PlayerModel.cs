@@ -24,13 +24,13 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 10)] public float StrikeStartupFrames = .1f;
     [Range(1, 10)] public float StrikeActiveFrames = .1f;
     public float StrikeHitBoxDistance = 1;
-    public Vector2 StrikeHitBoxSize = new Vector2(10, 10);
+    public Vector2 StrikeHitBoxSize = new Vector2(1.75f, 1f);
     [Range(1, 10)] public int StrikeRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
     [Range(1, 10)] public float GrabStartupFrames = .1f;
     [Range(1, 10)] public float GrabActiveFrames = .1f;
     [Range(1, 10)] public int GrabRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
     public float GrabHitBoxDistance = 1;
-    public Vector2 GrabHitBoxSize = new Vector2(10, 10);
+    public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
     [Range(1, 10)] public int BlockStartupFrames;
     [Range(1, 10)] public int BlockRecoveryFrames;
     [Range(1, 50)] public float GetUpSpeed = 10;
