@@ -64,6 +64,7 @@ public class Events : MonoBehaviour
     public class HitOpponent : GameEvent
     {
         public int PlayerIndex { get; }
+        
 
         public HitOpponent(int playerIndex)
         {

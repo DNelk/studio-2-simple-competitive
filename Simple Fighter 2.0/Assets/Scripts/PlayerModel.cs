@@ -11,7 +11,7 @@ public class PlayerModel : MonoBehaviour
 
     //Current hitpoints
     private int currentHitPoints;
-    
+    private bool hasHit;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -54,6 +54,7 @@ public class PlayerModel : MonoBehaviour
     {
         currentHitPoints = MaxHitPoints;
         stateMachine.TransitionTo<Idle>();
+        hasHit = false;
     }
     
     private void OnDestroy()
@@ -94,10 +95,15 @@ public class PlayerModel : MonoBehaviour
     //NOTE: The OTHER Player's view Fires this event. That is fine, but it is important to note
     public void OnHit(HitOpponent evt)
     {
-        if (PlayerIndex == evt.PlayerIndex) //The event is fired from the OTHER player, so if it is our own player index, we do not act on this
+        if (PlayerIndex == evt.PlayerIndex)//The event is fired from the OTHER player, so if it is our own player index, we do not act on this
+        {
+            hasHit = true;
             return;
+        }
+        
         stateMachine.TransitionTo<Falling>();
         CurrentHitPoints--;
+        Debug.Log(PlayerIndex + " health = " + CurrentHitPoints);
         EventManager.Instance.Fire(new HealthChanged(CurrentHitPoints, PlayerIndex));
     }
     
@@ -172,13 +178,14 @@ public class PlayerModel : MonoBehaviour
             maxTime = timer;
             activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
+            Context.hasHit = false;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit)
+            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
             {
                 //Active
                 Debug.Log("Fire hitbox active event " + Context.PlayerIndex);
@@ -239,13 +246,14 @@ public class PlayerModel : MonoBehaviour
             maxTime = timer;
             activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
+            Context.hasHit = false;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit)
+            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
             {
                 //Active
                 EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex));
