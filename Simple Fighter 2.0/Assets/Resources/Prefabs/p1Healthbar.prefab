@@ -91,9 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Children:
-  - {fileID: 3299771751239664372}
-  - {fileID: 3299771752046131753}
   - {fileID: 3299771751337431716}
+  - {fileID: 3299771752046131753}
+  - {fileID: 3299771751239664372}
 --- !u!1 &3299771751239664372
 GameObject:
   m_ObjectHideFlags: 0

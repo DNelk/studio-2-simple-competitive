@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     
     public static GameManager Instance = null; //Our Singleton
     public Vector3[] StartingPositions = {new Vector3(-3.5f, 0f, 0f), new Vector3(3.5f, 0f, 0f)};
-    
+    public ManagerState CurrentManagerState;
     #endregion
     
     #region Gameplay Variables
@@ -49,8 +49,10 @@ public class GameManager : MonoBehaviour
         
         DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         healthBars = new GameObject[2];
         roundNum = 1;
+        CurrentManagerState = ManagerState.Fighting;
         Init();
     }
 
@@ -97,12 +99,14 @@ public class GameManager : MonoBehaviour
             //Create UI
             healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
             healthBars[i].transform.SetParent(uiCanvas.transform, false);
+            healthBars[i].GetComponent<HealthBar>().PlayerIndex = i;
         }
     }
     
     private void OnDestroy()
     {
         EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
     }
     
     #endregion
@@ -111,7 +115,6 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown("r")){
             SceneManager.LoadScene("LevelName");
-            roundNum++;
         }
     }
 
@@ -127,19 +130,42 @@ public class GameManager : MonoBehaviour
             EndRound(index);
     }
 
+    private void OnInput(ProcessInput evt)
+    {
+        switch (CurrentManagerState)
+        {
+                case ManagerState.RoundOver:
+                    StartRound();
+                    break;
+        }
+    }
     #endregion
 
     #region Round Management
 
+    //End the current round
     private void EndRound(int losingPlayerIndex)
     {
+        for (int i = 0; i < players.Length ; i++)
+        {
+            if (i != losingPlayerIndex)
+            {
+                Debug.Log("player " + (i + 1) + " wins");
+                players[i].Model.WinRound();
+            }
+        }
         
+        //stop the timer
     }
 
+    //Start a new round
     private void StartRound()
     {
         players = null;
         InitPlayers();
+        roundNum++;
+        
+        //reset the timer
     }
     
     #endregion
@@ -189,4 +215,13 @@ public class Player
         set { controller = value; }
     }
     #endregion
+}
+
+public enum ManagerState
+{
+    Start,
+    Fighting,
+    RoundOver,
+    SetOver,
+    Menu
 }

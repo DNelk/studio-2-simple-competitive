@@ -76,6 +76,10 @@ public class PlayerModel : MonoBehaviour
         return stateMachine.CurrentState;
     }
 
+    public void WinRound()
+    {
+        stateMachine.TransitionTo<Victory>();
+    }
     #endregion
     
     //Called by Controller when an input is received
@@ -93,6 +97,8 @@ public class PlayerModel : MonoBehaviour
         if (PlayerIndex == evt.PlayerIndex) //The event is fired from the OTHER player, so if it is our own player index, we do not act on this
             return;
         stateMachine.TransitionTo<Falling>();
+        CurrentHitPoints--;
+        EventManager.Instance.Fire(new HealthChanged(CurrentHitPoints, PlayerIndex));
     }
     
     #region States
@@ -380,7 +386,15 @@ public class PlayerModel : MonoBehaviour
             }
         }
     }
-    
-    private class Victory : PlayerState{}
+
+    private class Victory : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+            //need victory anim
+            animationTrigger = "isGettingUp";
+        }
+    }
     #endregion
 }
