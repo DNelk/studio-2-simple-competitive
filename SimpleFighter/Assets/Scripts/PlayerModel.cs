@@ -66,6 +66,9 @@ public enum PlayerState
     TechRollStartup,
     TechRollActive,
     TechRollRecovery,
+    
+    Ko,
+    Win,
 	
     Ko,
     Win,

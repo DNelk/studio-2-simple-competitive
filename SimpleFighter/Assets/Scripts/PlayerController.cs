@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Rewired;
 using UnityEditor.Experimental.UIElements;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,10 +15,7 @@ public class PlayerController : MonoBehaviour
     public PlayerModel OpponentModel; //The model of the other player
     public PlayerView View; //Our View
     public Player Player; //Rewired Player reference
-    
-    //this is Palmmy's
-    public HPModel HPbar;
-    public StaminaModel staminaBar;
+    public PlayerStatus status; // HP and Stamina manager
     #endregion
     
     #region Physics Vars
@@ -25,17 +23,7 @@ public class PlayerController : MonoBehaviour
     public float RollMultiplier = 10;
     public float TechRollMultiplier = 15;
     private float rollDirection;
-    public Vector2 StrikeHitBoxSize;
-    public float StrikeHitBoxDistance = 0;
-    public Vector2 GrabHitBoxSize;
-    public float GrabHitBoxDistance = 0;
     private string hitBoxLayer;
-    
-    //this is palmmy's
-    private int maxHP;
-    private int HPMultiplier = 0;
-    private int maxStamina;
-    private int staminaMultiplier = 0;
     #endregion
 
     // Start is called before the first frame update
@@ -51,10 +39,6 @@ public class PlayerController : MonoBehaviour
         {
             hitBoxLayer = "HurtBoxP1";
         }
-        
-        //this is palmmy's
-        maxHP = Model.Health;
-        maxStamina = Model.Stamina;
     }
 
     // Update is called once per frame
@@ -67,16 +51,17 @@ public class PlayerController : MonoBehaviour
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
-                StaminaRecovery(); //Palmmy Stamina Function
-                HPRecovery();
+                View.hitBox.enabled = true; //reactivate hitbox as player stands
+                status.HPRecovery();
+                status.StaminaRecovery();
                 break;
             case PlayerState.Walking: //can perform any action while walking
                 MoveCheck();
                 StrikeCheck();
                 GrabCheck();
                 BlockCheck();
-                StaminaRecovery(); //Palmmy Stamina Function
-                HPRecovery();
+                status.HPRecovery();
+                status.StaminaRecovery();
                 break;
             case PlayerState.StrikeStartup: //can't do anything while punching
             case PlayerState.StrikeActive:
@@ -84,8 +69,9 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.BlockStartup: //can release blocking while blocking
             case PlayerState.BlockActive:
-            case PlayerState.BlockRecovery:
                 BlockCheck();
+                break;
+            case PlayerState.BlockRecovery:
                 break;
             case PlayerState.GrabStartup: //can't do anything while grabbing
             case PlayerState.GrabActive:
@@ -118,8 +104,8 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Grounded: //On the ground
                 WakeUpCheck();
                 break;
-            case PlayerState.Ko:
-            case PlayerState.Win:
+            case PlayerState.Ko: //KO
+            case PlayerState.Win: //Win
                 break;
         }
     }
@@ -172,7 +158,7 @@ public class PlayerController : MonoBehaviour
     {
         //STARTUP
         Model.State = PlayerState.BlockStartup;
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(3)); // wait for frames
         
         //ACTIVE
         Model.State = PlayerState.BlockActive; 
@@ -184,23 +170,22 @@ public class PlayerController : MonoBehaviour
     {
         //RECOVERY
         Model.State = PlayerState.BlockRecovery;
-        yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(22)); // wait for frames
             
         //FAF
         Model.State = PlayerState.Idle;
     }
     #endregion
 
-    //Palmmy add stamina condition here
     #region Striking
 
     private void StrikeCheck()
     {
-        if (Player.GetButtonDown("Strike") && Model.Stamina > 0) //Palmmy add Stamina Condition
+        if (Player.GetButtonDown("Strike") && Model.Stamina > 0) //also check there is stamina left
         {
+            status.performAction(1); //change number for different amount of Stamina uses
             //STARTUP STRIKE
             Model.State = PlayerState.StrikeStartup;
-            staminaBar.performHit(1); //added to use stamina
             StartCoroutine(PlayerAction_Strike());
         }
     }
@@ -210,7 +195,7 @@ public class PlayerController : MonoBehaviour
         yield return StartCoroutine(WaitFor.Frames(5)); // wait
         //ACTIVE
         Model.State = PlayerState.StrikeActive;
-        SpawnHitBox(StrikeHitBoxDistance, StrikeHitBoxSize, "strike box ");
+        SpawnHitBox(View.StrikeHitBoxDistance, View.StrikeHitBoxSize, "strike box ");
         yield return StartCoroutine(WaitFor.Frames(2)); // wait for frames
         //RECOVERY
         Model.State = PlayerState.StrikeRecovery;
@@ -223,14 +208,13 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    //Palmmuy also add stamina condition here
     #region Grabbing
 
     private void GrabCheck()
     {
-        if (Player.GetButtonDown("Grab") && Model.Stamina > 0) //Palmmy add Stamina Condition
+        if (Player.GetButtonDown("Grab") && Model.Stamina > 0) //also check there is stamina left
         {
-            staminaBar.performHit(1); //added to use stamina
+            status.performAction(1); //change number for different amount of Stamina uses
             StartCoroutine(PlayerAction_Grab());
         }
     }
@@ -243,12 +227,12 @@ public class PlayerController : MonoBehaviour
         
         //ACTIVE
         Model.State = PlayerState.GrabActive;
-        SpawnHitBox(GrabHitBoxDistance, GrabHitBoxSize, "grab box ");
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        SpawnHitBox(View.GrabHitBoxDistance, View.GrabHitBoxSize, "grab box ");
+        yield return StartCoroutine(WaitFor.Frames(5)); // wait for frames
         
         //RECOVERY
         Model.State = PlayerState.GrabRecovery;
-        yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+        yield return StartCoroutine(WaitFor.Frames(12)); // wait for frames
         
         //FAF
         if (OpponentModel.State != PlayerState.Ko)
@@ -272,23 +256,22 @@ public class PlayerController : MonoBehaviour
             if (Model.State == PlayerState.StrikeActive && OpponentModel.State != PlayerState.BlockActive)
             {
                // StartCoroutine(OpponentModel.PlayerAction_GetHit());
-               if (Model.Health > 1)
-                    OpponentModel.State = PlayerState.DamageStartup;
+                OpponentModel.State = PlayerState.DamageStartup;
             }
             else if (Model.State == PlayerState.GrabActive && OpponentModel.State != PlayerState.StrikeActive)
             {
                 //StartCoroutine(OpponentModel.PlayerAction_GetHit());
-                if (Model.Health > 1)
-                    OpponentModel.State = PlayerState.DamageStartup;
+                OpponentModel.State = PlayerState.DamageStartup;
             }
         }
     }
     
     
+    
     //What happens when we get hit
     private IEnumerator PlayerAction_GetHit()
     {
-        HPbar.getHit(1);
+        status.getHit(1);
         //yield return StartCoroutine((WaitFor.Frames(5))); //Wait a sec for hit animation
 
         if (Model.State != PlayerState.Ko)
@@ -298,7 +281,7 @@ public class PlayerController : MonoBehaviour
             View.hitBox.enabled = false; //turn off the hitBox for the duration of knockdown
             Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
             yield return StartCoroutine(WaitFor.Frames(5));
-        
+
             //Did we tech in this window? if not, let's process the rest of this
             if (Model.State == PlayerState.DamageActive)
             {
@@ -344,11 +327,11 @@ public class PlayerController : MonoBehaviour
         {            //go into tech in place states
             //STARTUP
             Model.State = PlayerState.TechInPlaceStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.TechInPlaceActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechInPlaceRecovery;
@@ -363,11 +346,11 @@ public class PlayerController : MonoBehaviour
         else //Go into normal wakeup states
         {
             Model.State = PlayerState.GetupStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(24)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.GetupActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(24)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRecovery;
@@ -391,37 +374,38 @@ public class PlayerController : MonoBehaviour
         {
             //STARTUP
             Model.State = PlayerState.TechRollStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.TechRollActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(10)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.TechRollRecovery;
             View.hitBox.enabled = true;
             Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(20)); // wait for frames
         
             //FAF
             Model.State = PlayerState.Idle;
             Debug.Log("tech roll");
+            
         }
         else //Go into normal roll states
         {
             //STARTUP
             Model.State = PlayerState.GetupRollStartup;
-            yield return StartCoroutine(WaitFor.Frames(8)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //ACTIVE
             Model.State = PlayerState.GetupRollActive;
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //RECOVERY
             Model.State = PlayerState.GetupRollRecovery;
             View.hitBox.enabled = true;
             Debug.Log("Player " + Model.PlayerIndex + "hitbox " + View.hitBox.isActiveAndEnabled);
-            yield return StartCoroutine(WaitFor.Frames(6)); // wait for frames
+            yield return StartCoroutine(WaitFor.Frames(16)); // wait for frames
         
             //FAF
             Model.State = PlayerState.Idle;
@@ -431,58 +415,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
     
-    //this is Palmmy's
-    #region StaminaRecovery
-
-    void StaminaRecovery()
-    {
-        if (Model.Stamina < maxStamina)
-        {
-            staminaMultiplier++;
-
-            if (staminaMultiplier == 60) //change this condition to adjust how fast stamina recovery
-            {
-                staminaMultiplier = 0;
-                Model.Stamina++;
-                staminaBar.updateStamina(Model.Stamina);
-                Debug.Log("RecoverStamina");
-            }
-        }
-    }
-
-    #endregion
-    
-    #region HPRecovery
-
-    void HPRecovery()
-    {
-        if (Model.Health < maxHP && Model.Health % 2 != 0)
-        {
-            HPMultiplier++;
-
-            if (HPMultiplier == 120) //change this condition to adjust how fast stamina recovery
-            {
-                HPMultiplier = 0;
-                Model.Health++;
-                HPbar.updateHP(Model.Health);
-                Debug.Log("RecoverHealth");
-            }
-        }
-    }
-
-    #endregion
-    
     #region Tools
-    private void OnDrawGizmos()
-    {
-        //Draw strike hitbox
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + StrikeHitBoxDistance, 0), StrikeHitBoxSize);
-        
-        //Draw Grab hitbox
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(new Vector2(View.transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
-    }
     #endregion
 }
 
