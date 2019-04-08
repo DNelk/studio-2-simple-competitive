@@ -19,7 +19,6 @@ public class PlayerModel : MonoBehaviour
 
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
-    public int CurrentHitPoints;
     [Range(1, 50)] public float MoveSpeed = 10;
     [Range(1, 10)] public float StrikeStartupFrames = .1f;
     [Range(1, 10)] public float StrikeActiveFrames = .1f;
@@ -102,9 +101,9 @@ public class PlayerModel : MonoBehaviour
         }
         
         stateMachine.TransitionTo<Falling>();
-        CurrentHitPoints--;
-        Debug.Log(PlayerIndex + " health = " + CurrentHitPoints);
-        EventManager.Instance.Fire(new HealthChanged(CurrentHitPoints, PlayerIndex));
+        currentHitPoints--;
+        Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+        EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
     }
     
     #region States
@@ -244,8 +243,8 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = 0.3f;
             maxTime = timer;
-            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
-            activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
+            activeWindowEnter = maxTime - Context.GrabStartupFrames;
+            activeWindowExit = activeWindowEnter - Context.GrabActiveFrames;
             Context.hasHit = false;
         }
 
@@ -269,6 +268,7 @@ public class PlayerModel : MonoBehaviour
 
     private class Falling : PlayerState
     {
+        
         public override void Init()
         {
             base.Init();
