@@ -13,6 +13,7 @@ public class PlayerModel : MonoBehaviour
     private int currentHitPoints;
     private bool hasHit;
     private bool isBlocking;
+    private float rollDir;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -21,6 +22,8 @@ public class PlayerModel : MonoBehaviour
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
     [Range(1, 50)] public float MoveSpeed = 10;
+    public float RollSpeed = 10;
+    public float TechSpeed = 15;
     [Range(1, 10)] public float StrikeStartupFrames = .1f;
     [Range(1, 10)] public float StrikeActiveFrames = .1f;
     public float StrikeHitBoxDistance = 1;
@@ -103,6 +106,7 @@ public class PlayerModel : MonoBehaviour
         }
         //if not blocking && not grounded && not getup && not rolling// make it a bool that is only true when actually in active frames
         Type currentStateType = stateMachine.CurrentState.GetType();
+        
         if (currentStateType == typeof(Grounded) || 
             currentStateType == typeof(Falling) || 
             currentStateType == typeof(Rolling) || 
@@ -110,8 +114,9 @@ public class PlayerModel : MonoBehaviour
         {
             Debug.Log("dont hit me");
         }
-        else if (isBlocking && evt.IsStrike)
+        else if (currentStateType == typeof(Blocking) && evt.IsStrike)
         {
+            Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
         }
         else if (currentStateType == typeof(Striking) && !evt.IsStrike)
@@ -266,8 +271,7 @@ public class PlayerModel : MonoBehaviour
                 timer -= 0.0167f;
                 if (timer <= 0)
                 {
-                    blocking = true;
-                    EventManager.Instance.Fire(new Events.AnimationChange("blockRelease", Context.PlayerIndex)); 
+                    blocking = true; 
                     timer = recoveryTime;
                 }
             }
@@ -358,6 +362,7 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.InputState.Roll:
+                    Context.rollDir = value;
                     TransitionTo<Rolling>();
                     Context.GetUpSpeed = 15;
                     break;
@@ -405,6 +410,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.MoveSpeed, Context.PlayerIndex));
             timer -= 0.0167f;
             if(timer <= 0)
                 TransitionTo<Idle>();
