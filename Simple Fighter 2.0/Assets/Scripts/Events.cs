@@ -51,12 +51,14 @@ public class Events : MonoBehaviour
         public float HitBoxDistance { get; }
         public Vector2 HitBoxSize { get; }
         public int PlayerIndex { get; }
-
-        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize, int playerIndex)
+        public bool IsStrike { get; }
+        
+        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize, int playerIndex, bool isStrike)
         {
             HitBoxDistance = hitBoxDistance;
             HitBoxSize = hitBoxSize;
             PlayerIndex = playerIndex;
+            IsStrike = isStrike;
         }   
     }
     
@@ -64,10 +66,12 @@ public class Events : MonoBehaviour
     public class HitOpponent : GameEvent
     {
         public int PlayerIndex { get; }
-
-        public HitOpponent(int playerIndex)
+        public bool IsStrike { get; }
+        
+        public HitOpponent(int playerIndex, bool isStrike)
         {
             PlayerIndex = playerIndex;
+            isStrike = isStrike;
         }
     }
     

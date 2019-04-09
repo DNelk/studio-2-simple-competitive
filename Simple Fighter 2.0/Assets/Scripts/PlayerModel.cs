@@ -46,6 +46,7 @@ public class PlayerModel : MonoBehaviour
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
         
         Init();
+        
     }
 
     //Init our variables
@@ -100,10 +101,30 @@ public class PlayerModel : MonoBehaviour
             return;
         }
         //if not blocking && not grounded && not getup && not rolling// make it a bool that is only true when actually in active frames
-        stateMachine.TransitionTo<Falling>();
-        currentHitPoints--;
-        Debug.Log(PlayerIndex + " health = " + currentHitPoints);
-        EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+        Type currentStateType = stateMachine.CurrentState.GetType();
+        if (currentStateType == typeof(Grounded) || 
+            currentStateType == typeof(Falling) || 
+            currentStateType == typeof(Rolling) || 
+            currentStateType == typeof(GetUp))
+        {
+            Debug.Log("dont hit me");
+        }
+        else if (currentStateType == typeof(Blocking) && evt.IsStrike)
+        {
+            //if we're opposite directions, successful block
+        }
+        else if (currentStateType == typeof(Striking) && !evt.IsStrike)
+        {
+            //if we're opposite directions, they got us
+        }
+        else
+        {
+            stateMachine.TransitionTo<Falling>();
+            currentHitPoints--;
+            Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+            EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+        }
+       
         
         //
     }
@@ -190,7 +211,7 @@ public class PlayerModel : MonoBehaviour
             {
                 //Active
                 Debug.Log("Fire hitbox active event " + Context.PlayerIndex);
-                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex));
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
             }
             else if (timer <= activeWindowExit)
             {
@@ -257,7 +278,7 @@ public class PlayerModel : MonoBehaviour
             if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
             {
                 //Active
-                EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex));
+                EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex, false));
             }
             else if (timer <= activeWindowExit)
             {
@@ -375,6 +396,12 @@ public class PlayerModel : MonoBehaviour
     
     private class Idle : PlayerState
     {
+        public override void Init()
+        {
+            base.Init();
+            animationTrigger = "isIdle";
+        }
+        
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
             base.ProcessInput(input, value);

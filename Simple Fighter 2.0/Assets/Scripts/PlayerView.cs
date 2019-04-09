@@ -41,7 +41,7 @@ public class PlayerView : MonoBehaviour
         rb = gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.isKinematic = false;
-
+        rb.freezeRotation = true;
         col = gameObject.AddComponent<BoxCollider2D>();
         
     }
@@ -148,7 +148,7 @@ public class PlayerView : MonoBehaviour
 
         if (hitCol)
         {
-            EventManager.Instance.Fire(new HitOpponent(PlayerIndex));
+            EventManager.Instance.Fire(new HitOpponent(PlayerIndex, evt.IsStrike));
         }
     }
     #region Tools
