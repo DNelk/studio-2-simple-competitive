@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
             players[i].View.transform.position = StartingPositions[i];
             players[i].View.transform.rotation = Quaternion.Euler(0,playerRot,0);
             playerRot -= 180;
+            players[i].View.PlayerModelState = players[i].Model; //give View a reference to the model so it can know state
             
             //Create UI
             healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));

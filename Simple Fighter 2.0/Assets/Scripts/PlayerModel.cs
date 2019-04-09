@@ -11,7 +11,7 @@ public class PlayerModel : MonoBehaviour
 
     //Current hitpoints
     private int currentHitPoints;
-    
+    private bool hasHit;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -19,18 +19,17 @@ public class PlayerModel : MonoBehaviour
 
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
-    public int CurrentHitPoints;
     [Range(1, 50)] public float MoveSpeed = 10;
     [Range(1, 10)] public float StrikeStartupFrames = .1f;
     [Range(1, 10)] public float StrikeActiveFrames = .1f;
     public float StrikeHitBoxDistance = 1;
-    public Vector2 StrikeHitBoxSize = new Vector2(10, 10);
+    public Vector2 StrikeHitBoxSize = new Vector2(1.75f, 1f);
     [Range(1, 10)] public int StrikeRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
     [Range(1, 10)] public float GrabStartupFrames = .1f;
     [Range(1, 10)] public float GrabActiveFrames = .1f;
     [Range(1, 10)] public int GrabRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
     public float GrabHitBoxDistance = 1;
-    public Vector2 GrabHitBoxSize = new Vector2(10, 10);
+    public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
     [Range(1, 10)] public int BlockStartupFrames;
     [Range(1, 10)] public int BlockRecoveryFrames;
     [Range(1, 50)] public float GetUpSpeed = 10;
@@ -54,6 +53,7 @@ public class PlayerModel : MonoBehaviour
     {
         currentHitPoints = MaxHitPoints;
         stateMachine.TransitionTo<Idle>();
+        hasHit = false;
     }
     
     private void OnDestroy()
@@ -94,11 +94,18 @@ public class PlayerModel : MonoBehaviour
     //NOTE: The OTHER Player's view Fires this event. That is fine, but it is important to note
     public void OnHit(HitOpponent evt)
     {
-        if (PlayerIndex == evt.PlayerIndex) //The event is fired from the OTHER player, so if it is our own player index, we do not act on this
+        if (PlayerIndex == evt.PlayerIndex)//The event is fired from the OTHER player, so if it is our own player index, we do not act on this
+        {
+            hasHit = true;
             return;
+        }
+        //if not blocking && not grounded && not getup && not rolling// make it a bool that is only true when actually in active frames
         stateMachine.TransitionTo<Falling>();
-        CurrentHitPoints--;
-        EventManager.Instance.Fire(new HealthChanged(CurrentHitPoints, PlayerIndex));
+        currentHitPoints--;
+        Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+        EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+        
+        //
     }
     
     #region States
@@ -172,13 +179,14 @@ public class PlayerModel : MonoBehaviour
             maxTime = timer;
             activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
+            Context.hasHit = false;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit)
+            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
             {
                 //Active
                 Debug.Log("Fire hitbox active event " + Context.PlayerIndex);
@@ -237,15 +245,16 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = 0.3f;
             maxTime = timer;
-            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
-            activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
+            activeWindowEnter = maxTime - Context.GrabStartupFrames;
+            activeWindowExit = activeWindowEnter - Context.GrabActiveFrames;
+            Context.hasHit = false;
         }
 
         public override void Update()
         {
             base.Update();
             timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit)
+            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
             {
                 //Active
                 EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex));
@@ -261,6 +270,7 @@ public class PlayerModel : MonoBehaviour
 
     private class Falling : PlayerState
     {
+        
         public override void Init()
         {
             base.Init();

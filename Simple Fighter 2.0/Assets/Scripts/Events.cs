@@ -19,6 +19,17 @@ public class Events : MonoBehaviour
         }
     }
     
+    //Sound Effect
+    public class PlaySoundEffect : GameEvent
+    {
+        public string SoundEffect { get; }
+
+        public PlaySoundEffect(string soundEffect)
+        {
+            SoundEffect = soundEffect;
+        }
+    }
+    
     //Translate Event
     public class TranslatePos : GameEvent
     {
