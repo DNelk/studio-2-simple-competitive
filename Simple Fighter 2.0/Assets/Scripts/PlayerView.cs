@@ -37,13 +37,13 @@ public class PlayerView : MonoBehaviour
         animator = gameObject.AddComponent<Animator>();
 
         spriteRen = gameObject.AddComponent<SpriteRenderer>();
-
+        spriteRen.sortingOrder = 5;
         rb = gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.isKinematic = false;
         rb.freezeRotation = true;
-        col = gameObject.AddComponent<BoxCollider2D>();
         
+        col = gameObject.AddComponent<BoxCollider2D>();
     }
     
     // Start is called before the first frame update
