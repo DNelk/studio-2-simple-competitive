@@ -71,7 +71,7 @@ public class Events : MonoBehaviour
         public HitOpponent(int playerIndex, bool isStrike)
         {
             PlayerIndex = playerIndex;
-            isStrike = isStrike;
+            IsStrike = isStrike;
         }
     }
     
