@@ -27,7 +27,7 @@ public class TitleExplosion : MonoBehaviour
         //Vector3 pushForce = Vector3.forward * 500f;
         rb.AddForce(gravity,ForceMode.Acceleration);
         
-        GetComponent<Image>().color += new Color(0,0,0,-0.015f);
+        GetComponent<Image>().color += new Color(0,0,0,-0.01f);
         if (GetComponent<Image>().color.a <= 0f)
             Destroy(transform.parent.gameObject);
     }
