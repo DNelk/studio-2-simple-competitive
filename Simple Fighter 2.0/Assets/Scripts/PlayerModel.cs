@@ -12,6 +12,7 @@ public class PlayerModel : MonoBehaviour
     //Current hitpoints
     private int currentHitPoints;
     private bool hasHit;
+    private bool isBlocking;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -109,7 +110,7 @@ public class PlayerModel : MonoBehaviour
         {
             Debug.Log("dont hit me");
         }
-        else if (currentStateType == typeof(Blocking) && evt.IsStrike)
+        else if (isBlocking && evt.IsStrike)
         {
             //if we're opposite directions, successful block
         }
@@ -224,10 +225,25 @@ public class PlayerModel : MonoBehaviour
 
     private class Blocking : PlayerState
     {
+
+        private float timer;
+        private float startupTime = .3f;
+        private float recoveryTime = .3f;
+
+        private bool blocking;
+        private bool blockReleased;
+        
         public override void Init()
         {
             base.Init();
             animationTrigger = "isBlocking";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = startupTime;
+            blockReleased = false;
         }
 
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -236,15 +252,39 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.InputState.EndBlock:
-                    TransitionTo<Idle>();
+                    blockReleased = true;
+                    EventManager.Instance.Fire(new Events.AnimationChange("blockRelease", Context.PlayerIndex)); 
                     break;
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (!blockReleased && !blocking)
+            {
+                timer -= 0.0167f;
+                if (timer <= 0)
+                {
+                    blocking = true;
+                    EventManager.Instance.Fire(new Events.AnimationChange("blockRelease", Context.PlayerIndex)); 
+                    timer = recoveryTime;
+                }
+            }
+            else if (blockReleased)
+            {
+                timer -= 0.0167f;
+                if (timer <= 0)
+                {
+                    TransitionTo<Idle>();
+                }
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            EventManager.Instance.Fire(new Events.AnimationChange("endBlock", Context.PlayerIndex));          
+            blocking = false;
         }
     }
 
