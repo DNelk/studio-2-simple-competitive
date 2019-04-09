@@ -99,11 +99,13 @@ public class PlayerModel : MonoBehaviour
             hasHit = true;
             return;
         }
-        
+        //if not blocking && not grounded && not getup && not rolling// make it a bool that is only true when actually in active frames
         stateMachine.TransitionTo<Falling>();
         currentHitPoints--;
         Debug.Log(PlayerIndex + " health = " + currentHitPoints);
         EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+        
+        //
     }
     
     #region States

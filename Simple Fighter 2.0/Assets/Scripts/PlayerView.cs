@@ -22,6 +22,7 @@ public class PlayerView : MonoBehaviour
     public float StrikeHitBoxDistance;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance;
+    public PlayerModel PlayerModelState;
     #endregion
     
     #region Public Variables
