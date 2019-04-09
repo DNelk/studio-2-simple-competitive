@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public GameObject[] Children = new GameObject[3];
+    public HPbarEffect[] Children = new HPbarEffect[3];
 
     public int PlayerIndex;
     
@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour
     
     private int cachedHealth;
     
-  
+    
     private void Start()
     {
         currentChild = 0;
@@ -43,24 +43,17 @@ public class HealthBar : MonoBehaviour
 
     private void RebuildChild()
     {
-        //Right now we just change the sprite.. probably not final
-        Image childImage = Children[currentChild].GetComponent<Image>();
-        childImage.sprite = Resources.Load<Sprite>("Textures/HPBar/p" + (PlayerIndex + 1) + "full");
+        Children[currentChild].Recover();
     }
     
     private void DamageChild()
     {
-        //Right now we just change the sprite.. probably not final
-        Image childImage = Children[currentChild].GetComponent<Image>();
-        Debug.Log("Textures/HPBar/p" + (PlayerIndex + 1) + "hurt");
-        childImage.sprite = Resources.Load<Sprite>("Textures/HPBar/p" + (PlayerIndex + 1) + "hurt");
+        Children[currentChild].Crack();
     }
     
     private void DestroyChild()
     {
-        //Right now we just change the sprite.. probably not final
-        Image childImage = Children[currentChild].GetComponent<Image>();
-        childImage.sprite = Resources.Load<Sprite>("Textures/HPBar/p" + (PlayerIndex + 1) + "empty");
+        Children[currentChild].Shatter();
         currentChild++;
     }
 }

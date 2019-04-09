@@ -7,6 +7,11 @@ public class HPbarEffect : MonoBehaviour
     //assign this script to HPbar object
     public Animator HPanim;
 
+    private void Start()
+    {
+        HPanim = transform.GetComponent<Animator>();
+    }
+
     public void Crack()
     {
         HPanim.SetBool("recover", false);
