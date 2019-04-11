@@ -10,12 +10,6 @@ public class RoundAnnouncer : MonoBehaviour
 
     public int roundNumber = 1;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,6 +23,7 @@ public class RoundAnnouncer : MonoBehaviour
     
     public void DestroyAfterAnimation()
     {
+        GameManager.Instance.CurrentManagerState = ManagerState.Fighting;
         Destroy(gameObject);
     }
 }

@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject uiCanvas;
     private GameObject[] healthBars;
-    
+    private GameObject timer;
     #endregion
     
     
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         healthBars = new GameObject[2];
         roundNum = 1;
-        CurrentManagerState = ManagerState.Fighting;
+        CurrentManagerState = ManagerState.Start;
         Init();
     }
 
@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
             InitPlayers();
             Debug.Log("Initializing players");
         }
+
+        timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
+        timer.transform.SetParent(uiCanvas.transform, false);
     }
     
     //Create our player objects and their fields
@@ -79,16 +82,19 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             //Create Player
-            GameObject playerGO;
+            GameObject playerView, playerModel, playerController;
             players[i] = new Player(); //Create Player Object
-            playerGO = new GameObject("Player" + (i+1)); //Create GameObject in scene for the player's view
-            playerGO.transform.parent = view.transform; //Set the parent for the player
-            
+        
             //Initialize Components
-            GameObject newModel = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerModel"), model.transform);
-            players[i].Model = newModel.GetComponent<PlayerModel>();
-            players[i].View = playerGO.AddComponent<PlayerView>();
-            players[i].Controller = controller.AddComponent<PlayerController>();
+            playerModel = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerModel"), model.transform);
+            players[i].Model = playerModel.GetComponent<PlayerModel>();
+            
+            playerView = new GameObject("Player" + (i+1)); //Create GameObject in scene for the player's view
+            playerView.transform.parent = view.transform; //Set the parent for the player
+            players[i].View = playerView.AddComponent<PlayerView>();
+            
+            playerController = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerController"), controller.transform);
+            players[i].Controller = playerController.GetComponent<PlayerController>();
             
             //Init Components
             players[i].Controller.SetRewiredPlayer(i); //after creating controller, set the player profile
@@ -158,16 +164,26 @@ public class GameManager : MonoBehaviour
         }
         
         //stop the timer
+        CurrentManagerState = ManagerState.RoundOver;
     }
 
     //Start a new round
     private void StartRound()
     {
-        players = null;
+        for(int i = 0; i < players.Length; i++)
+        {
+            Destroy(players[i].Model.gameObject);
+            Destroy(players[i].View.gameObject);
+            Destroy(players[i].Controller.gameObject);
+            Destroy(healthBars[i]);
+        }
+        players = new Player[2];
         InitPlayers();
         roundNum++;
         
         //reset the timer
+        CurrentManagerState = ManagerState.Start;
+        timer.GetComponent<Timer>().RoundUpdate();
     }
     
     #endregion

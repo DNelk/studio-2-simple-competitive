@@ -8,50 +8,48 @@ public class Timer : MonoBehaviour
     public Text LeftOne;
     public Text RightOne;
     
-    public float timerRaw = 60f;
-    public string timeString;
+    public float TimerRaw = 60f;
+    public string TimeString;
 
-    public Image roundSprite;
-    public int roundNumber = 1;
-    public Sprite[] roundList;
+    public Image RoundSprite;
+    public int RoundNumber = 1;
+    public Sprite[] RoundList;
 
-    public GameObject UIcanvas;
+    private Canvas canvas;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvas = GameObject.FindWithTag("UI").GetComponent<Canvas>();
+        GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
+        newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
     }
 
     // Update is called once per frame
     void Update()
     {
-        TimerUpdate();
-        RoundUpdate();
-
+        if(GameManager.Instance.CurrentManagerState == ManagerState.Fighting)
+            TimerUpdate();
     }
 
-    void TimerUpdate()
+    private void TimerUpdate()
     {
-        if (timerRaw > 0)
-            timerRaw -= Time.deltaTime;
+        if (TimerRaw > 0)
+            TimerRaw -= Time.deltaTime;
 
-        timeString = Mathf.Ceil(timerRaw).ToString();
+        TimeString = Mathf.Ceil(TimerRaw).ToString();
 
-        LeftOne.text = timeString[0].ToString();
-        RightOne.text = timeString[1].ToString();
+        LeftOne.text = TimeString[0].ToString();
+        RightOne.text = TimeString[1].ToString();
     }
 
-    void RoundUpdate()
+    public void RoundUpdate()
     {
-        if (roundNumber < 5 && Input.GetKeyDown(KeyCode.A))
-        {
-            timerRaw = 60;
-            roundNumber++;
-            GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), UIcanvas.transform) as GameObject;
-            newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = roundNumber;
-        }
-
-        roundSprite.sprite = roundList[roundNumber - 1];
+        TimerRaw = 60;
+        RoundNumber++;
+        GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
+        newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
+        RoundSprite.sprite = RoundList[RoundNumber - 1];
     }
+    
 }
