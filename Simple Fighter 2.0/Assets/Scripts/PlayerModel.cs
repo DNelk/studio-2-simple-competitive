@@ -38,6 +38,8 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 10)] public int BlockRecoveryFrames;
     [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
+    public StateTimers[] StateTimers; //this is where you put the timers for each state
+    private Dictionary<string, float> stateTimers; //This is where that is read
     #endregion
 
     // Start is called before the first frame update
@@ -48,6 +50,12 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        
+        //Setup dictionary for stateTimers
+        foreach (StateTimers st in StateTimers)
+        {
+            stateTimers.Add(st.key, st.time);
+        }
         
         Init();
         
@@ -202,7 +210,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            timer = Context.stateTimers["Strike"];
             maxTime = timer;
             activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
