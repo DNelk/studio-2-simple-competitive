@@ -61,3 +61,6 @@ MonoBehaviour:
   BlockRecoveryFrames: 0
   GetUpSpeed: 10
   PlayerIndex: 0
+  StateTimers:
+  - key: Strike
+    time: 0.3

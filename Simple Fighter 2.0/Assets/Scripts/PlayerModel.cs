@@ -14,6 +14,8 @@ public class PlayerModel : MonoBehaviour
     private bool hasHit;
     private bool isBlocking;
     private float rollDir;
+    private bool canHeal;
+    private float healthTimer;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -38,6 +40,8 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 10)] public int BlockRecoveryFrames;
     [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
+    public StateTimers[] StateTimers; //this is where you put the timers for each state
+    private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
     #endregion
 
     // Start is called before the first frame update
@@ -48,6 +52,12 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        
+        //Setup dictionary for stateTimers        
+        foreach (StateTimers st in StateTimers)
+        {
+            stateTimers.Add(st.key, st.time);
+        }
         
         Init();
         
@@ -153,6 +163,21 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new Events.AnimationChange(animationTrigger, Context.PlayerIndex));
         }
+
+        public override void Update()
+        {
+            base.Update();
+            if (Context.canHeal)
+            {
+                Context.healthTimer -= Time.deltaTime;
+                if (Context.healthTimer <= 0)
+                {
+                    Context.canHeal = false;
+                    Context.currentHitPoints++;
+                    EventManager.Instance.Fire(new HealthChanged(Context.currentHitPoints, Context.PlayerIndex));
+                }
+            }
+        }
     }
 
     private class Walking : PlayerState
@@ -202,7 +227,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            timer = Context.stateTimers["Strike"];
             maxTime = timer;
             activeWindowEnter = maxTime - Context.StrikeStartupFrames;
             activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
@@ -346,6 +371,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = 0.3f;
+            Context.canHeal = false;
         }
 
         public override void Update()
@@ -401,7 +427,8 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = .3f;
+            timer = .667f;
+            EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
         public override void Update()
@@ -411,6 +438,12 @@ public class PlayerModel : MonoBehaviour
             timer -= 0.0167f;
             if(timer <= 0)
                 TransitionTo<Idle>();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            EventManager.Instance.Fire(new ToggleCollider(false));
         }
     }
 
@@ -443,6 +476,20 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             animationTrigger = "isIdle";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            if (Context.currentHitPoints % 2 == 0)
+            {
+                Context.canHeal = false;
+            }
+            else
+            {
+                Context.canHeal = true;
+                Context.healthTimer = 1f;
+            }
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)

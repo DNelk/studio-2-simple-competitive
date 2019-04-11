@@ -109,6 +109,17 @@ public class Events : MonoBehaviour
         }
     }
     
+    //Toggle collider Event
+    public class ToggleCollider : GameEvent
+    {
+        public bool IsOn { get; }
+
+        public ToggleCollider(bool isOn)
+        {
+            IsOn = isOn;
+        }
+    }
+    
     //Game End Event
     public class GameEnd : GameEvent {}
     
