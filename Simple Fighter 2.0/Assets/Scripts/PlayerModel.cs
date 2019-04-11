@@ -364,11 +364,9 @@ public class PlayerModel : MonoBehaviour
                 case PlayerController.InputState.Roll:
                     Context.rollDir = value;
                     TransitionTo<Rolling>();
-                    Context.GetUpSpeed = 15;
                     break;
                 case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
-                    Context.GetUpSpeed = 15;
                     break;
             }
         }
@@ -382,12 +380,11 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.InputState.Roll:
+                    Context.rollDir = value;
                     TransitionTo<Rolling>();
-                    Context.GetUpSpeed = 10;
                     break;
                 case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
-                    Context.GetUpSpeed = 10;
                     break;
             }
         }
@@ -404,13 +401,13 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            timer = .3f;
         }
 
         public override void Update()
         {
             base.Update();
-            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.MoveSpeed, Context.PlayerIndex));
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.GetUpSpeed, Context.PlayerIndex));
             timer -= 0.0167f;
             if(timer <= 0)
                 TransitionTo<Idle>();
