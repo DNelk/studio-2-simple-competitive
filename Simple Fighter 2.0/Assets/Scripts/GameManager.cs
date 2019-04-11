@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject uiCanvas;
     private GameObject[] healthBars;
-    
+    private GameObject timer;
     #endregion
     
     
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         healthBars = new GameObject[2];
         roundNum = 1;
-        CurrentManagerState = ManagerState.Fighting;
+        CurrentManagerState = ManagerState.Start;
         Init();
     }
 
@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
             InitPlayers();
             Debug.Log("Initializing players");
         }
+
+        timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
+        timer.transform.SetParent(uiCanvas.transform, false);
     }
     
     //Create our player objects and their fields
