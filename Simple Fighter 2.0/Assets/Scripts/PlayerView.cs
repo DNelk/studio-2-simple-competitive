@@ -22,11 +22,12 @@ public class PlayerView : MonoBehaviour
     public float StrikeHitBoxDistance;
     public Vector2 GrabHitBoxSize;
     public float GrabHitBoxDistance;
-    public PlayerModel PlayerModelState;
+    
     #endregion
     
     #region Public Variables
     public int PlayerIndex;
+    public PlayerModel PlayerModelState;
     #endregion
     
     
@@ -52,6 +53,7 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.AddHandler<TranslatePos>(Translate);
         EventManager.Instance.AddHandler<HitBoxActive>(OnHitBoxActive);
+        EventManager.Instance.AddHandler<ToggleCollider>(OnToggleCollider);
         transform.localScale *= 0.15844f;
         
         StrikeHitBoxSize = new Vector2(1.75f, 1f);
@@ -101,6 +103,20 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.RemoveHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.RemoveHandler<TranslatePos>(Translate);
         EventManager.Instance.RemoveHandler<HitBoxActive>(OnHitBoxActive);
+        EventManager.Instance.RemoveHandler<ToggleCollider>(OnToggleCollider);
+    }
+    
+    //Allows us to toggle collider off while rolling
+    public void OnToggleCollider(ToggleCollider evt)
+    {
+        if (evt.IsOn)
+        {
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+        else if (!evt.IsOn)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
     }
 
     //Allows us to call animator from model -- replace with event system

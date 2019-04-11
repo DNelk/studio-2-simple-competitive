@@ -39,7 +39,7 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
     public StateTimers[] StateTimers; //this is where you put the timers for each state
-    private Dictionary<string, float> stateTimers; //This is where that is read
+    private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
     #endregion
 
     // Start is called before the first frame update
@@ -51,7 +51,7 @@ public class PlayerModel : MonoBehaviour
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
         
-        //Setup dictionary for stateTimers
+        //Setup dictionary for stateTimers        
         foreach (StateTimers st in StateTimers)
         {
             stateTimers.Add(st.key, st.time);
@@ -410,6 +410,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = .3f;
+            EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
         public override void Update()
@@ -419,6 +420,12 @@ public class PlayerModel : MonoBehaviour
             timer -= 0.0167f;
             if(timer <= 0)
                 TransitionTo<Idle>();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            EventManager.Instance.Fire(new ToggleCollider(false));
         }
     }
 
