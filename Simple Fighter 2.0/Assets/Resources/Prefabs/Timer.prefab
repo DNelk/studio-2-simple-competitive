@@ -140,10 +140,14 @@ MonoBehaviour:
   RightOne: {fileID: 4993207662022281842}
   TimerRaw: 60
   TimeString: 
-  RoundSprite: {fileID: 0}
+  RoundSprite: {fileID: 4993207660773864910}
   RoundNumber: 1
-  RoundList: []
-  UIcanvas: {fileID: 0}
+  RoundList:
+  - {fileID: 21300000, guid: 4b058addd8e00cd4eb66cc2a654ceaa2, type: 3}
+  - {fileID: 21300000, guid: ffde442db9cba374bb52d65a3e192675, type: 3}
+  - {fileID: 21300000, guid: 3de1ed4796db974448b1cca3279c6bd4, type: 3}
+  - {fileID: 21300000, guid: e65d2d2c298fd2d4eabb955c4b1ee18c, type: 3}
+  - {fileID: 21300000, guid: 47a637fada4f34f4981b36157ae62a2f, type: 3}
 --- !u!1 &4993207662022281840
 GameObject:
   m_ObjectHideFlags: 0

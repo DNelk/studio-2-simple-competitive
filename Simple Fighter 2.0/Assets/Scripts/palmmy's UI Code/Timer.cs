@@ -15,18 +15,21 @@ public class Timer : MonoBehaviour
     public int RoundNumber = 1;
     public Sprite[] RoundList;
 
-    public GameObject UIcanvas;
+    private Canvas canvas;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvas = GameObject.FindWithTag("UI").GetComponent<Canvas>();
+        GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
+        newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
     }
 
     // Update is called once per frame
     void Update()
     {
-        TimerUpdate();
+        if(GameManager.Instance.CurrentManagerState == ManagerState.Fighting)
+            TimerUpdate();
     }
 
     private void TimerUpdate()
@@ -44,7 +47,7 @@ public class Timer : MonoBehaviour
     {
         TimerRaw = 60;
         RoundNumber++;
-        GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), UIcanvas.transform) as GameObject;
+        GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
         newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
         RoundSprite.sprite = RoundList[RoundNumber - 1];
     }
