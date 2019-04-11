@@ -85,7 +85,8 @@ public class GameManager : MonoBehaviour
             playerGO.transform.parent = view.transform; //Set the parent for the player
             
             //Initialize Components
-            players[i].Model = model.AddComponent<PlayerModel>();
+            GameObject newModel = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerModel"), model.transform);
+            players[i].Model = newModel.GetComponent<PlayerModel>();
             players[i].View = playerGO.AddComponent<PlayerView>();
             players[i].Controller = controller.AddComponent<PlayerController>();
             
