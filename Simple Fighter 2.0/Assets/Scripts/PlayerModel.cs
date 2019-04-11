@@ -409,7 +409,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = .3f;
+            timer = .667f;
             EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
