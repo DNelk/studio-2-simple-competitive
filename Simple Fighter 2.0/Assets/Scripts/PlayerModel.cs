@@ -14,6 +14,8 @@ public class PlayerModel : MonoBehaviour
     private bool hasHit;
     private bool isBlocking;
     private float rollDir;
+    private bool canHeal;
+    private float healthTimer;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -160,6 +162,21 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new Events.AnimationChange(animationTrigger, Context.PlayerIndex));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (Context.canHeal)
+            {
+                Context.healthTimer -= Time.deltaTime;
+                if (Context.healthTimer <= 0)
+                {
+                    Context.canHeal = false;
+                    Context.currentHitPoints++;
+                    EventManager.Instance.Fire(new HealthChanged(Context.currentHitPoints, Context.PlayerIndex));
+                }
+            }
         }
     }
 
@@ -354,6 +371,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = 0.3f;
+            Context.canHeal = false;
         }
 
         public override void Update()
@@ -458,6 +476,20 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             animationTrigger = "isIdle";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            if (Context.currentHitPoints % 2 == 0)
+            {
+                Context.canHeal = false;
+            }
+            else
+            {
+                Context.canHeal = true;
+                Context.healthTimer = 1f;
+            }
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
