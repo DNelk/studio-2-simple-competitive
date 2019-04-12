@@ -30,7 +30,6 @@ public class PlayerModel : MonoBehaviour
     public Vector2 StrikeHitBoxSize = new Vector2(1.75f, 1f);
     public float GrabHitBoxDistance = 1;
     public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
-    [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
     public StateTimers[] StateTimers; //this is where you put the timers for each state
     private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
@@ -469,7 +468,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.GetUpSpeed, Context.PlayerIndex));
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.RollSpeed, Context.PlayerIndex));
             timer -= Time.deltaTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
@@ -500,7 +499,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.GetUpSpeed, Context.PlayerIndex));
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.TechSpeed, Context.PlayerIndex));
             timer -= Time.deltaTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
