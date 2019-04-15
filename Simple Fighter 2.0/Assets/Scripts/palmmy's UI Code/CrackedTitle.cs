@@ -17,6 +17,7 @@ public class CrackedTitle : MonoBehaviour
 
     void ShatteringTitle()
     {
+        GameObject mainMenu = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MainMenu"), transform.parent) as GameObject;
         GameObject shatteredTitle = Instantiate(Resources.Load("Prefabs/PalmmyEffect/CrackedTitle"), transform.parent) as GameObject;
         Destroy(gameObject);
     }
