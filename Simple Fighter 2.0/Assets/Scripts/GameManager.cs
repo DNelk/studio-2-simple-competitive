@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private GameObject uiCanvas;
     private GameObject[] healthBars;
     private GameObject timer;
+    private GameObject announcer;
     #endregion
     
     
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
         view = GameObject.Find("View");
         controller = GameObject.Find("Controller");
         uiCanvas = GameObject.Find("Canvas");
+        announcer = Instantiate(Resources.Load<GameObject>("Prefabs/winAnnouncer"), uiCanvas.transform);
         if (players == null)
         {
             players = new Player[2];
@@ -143,7 +145,8 @@ public class GameManager : MonoBehaviour
         switch (CurrentManagerState)
         {
                 case ManagerState.RoundOver:
-                    StartRound();
+                    if(evt.NewInput == PlayerController.InputState.Confirm)
+                        StartRound();
                     break;
         }
     }
@@ -160,6 +163,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("player " + (i + 1) + " wins");
                 players[i].Model.WinRound();
+                announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
             }
         }
         

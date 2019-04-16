@@ -4,61 +4,39 @@ using UnityEngine;
 
 public class WinningAnnouncer : MonoBehaviour
 {
-    public KeyCode[] winner; // 0 = player1, 1 = player2 
-    public Animator winningAnnouncer;
+    private Animator myAnim;
 
-    public int P1winNumber;
-    public int P2winNumber;
-
-    public GameObject[] P1WinBar;
-    public GameObject[] P2WinBar;
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        myAnim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayerWin(int playerIndex)
     {
-        MakePlayerWin();
-    }
-
-    void MakePlayerWin()
-    {
-        if (Input.GetKeyDown(winner[0]))
+        switch (playerIndex)
         {
-            if (P1winNumber < 3)
-            {
-                winningAnnouncer.SetBool("P1Win", true);
-                P1winNumber++;
-            }
-        }
-
-        if (Input.GetKeyDown(winner[1]))
-        {
-            if (P2winNumber < 3)
-            {
-                winningAnnouncer.SetBool("P2Win",true);
-                P2winNumber++;
-            }
+            case 0:
+                myAnim.SetBool("P1Win", true);
+                break;
+            case 1:
+                myAnim.SetBool("P1Win", true);
+                break;
         }
     }
 
-    void ResetBool()
+    public void ResetBool()
     {
-        winningAnnouncer.SetBool("P1Win", false);
-        winningAnnouncer.SetBool("P2Win", false);
+        myAnim.SetBool("P1Win", false);
+        myAnim.SetBool("P2Win", false);
     }
 
-    void P1Win()
-    {
-        Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P1WinBar[P1winNumber - 1].transform);
-    }
-
-    void P2Win()
-    {
-        Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P2WinBar[P2winNumber - 1].transform);
-    }
+    //void P1Win()
+    //{
+    //    Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P1WinBar[P1winNumber - 1].transform);
+    //}
+//
+    //void P2Win()
+    //{
+    //    Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P2WinBar[P2winNumber - 1].transform);
+    //}
 }
