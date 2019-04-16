@@ -17,7 +17,7 @@ public class TitleExplosion : MonoBehaviour
         Vector3 CenterModifier = new Vector3(0, 0f, 0f);
 
         rb.useGravity = false;
-        rb.AddExplosionForce(3000f, transform.parent.position + CenterModifier, 2000f, 3.0f);
+        rb.AddExplosionForce(3000f, transform.parent.position + CenterModifier, 150f, 3.0f);
     }
 
     // Update is called once per frame
