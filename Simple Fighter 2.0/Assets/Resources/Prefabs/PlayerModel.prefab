@@ -62,5 +62,31 @@ MonoBehaviour:
   GetUpSpeed: 10
   PlayerIndex: 0
   StateTimers:
-  - key: Strike
+  - key: StrikeStartup
+    time: 0.1
+  - key: StrikeActive
+    time: 0.1
+  - key: StrikeRecovery
+    time: 0.1
+  - key: GrabStartup
+    time: 0.3
+  - key: GrabActive
+    time: 0.3
+  - key: GrabRecovery
+    time: 0.3
+  - key: BlockStartup
+    time: 0.3
+  - key: BlockActive
+    time: 0.3
+  - key: BlockRecovery
+    time: 0.3
+  - key: Falling
+    time: 0.3
+  - key: Rolling
+    time: 0.3
+  - key: GetUp
+    time: 0.3
+  - key: TechRolling
+    time: 0.3
+  - key: TechUp
     time: 0.3
