@@ -111,7 +111,7 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.PlayerIndex != PlayerIndex)
             return;
-        animator.SetTrigger(evt.AnimState);
+        animator.Play(evt.AnimState, 0);
     }
      
     //Move the player by amount times speed

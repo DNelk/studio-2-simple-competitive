@@ -152,7 +152,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new Events.AnimationChange(animationTrigger, Context.PlayerIndex));
+            
         }
 
         public override void Update()
@@ -176,12 +176,17 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isWalking";
         }
 
+        public override void OnEnter()
+        {
+            EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
+        }
+        
         public override void Update()
         {
             base.Update();
+            
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
@@ -215,13 +220,13 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isStriking";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
             timer = Context.stateTimers["StrikeStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Strike", Context.PlayerIndex));
         }
 
         public override void Update()
@@ -282,12 +287,12 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isBlocking";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_BlockStartup", Context.PlayerIndex));
             timer = Context.stateTimers["BlockStartup"];
         }
 
@@ -302,6 +307,13 @@ public class PlayerModel : MonoBehaviour
     
     private class BlockActive : PlayerState
     {
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
+        }
+        
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
             base.ProcessInput(input, value);
@@ -319,12 +331,12 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "blockRelease";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Recovery", Context.PlayerIndex));
             timer = Context.stateTimers["BlockRecovery"];
         }
 
@@ -342,12 +354,12 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isGrabbing";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Grab", Context.PlayerIndex));
             timer = Context.stateTimers["GrabStartup"];
         }
 
@@ -405,13 +417,13 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "gotStriked";
             hasPressed = false;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
             timer = Context.stateTimers["Falling"];
             Context.canHeal = false;
             hasPressed = false;
@@ -443,6 +455,11 @@ public class PlayerModel : MonoBehaviour
 
     private class Grounded : PlayerState
     {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+        }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
             base.ProcessInput(input, value);
@@ -464,13 +481,13 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isRolling";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
             timer = Context.stateTimers["Rolling"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
             EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
@@ -495,13 +512,13 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isRolling";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
             timer = Context.stateTimers["TechRolling"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
             EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
@@ -526,12 +543,12 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isGettingUp";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["GetUp"];
         }
 
@@ -549,12 +566,12 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isGettingUp";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["TechUp"];
         }
 
@@ -572,7 +589,6 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isIdle";
         }
 
         public override void OnEnter()
@@ -587,6 +603,7 @@ public class PlayerModel : MonoBehaviour
                 Context.canHeal = true;
                 Context.healthTimer = 1f;
             }
+            EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
 
         public override void Update()
