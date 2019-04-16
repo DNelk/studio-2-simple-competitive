@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public HPbarEffect[] Children = new HPbarEffect[3];
-
+    
+    public GameObject[] WinCounter = new GameObject[3];
+    
     public int PlayerIndex;
     
     private int currentChild;
