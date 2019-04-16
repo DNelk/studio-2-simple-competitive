@@ -400,11 +400,13 @@ public class PlayerModel : MonoBehaviour
 
     private class Falling : PlayerState
     {
+        private bool hasPressed;
         
         public override void Init()
         {
             base.Init();
             animationTrigger = "gotStriked";
+            hasPressed = false;
         }
 
         public override void OnEnter()
@@ -412,6 +414,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = Context.stateTimers["Falling"];
             Context.canHeal = false;
+            hasPressed = false;
         }
 
         public override void Update()
