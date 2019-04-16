@@ -44,6 +44,17 @@ public class Events : MonoBehaviour
             PlayerIndex = playerIndex;
         }
     }
+    
+    //Turn Around Event
+    public class TurnAround : GameEvent
+    {
+        public int PlayerIndex { get; }
+
+        public TurnAround(int playerIndex)
+        {
+            PlayerIndex = playerIndex;
+        }
+    }
 
     //Called from model when the hitboxes become active
     public class HitBoxActive : GameEvent

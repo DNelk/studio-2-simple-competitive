@@ -187,6 +187,12 @@ public class PlayerModel : MonoBehaviour
             base.Init();
             animationTrigger = "isWalking";
         }
+
+        public override void Update()
+        {
+            base.Update();
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+        }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
@@ -490,6 +496,12 @@ public class PlayerModel : MonoBehaviour
                 Context.canHeal = true;
                 Context.healthTimer = 1f;
             }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
