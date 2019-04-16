@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         GrabCheck();
         BlockCheck();
         GetUpCheck();
+        ConfirmCheck();
     }
     
     //Called from the GameManager to set which player profile to use
