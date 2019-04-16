@@ -9,12 +9,12 @@ public class Events : MonoBehaviour
     //Fired from Model and received by View
     public class AnimationChange : GameEvent
     {
-        public string AnimTrigger { get; }
+        public string AnimState { get; }
         public int PlayerIndex { get; }
 
-        public AnimationChange(string animTrigger, int playerIndex)
+        public AnimationChange(string animState, int playerIndex)
         {
-            AnimTrigger = animTrigger;
+            AnimState = animState;
             PlayerIndex = playerIndex;
         }
     }
@@ -41,6 +41,17 @@ public class Events : MonoBehaviour
         {
             Speed = speed;
             RawAxis = rawAxis;
+            PlayerIndex = playerIndex;
+        }
+    }
+    
+    //Turn Around Event
+    public class TurnAround : GameEvent
+    {
+        public int PlayerIndex { get; }
+
+        public TurnAround(int playerIndex)
+        {
             PlayerIndex = playerIndex;
         }
     }
