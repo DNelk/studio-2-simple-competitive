@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using static Events;
 
@@ -36,7 +37,8 @@ public class GameManager : MonoBehaviour
     public int TotalRounds = 3;
     public int roundNum;
     private int setNum;
-    
+    private int[] playerWins;
+    private int[] playerHealthCached;
     #endregion
     
     #region Starting Functions
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         healthBars = new GameObject[2];
         roundNum = 1;
         CurrentManagerState = ManagerState.Start;
@@ -68,6 +71,8 @@ public class GameManager : MonoBehaviour
         if (players == null)
         {
             players = new Player[2];
+            playerWins = new int[2];
+            playerHealthCached = new int[2]{6,6};
             InitPlayers();
             Debug.Log("Initializing players");
         }
@@ -110,6 +115,13 @@ public class GameManager : MonoBehaviour
             healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
             healthBars[i].transform.SetParent(uiCanvas.transform, false);
             healthBars[i].GetComponent<HealthBar>().PlayerIndex = i;
+            for (int j = 0; j < playerWins[i]; j++)
+            {
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+            }
+            
+            //Set up camera manager                 
+            CameraManager.Instance.AddView(players[i].View.gameObject);
         }
     }
     
@@ -123,9 +135,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Test reset
         if (Input.GetKeyDown("r")){
             SceneManager.LoadScene("LevelName");
         }
+
+        switch (CurrentManagerState)
+        {
+                case ManagerState.Fighting:
+                    //Check if we timed out
+                    if (timer.GetComponent<Timer>().TimerRaw <= 0)
+                    {
+                        if(playerHealthCached[0] > playerHealthCached[1])
+                            EndRound(1);
+                        else if(playerHealthCached[1] > playerHealthCached[0])
+                            EndRound(0);
+                        else
+                        {
+                            //Uh oh... time out with no winners.. need a solution for this
+                        }
+                    }
+                    break;
+        }
+        
     }
 
     #region Events
@@ -138,6 +170,8 @@ public class GameManager : MonoBehaviour
         healthBar.UpdateHealth(newHealth);
         if (newHealth <= 0)
             EndRound(index);
+        //Cache health in case we time out
+        playerHealthCached[index] = newHealth;
     }
 
     private void OnInput(ProcessInput evt)
@@ -164,11 +198,26 @@ public class GameManager : MonoBehaviour
                 Debug.Log("player " + (i + 1) + " wins");
                 players[i].Model.WinRound();
                 announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
+                playerWins[i]++;
+                if (playerWins[i] >= TotalRounds)
+                {
+                    //stop the timer
+                    CurrentManagerState = ManagerState.SetOver;
+                    for (int j = 0; j < playerWins[i]; j++)
+                    {
+                        Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+                    }
+                    //End the set somehow lol
+                }
+                else
+                {
+                    //stop the timer
+                    CurrentManagerState = ManagerState.RoundOver;
+                }
             }
         }
         
-        //stop the timer
-        CurrentManagerState = ManagerState.RoundOver;
+        CameraManager.Instance.ClearViews();
     }
 
     //Start a new round
@@ -188,8 +237,8 @@ public class GameManager : MonoBehaviour
         //reset the timer
         CurrentManagerState = ManagerState.Start;
         timer.GetComponent<Timer>().RoundUpdate();
+        announcer.GetComponent<WinningAnnouncer>().ResetBool();
     }
-    
     #endregion
 }
 

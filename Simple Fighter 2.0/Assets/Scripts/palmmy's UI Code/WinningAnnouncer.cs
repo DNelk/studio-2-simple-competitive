@@ -19,7 +19,7 @@ public class WinningAnnouncer : MonoBehaviour
                 myAnim.SetBool("P1Win", true);
                 break;
             case 1:
-                myAnim.SetBool("P1Win", true);
+                myAnim.SetBool("P2Win", true);
                 break;
         }
     }
@@ -29,14 +29,4 @@ public class WinningAnnouncer : MonoBehaviour
         myAnim.SetBool("P1Win", false);
         myAnim.SetBool("P2Win", false);
     }
-
-    //void P1Win()
-    //{
-    //    Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P1WinBar[P1winNumber - 1].transform);
-    //}
-//
-    //void P2Win()
-    //{
-    //    Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), P2WinBar[P2winNumber - 1].transform);
-    //}
 }

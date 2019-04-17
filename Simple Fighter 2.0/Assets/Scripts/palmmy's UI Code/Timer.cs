@@ -38,9 +38,16 @@ public class Timer : MonoBehaviour
             TimerRaw -= Time.deltaTime;
 
         TimeString = Mathf.Ceil(TimerRaw).ToString();
-
-        LeftOne.text = TimeString[0].ToString();
-        RightOne.text = TimeString[1].ToString();
+        if (TimerRaw <= 9)
+        {
+            LeftOne.text = 0.ToString();
+            RightOne.text = TimeString;
+        }
+        else
+        {
+            LeftOne.text = TimeString[0].ToString();
+            RightOne.text = TimeString[1].ToString();  
+        }          
     }
 
     public void RoundUpdate()
