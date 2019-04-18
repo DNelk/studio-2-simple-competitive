@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     #region Public Variables
 
     public static CameraManager Instance = null;
-    public float minDistance = 2.9f;
+    public float minDistance = 4.0f;
     public float maxDistance = 5.6f;
     public float xMin, xMax, yMin, yMax;
     
