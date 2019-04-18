@@ -417,7 +417,7 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            hasPressed = false;
+            hasPressed = true;
         }
 
         public override void OnEnter()
@@ -426,7 +426,7 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
             timer = Context.stateTimers["Falling"];
             Context.canHeal = false;
-            hasPressed = false;
+            hasPressed = true;
         }
 
         public override void Update()
