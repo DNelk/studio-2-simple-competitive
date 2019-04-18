@@ -92,7 +92,7 @@ public class PlayerModel : MonoBehaviour
     //Called by Controller when an input is received
     public void OnInput(ProcessInput evt)
     {
-        if (PlayerIndex != evt.PlayerIndex)
+        if (PlayerIndex != evt.PlayerIndex || GameManager.Instance.CurrentManagerState != ManagerState.Fighting)
             return;
         ((PlayerState)stateMachine.CurrentState).ProcessInput(evt.NewInput, evt.Value);
     }
@@ -117,15 +117,18 @@ public class PlayerModel : MonoBehaviour
             currentStateType == typeof(GetUp))
         {
             Debug.Log("dont hit me");
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else if (currentStateType == typeof(BlockActive) && evt.IsStrike)
         {
             Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
         }
         else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
         {
             //if we're opposite directions, they got us
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
@@ -133,6 +136,11 @@ public class PlayerModel : MonoBehaviour
             currentHitPoints--;
             Debug.Log(PlayerIndex + " health = " + currentHitPoints);
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+            if(evt.IsStrike)
+                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
+            else
+                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
+
         }
        
         
@@ -563,6 +571,8 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
