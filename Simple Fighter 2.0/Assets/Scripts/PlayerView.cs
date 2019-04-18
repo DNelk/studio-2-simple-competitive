@@ -144,7 +144,7 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.PlayerIndex != PlayerIndex)
             return;
-        Debug.Log("HitBox Active " + PlayerIndex);
+        //Debug.Log("HitBox Active " + PlayerIndex);
         Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance * direction, 0);
         Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0, opponentLayer);
 

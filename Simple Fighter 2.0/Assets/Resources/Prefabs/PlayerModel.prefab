@@ -44,49 +44,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHitPoints: 6
-  MoveSpeed: 10
-  RollSpeed: 10
-  TechSpeed: 15
-  StrikeStartupFrames: 0.1
-  StrikeActiveFrames: 0.1
+  MoveSpeed: 4
+  RollSpeed: 5
+  TechSpeed: 5
   StrikeHitBoxDistance: 1
   StrikeHitBoxSize: {x: 1.75, y: 1}
-  StrikeRecoveryFrames: 0
-  GrabStartupFrames: 0.1
-  GrabActiveFrames: 0.1
-  GrabRecoveryFrames: 0
   GrabHitBoxDistance: 1
-  GrabHitBoxSize: {x: 0.5, y: 1}
-  BlockStartupFrames: 0
-  BlockRecoveryFrames: 0
-  GetUpSpeed: 10
+  GrabHitBoxSize: {x: 1.75, y: 1}
   PlayerIndex: 0
   StateTimers:
   - key: StrikeStartup
-    time: 0.1
+    time: 0.3
   - key: StrikeActive
     time: 0.1
   - key: StrikeRecovery
-    time: 0.1
+    time: 0.6
   - key: GrabStartup
     time: 0.3
   - key: GrabActive
-    time: 0.3
+    time: 0.1
   - key: GrabRecovery
-    time: 0.3
+    time: 0.6
   - key: BlockStartup
-    time: 0.3
+    time: 0.2
   - key: BlockActive
-    time: 0.3
+    time: 0.1
   - key: BlockRecovery
-    time: 0.3
-  - key: Falling
-    time: 0.3
+    time: 0.4
+  - key: FallActive
+    time: 0.7
   - key: Rolling
-    time: 0.3
+    time: 0.6
   - key: GetUp
-    time: 0.3
+    time: 0.8
   - key: TechRolling
-    time: 0.3
+    time: 0.8
   - key: TechUp
-    time: 0.3
+    time: 0.8
+  - key: FallStartup
+    time: 0.2
+  - key: FallRecovery
+    time: 0.2
+  - key: CounterStartup
+    time: 0.1
+  - key: CounterActive
+    time: 0.1
+  - key: CounterRecovery
+    time: 0.1

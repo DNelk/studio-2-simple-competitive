@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 using static Events;
 
@@ -91,7 +92,7 @@ public class PlayerModel : MonoBehaviour
     //Called by Controller when an input is received
     public void OnInput(ProcessInput evt)
     {
-        if (PlayerIndex != evt.PlayerIndex)
+        if (PlayerIndex != evt.PlayerIndex || GameManager.Instance.CurrentManagerState != ManagerState.Fighting)
             return;
         ((PlayerState)stateMachine.CurrentState).ProcessInput(evt.NewInput, evt.Value);
     }
@@ -109,27 +110,39 @@ public class PlayerModel : MonoBehaviour
         Type currentStateType = stateMachine.CurrentState.GetType();
         
         if (currentStateType == typeof(Grounded) || 
-            currentStateType == typeof(Falling) || 
+            currentStateType == typeof(FallStartup) ||
+            currentStateType == typeof(FallActive)||
+            currentStateType == typeof(FallRecovery)||
             currentStateType == typeof(Rolling) || 
             currentStateType == typeof(GetUp))
         {
             Debug.Log("dont hit me");
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else if (currentStateType == typeof(BlockActive) && evt.IsStrike)
         {
             Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
+            stateMachine.TransitionTo<CounterStartup>();
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
         }
         else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
         {
             //if we're opposite directions, they got us
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
-            stateMachine.TransitionTo<Falling>();
+            stateMachine.TransitionTo<FallStartup>();
             currentHitPoints--;
             Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+            canHeal = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
+            if(evt.IsStrike)
+                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
+            else
+                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
+
         }
        
         
@@ -282,6 +295,66 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
+    private class CounterStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Counter", Context.PlayerIndex));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                TransitionTo<CounterActive>();
+            }
+        }
+    }
+
+    private class CounterActive : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterActive"];
+            Context.hasHit = false; //a hit has not registered this attack yet
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            //Turn on hitbox
+            if (!Context.hasHit)
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
+            
+            //Countdown to recovery
+            timer -= Time.deltaTime;     
+            if(timer <= 0)
+                TransitionTo<CounterRecovery>();
+        }
+    }
+
+    private class CounterRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
     private class BlockStartup : PlayerState
     {
         public override void Init()
@@ -399,6 +472,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = Context.stateTimers["GrabRecovery"];
+            Context.canHeal = false;
         }
 
         public override void Update()
@@ -410,23 +484,39 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    private class Falling : PlayerState
+    private class FallStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
+            timer = Context.stateTimers["FallStartup"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<FallActive>();
+        }
+    }
+
+    private class FallActive : PlayerState
     {
         private bool hasPressed;
         
         public override void Init()
         {
             base.Init();
-            hasPressed = false;
+            hasPressed = true;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
-            timer = Context.stateTimers["Falling"];
-            Context.canHeal = false;
-            hasPressed = false;
+            timer = Context.stateTimers["FallActive"];        
+            hasPressed = true;
         }
 
         public override void Update()
@@ -434,7 +524,7 @@ public class PlayerModel : MonoBehaviour
             base.Update();
             timer -= Time.deltaTime;
             if(timer <= 0)
-                TransitionTo<Grounded>();
+                TransitionTo<FallRecovery>();
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -442,14 +532,38 @@ public class PlayerModel : MonoBehaviour
             base.ProcessInput(input, value);
             switch (input)
             {
+                case PlayerController.InputState.MoveRelease:
+                    hasPressed = false;
+                    break;
                 case PlayerController.InputState.Roll:
-                    Context.rollDir = value;
-                    TransitionTo<TechRolling>();
+                    if (!hasPressed)
+                    {
+                        Context.rollDir = value;
+                        TransitionTo<TechRolling>();
+                    }
                     break;
                 case PlayerController.InputState.GetUp:
-                    TransitionTo<TechUp>();
+                    if (!hasPressed)
+                        TransitionTo<TechUp>();
                     break;
             }
+        }
+    }
+
+    private class FallRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["FallRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Grounded>();
         }
     }
 
@@ -459,6 +573,8 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
+            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
