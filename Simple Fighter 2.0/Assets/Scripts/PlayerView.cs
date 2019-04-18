@@ -16,20 +16,11 @@ public class PlayerView : MonoBehaviour
     private int opponentLayer;
         
     #endregion
-
-    #region Hitbox Tweaking Vars
-    public Vector2 StrikeHitBoxSize;
-    public float StrikeHitBoxDistance;
-    public Vector2 GrabHitBoxSize;
-    public float GrabHitBoxDistance;
-    public PlayerModel PlayerModelState;
-    #endregion
     
     #region Public Variables
     public int PlayerIndex;
+    public PlayerModel PlayerModelState;
     #endregion
-    
-    
     
     private void Awake()
     {
@@ -52,10 +43,9 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.AddHandler<TranslatePos>(Translate);
         EventManager.Instance.AddHandler<HitBoxActive>(OnHitBoxActive);
+        EventManager.Instance.AddHandler<ToggleCollider>(OnToggleCollider);
+        EventManager.Instance.AddHandler<TurnAround>(OnTurnAround);
         transform.localScale *= 0.15844f;
-        
-        StrikeHitBoxSize = new Vector2(1.75f, 1f);
-        GrabHitBoxSize = new Vector2(0.5f, 1f);
         
         //Assign sprite and animator
         spriteRen.sprite = Resources.Load<Sprite>("Textures/NormalStance");
@@ -69,12 +59,10 @@ public class PlayerView : MonoBehaviour
         if (rotInt == 180)
         {
             direction = 1;
-            StrikeHitBoxDistance = GrabHitBoxDistance = 1f;
         }
         else if (rotInt == 0)
         {
             direction = -1;
-            StrikeHitBoxDistance = GrabHitBoxDistance = -1f;
         }
         else
             Debug.Log("error: direction not found");
@@ -101,6 +89,21 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.RemoveHandler<AnimationChange>(OnAnimationChange);
         EventManager.Instance.RemoveHandler<TranslatePos>(Translate);
         EventManager.Instance.RemoveHandler<HitBoxActive>(OnHitBoxActive);
+        EventManager.Instance.RemoveHandler<ToggleCollider>(OnToggleCollider);
+        EventManager.Instance.RemoveHandler<TurnAround>(OnTurnAround);
+    }
+    
+    //Allows us to toggle collider off while rolling
+    public void OnToggleCollider(ToggleCollider evt)
+    {
+        if (evt.IsOn)
+        {
+            GetComponent<Collider2D>().isTrigger = true;
+        }
+        else if (!evt.IsOn)
+        {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
     }
 
     //Allows us to call animator from model -- replace with event system
@@ -108,7 +111,7 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.PlayerIndex != PlayerIndex)
             return;
-        animator.SetTrigger(evt.AnimTrigger);
+        animator.Play(evt.AnimState, 0);
     }
      
     //Move the player by amount times speed
@@ -122,19 +125,18 @@ public class PlayerView : MonoBehaviour
         float oldX = transform.position.x; //Our old position
         
         transform.position += Vector3.right * amount * Time.deltaTime * speed;
-        
-        //Update our direction and change our rotation if necessary
-        if (transform.position.x > oldX && direction == -1)
+    }
+
+    public void OnTurnAround(TurnAround evt)
+    {
+        if (PlayerIndex != evt.PlayerIndex)
+            return;
+
+        RaycastHit2D hitCol = Physics2D.Raycast(transform.position, Vector2.left * direction, 20, opponentLayer);
+        if (hitCol)
         {
-            transform.Rotate(0f,-180f,0f);
-            direction = 1;
-            StrikeHitBoxDistance = GrabHitBoxDistance = 1;
-        }
-        if (transform.position.x < oldX && direction == 1)
-        {
-            transform.Rotate(0f,180f,0f);
-            direction = -1;
-            StrikeHitBoxDistance = GrabHitBoxDistance = -1;
+            transform.Rotate(0f, 180f, 0f); //rotate the sprite
+            direction *= -1; //Flip the hitbox directions
         }
     }
 
@@ -143,7 +145,7 @@ public class PlayerView : MonoBehaviour
         if (evt.PlayerIndex != PlayerIndex)
             return;
         Debug.Log("HitBox Active " + PlayerIndex);
-        Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance * StrikeHitBoxDistance, 0);
+        Vector2 hitBoxCenter = new Vector2(transform.position.x + evt.HitBoxDistance * direction, 0);
         Collider2D hitCol = Physics2D.OverlapBox(hitBoxCenter, evt.HitBoxSize, 0, opponentLayer);
 
         if (hitCol)
@@ -152,7 +154,7 @@ public class PlayerView : MonoBehaviour
         }
     }
     #region Tools
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         //Draw strike hitbox
         Gizmos.color = Color.red;
@@ -161,6 +163,6 @@ public class PlayerView : MonoBehaviour
         //Draw Grab hitbox
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(new Vector2(transform.position.x + GrabHitBoxDistance, 0), GrabHitBoxSize);
-    }
+    }*/
     #endregion
 }

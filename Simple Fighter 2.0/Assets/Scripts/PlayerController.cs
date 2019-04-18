@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
         Block,
         EndBlock,
         Roll,
-        GetUp
+        GetUp,
+        Confirm
     }
 
     #region Public Variables
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         GrabCheck();
         BlockCheck();
         GetUpCheck();
+        ConfirmCheck();
     }
     
     //Called from the GameManager to set which player profile to use
@@ -119,6 +121,15 @@ public class PlayerController : MonoBehaviour
         {
             //if up, Stand
             SendInput(InputState.GetUp, axisRaw);
+        }
+    }
+
+    private void ConfirmCheck()
+    {
+        if (rewiredPlayer.GetButtonDown("Confirm"))
+        {
+            //switch to Grab
+            SendInput(InputState.Confirm, 0f);
         }
     }
     #endregion

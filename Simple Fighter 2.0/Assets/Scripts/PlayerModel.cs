@@ -14,6 +14,8 @@ public class PlayerModel : MonoBehaviour
     private bool hasHit;
     private bool isBlocking;
     private float rollDir;
+    private bool canHeal;
+    private float healthTimer;
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -24,20 +26,13 @@ public class PlayerModel : MonoBehaviour
     [Range(1, 50)] public float MoveSpeed = 10;
     public float RollSpeed = 10;
     public float TechSpeed = 15;
-    [Range(1, 10)] public float StrikeStartupFrames = .1f;
-    [Range(1, 10)] public float StrikeActiveFrames = .1f;
     public float StrikeHitBoxDistance = 1;
     public Vector2 StrikeHitBoxSize = new Vector2(1.75f, 1f);
-    [Range(1, 10)] public int StrikeRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
-    [Range(1, 10)] public float GrabStartupFrames = .1f;
-    [Range(1, 10)] public float GrabActiveFrames = .1f;
-    [Range(1, 10)] public int GrabRecoveryFrames; //currently does nothing. It's just what is leftover in the animation
     public float GrabHitBoxDistance = 1;
     public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
-    [Range(1, 10)] public int BlockStartupFrames;
-    [Range(1, 10)] public int BlockRecoveryFrames;
-    [Range(1, 50)] public float GetUpSpeed = 10;
     public int PlayerIndex;
+    public StateTimers[] StateTimers; //this is where you put the timers for each state
+    private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
     #endregion
 
     // Start is called before the first frame update
@@ -48,6 +43,12 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        
+        //Setup dictionary for stateTimers        
+        foreach (StateTimers st in StateTimers)
+        {
+            stateTimers.Add(st.key, st.time);
+        }
         
         Init();
         
@@ -69,7 +70,7 @@ public class PlayerModel : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         stateMachine.Update();
     }
@@ -114,12 +115,12 @@ public class PlayerModel : MonoBehaviour
         {
             Debug.Log("dont hit me");
         }
-        else if (currentStateType == typeof(Blocking) && evt.IsStrike)
+        else if (currentStateType == typeof(BlockActive) && evt.IsStrike)
         {
             Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
         }
-        else if (currentStateType == typeof(Striking) && !evt.IsStrike)
+        else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
         {
             //if we're opposite directions, they got us
         }
@@ -151,7 +152,22 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new Events.AnimationChange(animationTrigger, Context.PlayerIndex));
+            
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if (Context.canHeal)
+            {
+                Context.healthTimer -= Time.deltaTime;
+                if (Context.healthTimer <= 0)
+                {
+                    Context.canHeal = false;
+                    Context.currentHitPoints++;
+                    EventManager.Instance.Fire(new HealthChanged(Context.currentHitPoints, Context.PlayerIndex));
+                }
+            }
         }
     }
 
@@ -160,7 +176,18 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isWalking";
+        }
+
+        public override void OnEnter()
+        {
+            EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
+        }
+        
+        public override void Update()
+        {
+            base.Update();
+            
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -175,183 +202,237 @@ public class PlayerModel : MonoBehaviour
                     TransitionTo<Idle>();
                     break;
                 case PlayerController.InputState.Strike:
-                    TransitionTo<Striking>();
+                    TransitionTo<StrikeStartup>();
                     break;
                 case PlayerController.InputState.Grab:
-                    TransitionTo<Grabbing>();
+                    TransitionTo<GrabStartup>();
                     break;
                 case PlayerController.InputState.Block:
-                    TransitionTo<Blocking>();
+                    TransitionTo<BlockStartup>();
                     break;
             }
         }
     }
 
-    private class Striking : PlayerState
+    //Startup simply activates the animation trigger and running down a timer
+    private class StrikeStartup : PlayerState
     {
-        private float maxTime;
-        private float activeWindowEnter;
-        private float activeWindowExit;
-        
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isStriking";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
-            maxTime = timer;
-            activeWindowEnter = maxTime - Context.StrikeStartupFrames;
-            activeWindowExit = activeWindowEnter - Context.StrikeActiveFrames;
-            Context.hasHit = false;
+            timer = Context.stateTimers["StrikeStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Strike", Context.PlayerIndex));
         }
 
         public override void Update()
         {
             base.Update();
-            timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
+            timer -= Time.deltaTime;
+            if (timer <= 0)
             {
-                //Active
-                Debug.Log("Fire hitbox active event " + Context.PlayerIndex);
+                TransitionTo<StrikeActive>();
+            }
+        }
+    }
+
+    //Active is where the state fires its function -- hitboxes for attacks, blocking for blocking
+    private class StrikeActive : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["StrikeActive"];
+            Context.hasHit = false; //a hit has not registered this attack yet
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            //Turn on hitbox
+            if (!Context.hasHit)
                 EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
-            }
-            else if (timer <= activeWindowExit)
-            {
-                //Recovery
-            }
+            
+            //Countdown to recovery
+            timer -= Time.deltaTime;     
             if(timer <= 0)
+                TransitionTo<StrikeRecovery>();
+        }
+    }
+
+    //recovery just sets a timer and counts down
+    private class StrikeRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["StrikeRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
                 TransitionTo<Idle>();
         }
     }
 
-    private class Blocking : PlayerState
+    private class BlockStartup : PlayerState
     {
-
-        private float timer;
-        private float startupTime = .3f;
-        private float recoveryTime = .3f;
-
-        private bool blocking;
-        private bool blockReleased;
-        
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isBlocking";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = startupTime;
-            blockReleased = false;
+            EventManager.Instance.Fire(new AnimationChange("Player_BlockStartup", Context.PlayerIndex));
+            timer = Context.stateTimers["BlockStartup"];
         }
 
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<BlockActive>();
+        }
+    }
+    
+    private class BlockActive : PlayerState
+    {
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
+        }
+        
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
             base.ProcessInput(input, value);
             switch (input)
             {
                 case PlayerController.InputState.EndBlock:
-                    blockReleased = true;
-                    EventManager.Instance.Fire(new Events.AnimationChange("blockRelease", Context.PlayerIndex)); 
+                    TransitionTo<BlockRecovery>(); 
                     break;
             }
         }
-
-        public override void Update()
-        {
-            base.Update();
-            if (!blockReleased && !blocking)
-            {
-                timer -= 0.0167f;
-                if (timer <= 0)
-                {
-                    blocking = true; 
-                    timer = recoveryTime;
-                }
-            }
-            else if (blockReleased)
-            {
-                timer -= 0.0167f;
-                if (timer <= 0)
-                {
-                    TransitionTo<Idle>();
-                }
-            }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            blocking = false;
-        }
     }
 
-    private class Grabbing : PlayerState
+    private class BlockRecovery : PlayerState
     {
-        private float maxTime;
-        private float activeWindowEnter;
-        private float activeWindowExit;
-        
         public override void Init()
         {
             base.Init();
-            
-            animationTrigger = "isGrabbing";
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
-            maxTime = timer;
-            activeWindowEnter = maxTime - Context.GrabStartupFrames;
-            activeWindowExit = activeWindowEnter - Context.GrabActiveFrames;
+            EventManager.Instance.Fire(new AnimationChange("Player_Recovery", Context.PlayerIndex));
+            timer = Context.stateTimers["BlockRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
+    private class GrabStartup : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Grab", Context.PlayerIndex));
+            timer = Context.stateTimers["GrabStartup"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<GrabActive>();
+        }
+    }
+    
+    private class GrabActive : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["GrabActive"];
             Context.hasHit = false;
         }
 
         public override void Update()
         {
             base.Update();
-            timer -= 0.0167f;
-            if (timer <= activeWindowEnter && timer > activeWindowExit && !Context.hasHit)
-            {
-                //Active
+            timer -= Time.deltaTime;
+            //Active
+            if (!Context.hasHit)
                 EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex, false));
-            }
-            else if (timer <= activeWindowExit)
-            {
-                //Recovery
-            }
             if(timer <= 0)
+                TransitionTo<GrabRecovery>();
+        }
+    }
+
+    private class GrabRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["GrabRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
                 TransitionTo<Idle>();
         }
     }
 
     private class Falling : PlayerState
     {
+        private bool hasPressed;
         
         public override void Init()
         {
             base.Init();
-            animationTrigger = "gotStriked";
+            hasPressed = false;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
+            timer = Context.stateTimers["Falling"];
+            Context.canHeal = false;
+            hasPressed = false;
         }
 
         public override void Update()
         {
             base.Update();
-            timer -= 0.0167f;
+            timer -= Time.deltaTime;
             if(timer <= 0)
                 TransitionTo<Grounded>();
         }
@@ -363,12 +444,10 @@ public class PlayerModel : MonoBehaviour
             {
                 case PlayerController.InputState.Roll:
                     Context.rollDir = value;
-                    TransitionTo<Rolling>();
-                    Context.GetUpSpeed = 15;
+                    TransitionTo<TechRolling>();
                     break;
                 case PlayerController.InputState.GetUp:
-                    TransitionTo<GetUp>();
-                    Context.GetUpSpeed = 15;
+                    TransitionTo<TechUp>();
                     break;
             }
         }
@@ -376,18 +455,22 @@ public class PlayerModel : MonoBehaviour
 
     private class Grounded : PlayerState
     {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+        }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
             base.ProcessInput(input, value);
             switch (input)
             {
                 case PlayerController.InputState.Roll:
+                    Context.rollDir = value;
                     TransitionTo<Rolling>();
-                    Context.GetUpSpeed = 10;
                     break;
                 case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
-                    Context.GetUpSpeed = 10;
                     break;
             }
         }
@@ -398,22 +481,60 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isRolling";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            timer = Context.stateTimers["Rolling"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
+            EventManager.Instance.Fire(new ToggleCollider(true));
         }
 
         public override void Update()
         {
             base.Update();
-            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.MoveSpeed, Context.PlayerIndex));
-            timer -= 0.0167f;
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.RollSpeed, Context.PlayerIndex));
+            timer -= Time.deltaTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            EventManager.Instance.Fire(new ToggleCollider(false));
+        }
+    }
+
+    private class TechRolling : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+        }
+        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["TechRolling"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
+            EventManager.Instance.Fire(new ToggleCollider(true));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.TechSpeed, Context.PlayerIndex));
+            timer -= Time.deltaTime;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            EventManager.Instance.Fire(new ToggleCollider(false));
         }
     }
 
@@ -422,19 +543,42 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isGettingUp";
         }
         
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = 0.3f;
+            EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
+            timer = Context.stateTimers["GetUp"];
         }
 
         public override void Update()
         {
             base.Update();
-            timer -= 0.0167f;
+            timer -= Time.deltaTime;
+            if(timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
+    private class TechUp : PlayerState
+    {
+        public override void Init()
+        {
+            base.Init();
+        }
+        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
+            timer = Context.stateTimers["TechUp"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -445,7 +589,27 @@ public class PlayerModel : MonoBehaviour
         public override void Init()
         {
             base.Init();
-            animationTrigger = "isIdle";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            if (Context.currentHitPoints % 2 == 0)
+            {
+                Context.canHeal = false;
+            }
+            else
+            {
+                Context.canHeal = true;
+                Context.healthTimer = 1f;
+            }
+            EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -458,13 +622,13 @@ public class PlayerModel : MonoBehaviour
                     EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
                     break;
                 case PlayerController.InputState.Strike:
-                    TransitionTo<Striking>();
+                    TransitionTo<StrikeStartup>();
                     break;
                 case PlayerController.InputState.Grab:
-                    TransitionTo<Grabbing>();
+                    TransitionTo<GrabStartup>();
                     break;
                 case PlayerController.InputState.Block:
-                    TransitionTo<Blocking>();
+                    TransitionTo<BlockStartup>();
                     break;
             }
         }

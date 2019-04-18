@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using static Events;
 
@@ -26,7 +27,8 @@ public class GameManager : MonoBehaviour
 
     private GameObject uiCanvas;
     private GameObject[] healthBars;
-    
+    private GameObject timer;
+    private GameObject announcer;
     #endregion
     
     
@@ -35,7 +37,8 @@ public class GameManager : MonoBehaviour
     public int TotalRounds = 3;
     public int roundNum;
     private int setNum;
-    
+    private int[] playerWins;
+    private int[] playerHealthCached;
     #endregion
     
     #region Starting Functions
@@ -50,9 +53,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         healthBars = new GameObject[2];
         roundNum = 1;
-        CurrentManagerState = ManagerState.Fighting;
+        CurrentManagerState = ManagerState.Start;
         Init();
     }
 
@@ -63,12 +67,18 @@ public class GameManager : MonoBehaviour
         view = GameObject.Find("View");
         controller = GameObject.Find("Controller");
         uiCanvas = GameObject.Find("Canvas");
+        announcer = Instantiate(Resources.Load<GameObject>("Prefabs/winAnnouncer"), uiCanvas.transform);
         if (players == null)
         {
             players = new Player[2];
+            playerWins = new int[2];
+            playerHealthCached = new int[2]{6,6};
             InitPlayers();
             Debug.Log("Initializing players");
         }
+
+        timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
+        timer.transform.SetParent(uiCanvas.transform, false);
     }
     
     //Create our player objects and their fields
@@ -79,15 +89,19 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
             //Create Player
-            GameObject playerGO;
+            GameObject playerView, playerModel, playerController;
             players[i] = new Player(); //Create Player Object
-            playerGO = new GameObject("Player" + (i+1)); //Create GameObject in scene for the player's view
-            playerGO.transform.parent = view.transform; //Set the parent for the player
-            
+        
             //Initialize Components
-            players[i].Model = model.AddComponent<PlayerModel>();
-            players[i].View = playerGO.AddComponent<PlayerView>();
-            players[i].Controller = controller.AddComponent<PlayerController>();
+            playerModel = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerModel"), model.transform);
+            players[i].Model = playerModel.GetComponent<PlayerModel>();
+            
+            playerView = new GameObject("Player" + (i+1)); //Create GameObject in scene for the player's view
+            playerView.transform.parent = view.transform; //Set the parent for the player
+            players[i].View = playerView.AddComponent<PlayerView>();
+            
+            playerController = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerController"), controller.transform);
+            players[i].Controller = playerController.GetComponent<PlayerController>();
             
             //Init Components
             players[i].Controller.SetRewiredPlayer(i); //after creating controller, set the player profile
@@ -101,6 +115,13 @@ public class GameManager : MonoBehaviour
             healthBars[i] = Instantiate(Resources.Load<GameObject>("prefabs/p" + (i+1) + "Healthbar"));
             healthBars[i].transform.SetParent(uiCanvas.transform, false);
             healthBars[i].GetComponent<HealthBar>().PlayerIndex = i;
+            for (int j = 0; j < playerWins[i]; j++)
+            {
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+            }
+            
+            //Set up camera manager                 
+            CameraManager.Instance.AddView(players[i].View.gameObject);
         }
     }
     
@@ -114,9 +135,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Test reset
         if (Input.GetKeyDown("r")){
             SceneManager.LoadScene("LevelName");
         }
+
+        switch (CurrentManagerState)
+        {
+                case ManagerState.Fighting:
+                    //Check if we timed out
+                    if (timer.GetComponent<Timer>().TimerRaw <= 0)
+                    {
+                        if(playerHealthCached[0] > playerHealthCached[1])
+                            EndRound(1);
+                        else if(playerHealthCached[1] > playerHealthCached[0])
+                            EndRound(0);
+                        else
+                        {
+                            //Uh oh... time out with no winners.. need a solution for this
+                        }
+                    }
+                    break;
+        }
+        
     }
 
     #region Events
@@ -129,6 +170,8 @@ public class GameManager : MonoBehaviour
         healthBar.UpdateHealth(newHealth);
         if (newHealth <= 0)
             EndRound(index);
+        //Cache health in case we time out
+        playerHealthCached[index] = newHealth;
     }
 
     private void OnInput(ProcessInput evt)
@@ -136,7 +179,8 @@ public class GameManager : MonoBehaviour
         switch (CurrentManagerState)
         {
                 case ManagerState.RoundOver:
-                    StartRound();
+                    if(evt.NewInput == PlayerController.InputState.Confirm)
+                        StartRound();
                     break;
         }
     }
@@ -153,22 +197,48 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("player " + (i + 1) + " wins");
                 players[i].Model.WinRound();
+                announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
+                playerWins[i]++;
+                if (playerWins[i] >= TotalRounds)
+                {
+                    //stop the timer
+                    CurrentManagerState = ManagerState.SetOver;
+                    for (int j = 0; j < playerWins[i]; j++)
+                    {
+                        Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+                    }
+                    //End the set somehow lol
+                }
+                else
+                {
+                    //stop the timer
+                    CurrentManagerState = ManagerState.RoundOver;
+                }
             }
         }
         
-        //stop the timer
+        CameraManager.Instance.ClearViews();
     }
 
     //Start a new round
     private void StartRound()
     {
-        players = null;
+        for(int i = 0; i < players.Length; i++)
+        {
+            Destroy(players[i].Model.gameObject);
+            Destroy(players[i].View.gameObject);
+            Destroy(players[i].Controller.gameObject);
+            Destroy(healthBars[i]);
+        }
+        players = new Player[2];
         InitPlayers();
         roundNum++;
         
         //reset the timer
+        CurrentManagerState = ManagerState.Start;
+        timer.GetComponent<Timer>().RoundUpdate();
+        announcer.GetComponent<WinningAnnouncer>().ResetBool();
     }
-    
     #endregion
 }
 
