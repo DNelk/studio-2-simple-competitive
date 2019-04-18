@@ -409,7 +409,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Player_Recovery", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_BlockRecovery", Context.PlayerIndex));
             timer = Context.stateTimers["BlockRecovery"];
         }
 
