@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Events;
 
+[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
 
@@ -45,7 +46,7 @@ public class AudioManager : MonoBehaviour
             Instance = this;
         else if (Instance != this)
             Destroy(gameObject);
-        
+        audioSource = GetComponent<AudioSource>();
         EventManager.Instance.AddHandler<PlaySoundEffect>(OnPlaySound);
     }
 
