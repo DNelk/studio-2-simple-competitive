@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
             InitPlayers();
             Debug.Log("Initializing players");
         }
-
+        
         timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
         timer.transform.SetParent(uiCanvas.transform, false);
     }
