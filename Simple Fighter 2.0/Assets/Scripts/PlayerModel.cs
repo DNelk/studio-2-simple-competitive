@@ -13,7 +13,7 @@ public class PlayerModel : MonoBehaviour
     //Current hitpoints
     private int currentHitPoints;
     private bool hasHit;
-    private bool isBlocking;
+    private bool isBlocking = false;
     private float rollDir;
     private bool canHeal;
     private float healthTimer;
@@ -367,6 +367,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockStartup", Context.PlayerIndex));
             timer = Context.stateTimers["BlockStartup"];
+            Context.isBlocking = true;
         }
 
         public override void Update()
@@ -375,6 +376,17 @@ public class PlayerModel : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
                 TransitionTo<BlockActive>();
+        }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.EndBlock:
+                    Context.isBlocking = false;
+                    break;
+            }
         }
     }
     
@@ -386,6 +398,13 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
         }
+
+        public override void Update()
+        {
+            base.Update();
+            if (!Context.isBlocking)
+                TransitionTo<BlockRecovery>();
+        }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
@@ -393,7 +412,7 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.InputState.EndBlock:
-                    TransitionTo<BlockRecovery>(); 
+                    Context.isBlocking = false;
                     break;
             }
         }
