@@ -136,6 +136,7 @@ public class PlayerModel : MonoBehaviour
             stateMachine.TransitionTo<FallStartup>();
             currentHitPoints--;
             Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+            canHeal = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
             if(evt.IsStrike)
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
