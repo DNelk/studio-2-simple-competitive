@@ -123,6 +123,7 @@ public class PlayerModel : MonoBehaviour
         {
             Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
+            stateMachine.TransitionTo<CounterStartup>();
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
         }
         else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
