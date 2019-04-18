@@ -11,6 +11,8 @@ public class EffectsCommand : MonoBehaviour
     private bool isActive;
 
     private int coolDown;
+
+    public TestHPbar opponentHP;
     
     // Start is called before the first frame update
     void Start()
@@ -43,21 +45,33 @@ public class EffectsCommand : MonoBehaviour
             isActive = true;
         }
         
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             GetComponent<Image>().sprite = Active;
-            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Attacks3"), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(133f,128f);
+            string attackPrefab;
+            if (opponentHP.characterHP / 2 == Mathf.Ceil(opponentHP.characterHP / 2))
+            {
+                attackPrefab = "Prefabs/PalmmyEffect/Attacks_Break";
+            }
+            else
+            {
+                attackPrefab = "Prefabs/PalmmyEffect/Attacks3";
+            }
+            
+            GameObject Attack = Instantiate(Resources.Load(attackPrefab), transform) as GameObject;
+            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(190f,128f);
             isActive = true;
         }
         
+/*
         if (Input.GetKeyDown(KeyCode.B))
         {
             GetComponent<Image>().sprite = Active;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Attacks_Break"), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(133f,128f);
+            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(190f,128f);
             isActive = true;
         }
+*/
         
 
         if (isActive == true)
