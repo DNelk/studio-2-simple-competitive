@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Rewired;
 using UnityEngine;
 using static Events;
 
@@ -109,7 +110,9 @@ public class PlayerModel : MonoBehaviour
         Type currentStateType = stateMachine.CurrentState.GetType();
         
         if (currentStateType == typeof(Grounded) || 
-            currentStateType == typeof(Falling) || 
+            currentStateType == typeof(FallStartup) ||
+            currentStateType == typeof(FallActive)||
+            currentStateType == typeof(FallRecovery)||
             currentStateType == typeof(Rolling) || 
             currentStateType == typeof(GetUp))
         {
@@ -126,7 +129,7 @@ public class PlayerModel : MonoBehaviour
         }
         else
         {
-            stateMachine.TransitionTo<Falling>();
+            stateMachine.TransitionTo<FallStartup>();
             currentHitPoints--;
             Debug.Log(PlayerIndex + " health = " + currentHitPoints);
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
@@ -399,6 +402,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = Context.stateTimers["GrabRecovery"];
+            Context.canHeal = false;
         }
 
         public override void Update()
@@ -410,7 +414,25 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    private class Falling : PlayerState
+    private class FallStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
+            timer = Context.stateTimers["FallStartup"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<FallActive>();
+        }
+    }
+
+    private class FallActive : PlayerState
     {
         private bool hasPressed;
         
@@ -423,9 +445,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
-            timer = Context.stateTimers["Falling"];
-            Context.canHeal = false;
+            timer = Context.stateTimers["FallActive"];        
             hasPressed = true;
         }
 
@@ -434,7 +454,7 @@ public class PlayerModel : MonoBehaviour
             base.Update();
             timer -= Time.deltaTime;
             if(timer <= 0)
-                TransitionTo<Grounded>();
+                TransitionTo<FallRecovery>();
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -457,6 +477,23 @@ public class PlayerModel : MonoBehaviour
                         TransitionTo<TechUp>();
                     break;
             }
+        }
+    }
+
+    private class FallRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["FallRecover"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Grounded>();
         }
     }
 
