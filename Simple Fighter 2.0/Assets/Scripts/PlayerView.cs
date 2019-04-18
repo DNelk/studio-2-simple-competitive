@@ -20,6 +20,7 @@ public class PlayerView : MonoBehaviour
     #region Public Variables
     public int PlayerIndex;
     public PlayerModel PlayerModelState;
+    public float MoveCastDistance;
     #endregion
     
     private void Awake()
@@ -123,8 +124,16 @@ public class PlayerView : MonoBehaviour
         float amount = evt.RawAxis;
         float speed = evt.Speed;
         float oldX = transform.position.x; //Our old position
-        
-        transform.position += Vector3.right * amount * Time.deltaTime * speed;
+
+        RaycastHit2D oppCol =
+            Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
+        RaycastHit2D wallCol = Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance,
+            LayerMask.GetMask("Bounds"));
+
+        if (!oppCol && !wallCol)
+        {
+            transform.position += Vector3.right * amount * Time.deltaTime * speed;
+        }
     }
 
     public void OnTurnAround(TurnAround evt)
