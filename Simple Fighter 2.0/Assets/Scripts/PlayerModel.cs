@@ -123,6 +123,7 @@ public class PlayerModel : MonoBehaviour
         {
             Debug.Log("I am blocking, no hit");
             //if we're opposite directions, successful block
+            stateMachine.TransitionTo<CounterStartup>();
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
         }
         else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
@@ -135,6 +136,7 @@ public class PlayerModel : MonoBehaviour
             stateMachine.TransitionTo<FallStartup>();
             currentHitPoints--;
             Debug.Log(PlayerIndex + " health = " + currentHitPoints);
+            canHeal = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
             if(evt.IsStrike)
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
@@ -282,6 +284,66 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = Context.stateTimers["StrikeRecovery"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
+    private class CounterStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Counter", Context.PlayerIndex));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                TransitionTo<CounterActive>();
+            }
+        }
+    }
+
+    private class CounterActive : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterActive"];
+            Context.hasHit = false; //a hit has not registered this attack yet
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            //Turn on hitbox
+            if (!Context.hasHit)
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
+            
+            //Countdown to recovery
+            timer -= Time.deltaTime;     
+            if(timer <= 0)
+                TransitionTo<CounterRecovery>();
+        }
+    }
+
+    private class CounterRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["CounterRecovery"];
         }
 
         public override void Update()
