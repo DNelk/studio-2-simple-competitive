@@ -45,8 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHitPoints: 6
   MoveSpeed: 4
-  RollSpeed: 6
-  TechSpeed: 6
+  RollSpeed: 5
+  TechSpeed: 5
   StrikeHitBoxDistance: 1
   StrikeHitBoxSize: {x: 1.75, y: 1}
   GrabHitBoxDistance: 1
@@ -60,7 +60,7 @@ MonoBehaviour:
   - key: StrikeRecovery
     time: 0.6
   - key: GrabStartup
-    time: 0.2
+    time: 0.3
   - key: GrabActive
     time: 0.1
   - key: GrabRecovery
@@ -85,3 +85,9 @@ MonoBehaviour:
     time: 0.2
   - key: FallRecovery
     time: 0.2
+  - key: CounterStartup
+    time: 0.1
+  - key: CounterActive
+    time: 0.1
+  - key: CounterRecovery
+    time: 0.1
