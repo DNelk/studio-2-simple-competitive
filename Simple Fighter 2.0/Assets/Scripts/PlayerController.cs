@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
         EndBlock,
         Roll,
         GetUp,
+        MoveRelease,
         Confirm
     }
 
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         GrabCheck();
         BlockCheck();
         GetUpCheck();
+        MoveReleaseCheck();
         ConfirmCheck();
     }
     
@@ -121,6 +123,15 @@ public class PlayerController : MonoBehaviour
         {
             //if up, Stand
             SendInput(InputState.GetUp, axisRaw);
+        }
+    }
+    
+    //Check to see if the player releases movement
+    private void MoveReleaseCheck()
+    {
+        if (rewiredPlayer.GetAxisRaw("MoveHorizontal") == 0 && rewiredPlayer.GetAxisRaw("MoveVertical") == 0)
+        {
+            SendInput(InputState.MoveRelease, 0f);
         }
     }
 
