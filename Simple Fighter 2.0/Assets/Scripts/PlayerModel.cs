@@ -485,7 +485,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = Context.stateTimers["FallRecover"];
+            timer = Context.stateTimers["FallRecovery"];
         }
 
         public override void Update()
