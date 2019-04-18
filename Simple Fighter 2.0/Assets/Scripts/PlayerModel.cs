@@ -442,12 +442,19 @@ public class PlayerModel : MonoBehaviour
             base.ProcessInput(input, value);
             switch (input)
             {
+                case PlayerController.InputState.MoveRelease:
+                    hasPressed = false;
+                    break;
                 case PlayerController.InputState.Roll:
-                    Context.rollDir = value;
-                    TransitionTo<TechRolling>();
+                    if (!hasPressed)
+                    {
+                        Context.rollDir = value;
+                        TransitionTo<TechRolling>();
+                    }
                     break;
                 case PlayerController.InputState.GetUp:
-                    TransitionTo<TechUp>();
+                    if (!hasPressed)
+                        TransitionTo<TechUp>();
                     break;
             }
         }
