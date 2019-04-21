@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class EffectsCommand : MonoBehaviour
 {
     public Sprite StartUP;
-    public Sprite Active;
+    public Sprite strikeActive;
+    public Sprite kickActive;
 
-    private bool isActive;
+    private bool strikeIsActive;
+    private bool kickIsActive;
 
     private int coolDown;
 
@@ -17,7 +20,7 @@ public class EffectsCommand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isActive = false;
+        strikeIsActive = false;
         coolDown = 0;
     }
 
@@ -31,56 +34,41 @@ public class EffectsCommand : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GetComponent<Image>().sprite = Active;
-            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Attacks1"), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(133f,128f);
-            isActive = true;
+            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Attacks_Break"), transform) as GameObject;
+            strikeIsActive = true;
         }
         
         if (Input.GetKeyDown(KeyCode.D))
         {
-            GetComponent<Image>().sprite = Active;
-            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Attacks2"), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(133f,128f);
-            isActive = true;
+            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Attacks_Normal"), transform) as GameObject;
+            strikeIsActive = true;
         }
         
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            GetComponent<Image>().sprite = Active;
-            string attackPrefab;
-            if (opponentHP.characterHP / 2 == Mathf.Ceil(opponentHP.characterHP / 2))
-            {
-                attackPrefab = "Prefabs/PalmmyEffect/Attacks_Break";
-            }
-            else
-            {
-                attackPrefab = "Prefabs/PalmmyEffect/Attacks3";
-            }
-            
-            GameObject Attack = Instantiate(Resources.Load(attackPrefab), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(190f,128f);
-            isActive = true;
+            GetComponent<SpriteRenderer>().sprite = kickActive;
+            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Kick_Normal"), transform) as GameObject;
+            kickIsActive = true;
         }
         
-/*
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            GetComponent<Image>().sprite = Active;
-            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Attacks_Break"), transform) as GameObject;
-            Attack.GetComponent<RectTransform>().anchoredPosition = new Vector2(190f,128f);
-            isActive = true;
+            GetComponent<SpriteRenderer>().sprite = kickActive;
+            GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Kick_Break"), transform) as GameObject;
+            kickIsActive = true;
         }
-*/
         
 
-        if (isActive == true)
+        if (strikeIsActive == true || kickIsActive == true)
             coolDown++;
 
         if (coolDown == 15)
         {
-            isActive = false;
-            GetComponent<Image>().sprite = StartUP;
+            strikeIsActive = false;
+            kickIsActive = false;
+            GetComponent<SpriteRenderer>().sprite = StartUP;
             coolDown = 0;
         }
 
