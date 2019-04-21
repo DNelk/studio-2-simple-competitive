@@ -70,6 +70,9 @@ public enum PlayerState
     Ko,
     Win,
 	
+    Ko,
+    Win,
+    
     /* Not being used currently
     Jumping,
     Special,

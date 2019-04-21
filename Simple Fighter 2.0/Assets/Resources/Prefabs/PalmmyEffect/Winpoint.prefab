@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2c4e8f2ad569b4ab65dd7efe3b0c96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 536238663973848992}
+  bubbleLight: {fileID: 536238663973848992}
 --- !u!1 &536238663973848992
 GameObject:
   m_ObjectHideFlags: 0

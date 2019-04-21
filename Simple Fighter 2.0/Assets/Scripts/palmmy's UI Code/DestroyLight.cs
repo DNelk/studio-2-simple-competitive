@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestroyLight : MonoBehaviour
 {
-    public GameObject light;
+    public GameObject bubbleLight;
     
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,6 @@ public class DestroyLight : MonoBehaviour
 
     void destroyLight()
     {
-        Destroy(light);
+        Destroy(bubbleLight);
     }
 }
