@@ -22,11 +22,11 @@ public class Events : MonoBehaviour
     //Sound Effect
     public class PlaySoundEffect : GameEvent
     {
-        public string SoundEffect { get; }
+        public AudioClip[] Clip { get; }
 
-        public PlaySoundEffect(string soundEffect)
+        public PlaySoundEffect(AudioClip[] clip)
         {
-            SoundEffect = soundEffect;
+            Clip = clip;
         }
     }
     

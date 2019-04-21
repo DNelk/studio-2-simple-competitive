@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour
             playerWins = new int[2];
             playerHealthCached = new int[2]{6,6};
             InitPlayers();
-            Debug.Log("Initializing players");
+            //Debug.Log("Initializing players");
         }
-
+        
         timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
         timer.transform.SetParent(uiCanvas.transform, false);
     }
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         {
             if (i != losingPlayerIndex)
             {
-                Debug.Log("player " + (i + 1) + " wins");
+               // Debug.Log("player " + (i + 1) + " wins");
                 players[i].Model.WinRound();
                 announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
                 playerWins[i]++;
