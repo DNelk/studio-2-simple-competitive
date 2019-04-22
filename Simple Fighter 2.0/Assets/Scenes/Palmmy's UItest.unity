@@ -3455,6 +3455,9 @@ MonoBehaviour:
   StartUP: {fileID: 21300000, guid: 66bc6715a9409c847bd9a29c38e2243c, type: 3}
   strikeActive: {fileID: 21300000, guid: c88935c8ef833e14085bb7a309fda8e7, type: 3}
   kickActive: {fileID: 21300000, guid: d9bbde176815fdf4c99788e093b65ea9, type: 3}
+  opponent: {fileID: 1997306093}
+  opponentStartUP: {fileID: 21300000, guid: 9bd6ffdbc262c7a44b627127e49f160e, type: 3}
+  opponentAttack: {fileID: 21300000, guid: 17333d938cfda9e49a6a9a06cc097d78, type: 3}
   opponentHP: {fileID: 0}
 --- !u!4 &943561875
 Transform:
@@ -3507,7 +3510,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d9bbde176815fdf4c99788e093b65ea9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66bc6715a9409c847bd9a29c38e2243c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5949,6 +5952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1997306095}
+  - component: {fileID: 1997306096}
   - component: {fileID: 1997306094}
   m_Layer: 0
   m_Name: Opponent
@@ -6019,6 +6023,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1997306096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997306093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c2e7dce9e00964eaf2cdabf6644187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartUP: {fileID: 21300000, guid: 9bd6ffdbc262c7a44b627127e49f160e, type: 3}
+  strikeActive: {fileID: 21300000, guid: 17333d938cfda9e49a6a9a06cc097d78, type: 3}
+  kickActive: {fileID: 21300000, guid: d94369b812372344ebbdfd3318dd4cb8, type: 3}
+  opponent: {fileID: 943561873}
+  opponentStartUP: {fileID: 21300000, guid: 66bc6715a9409c847bd9a29c38e2243c, type: 3}
+  opponentAttack: {fileID: 21300000, guid: c88935c8ef833e14085bb7a309fda8e7, type: 3}
+  opponentHP: {fileID: 0}
 --- !u!1 &2034444004
 GameObject:
   m_ObjectHideFlags: 0
