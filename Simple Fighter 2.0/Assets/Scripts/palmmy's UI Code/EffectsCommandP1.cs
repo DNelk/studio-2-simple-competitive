@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class EffectsCommandP1 : MonoBehaviour
 {
+    private SpriteRenderer mySprite;
     public Sprite StartUP;
     public Sprite strikeActive;
     public Sprite kickActive;
 
-    public GameObject opponent;
+    public SpriteRenderer opponent;
     public Sprite opponentStartUP;
     public Sprite opponentAttack;
     private bool opponentIsActive;
@@ -32,6 +33,8 @@ public class EffectsCommandP1 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mySprite = GetComponent<SpriteRenderer>();
+        
         strikeIsActive = false;
         kickIsActive = false;
         opponentIsActive = false;
@@ -53,7 +56,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //Attack
         if (Input.GetKeyDown(KeyCode.D))
         {
-            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            mySprite.sprite = strikeActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Attacks_Normal"), transform) as GameObject;
             strikeIsActive = true;
         }
@@ -61,7 +64,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //Attack_Break
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            mySprite.sprite = strikeActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Attacks_Break"), transform) as GameObject;
             strikeIsActive = true;
         }
@@ -69,7 +72,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //Kick
         if (Input.GetKeyDown(KeyCode.F))
         {
-            GetComponent<SpriteRenderer>().sprite = kickActive;
+            mySprite.sprite = kickActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Kick_Normal"), transform) as GameObject;
             kickIsActive = true;
         }
@@ -77,7 +80,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //Kick_break
         if (Input.GetKeyDown(KeyCode.V))
         {
-            GetComponent<SpriteRenderer>().sprite = kickActive;
+            mySprite.sprite = kickActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Kick_Break"), transform) as GameObject;
             kickIsActive = true;
         }        
@@ -89,7 +92,7 @@ public class EffectsCommandP1 : MonoBehaviour
         {
             strikeIsActive = false;
             kickIsActive = false;
-            GetComponent<SpriteRenderer>().sprite = StartUP;
+            mySprite.sprite = StartUP;
             coolDown = 0;
         }
 
@@ -101,7 +104,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //Guard
         if (Input.GetKeyDown(KeyCode.T))
         {
-            opponent.GetComponent<SpriteRenderer>().sprite = opponentAttack;
+            opponent.sprite = opponentAttack;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Guard"), transform) as GameObject;
             opponentIsActive = true;
         }
@@ -112,7 +115,7 @@ public class EffectsCommandP1 : MonoBehaviour
         if (opponentCooldown == 15)
         {
             opponentIsActive = false;
-            opponent.GetComponent<SpriteRenderer>().sprite = opponentStartUP;
+            opponent.sprite = opponentStartUP;
             opponentCooldown = 0;
         }
     }
@@ -122,7 +125,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //counter
         if (Input.GetKeyDown(KeyCode.G))
         {
-            opponent.GetComponent<SpriteRenderer>().sprite = opponentAttack;
+            opponent.sprite = opponentAttack;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Guard_Counter"), transform) as GameObject;
             opponentIsActive = true;
             counterNormal = true;
@@ -131,7 +134,7 @@ public class EffectsCommandP1 : MonoBehaviour
         //counter_Break
         if (Input.GetKeyDown(KeyCode.B))
         {
-            opponent.GetComponent<SpriteRenderer>().sprite = opponentAttack;
+            opponent.sprite = opponentAttack;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Guard_Counter"), transform) as GameObject;
             opponentIsActive = true;
             counterBreak = true;
@@ -143,7 +146,7 @@ public class EffectsCommandP1 : MonoBehaviour
 
         if (counterNormalFrame == 10)
         {
-            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            mySprite.sprite = strikeActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Counter_Normal"), transform) as GameObject;
             strikeIsActive = true;
             counterNormal = false;
@@ -156,7 +159,7 @@ public class EffectsCommandP1 : MonoBehaviour
 
         if (counterBreakFrame == 10)
         {
-            GetComponent<SpriteRenderer>().sprite = strikeActive;
+            mySprite.sprite = strikeActive;
             GameObject Attack = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/Counter_Break"), transform) as GameObject;
             strikeIsActive = true;
             counterBreak = false;
@@ -171,7 +174,7 @@ public class EffectsCommandP1 : MonoBehaviour
         if (opponentCooldown == 15)
         {
             opponentIsActive = false;
-            opponent.GetComponent<SpriteRenderer>().sprite = opponentStartUP;
+            opponent.sprite = opponentStartUP;
             opponentCooldown = 0;
         }
     }
