@@ -794,7 +794,7 @@ public class PlayerModel : MonoBehaviour
             {
                 Context.canHeal = false;
             }
-            else
+            else if (Context.canHeal == false)
             {
                 Context.canHeal = true;
                 Context.healthTimer = 1f;
