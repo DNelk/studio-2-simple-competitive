@@ -48,19 +48,19 @@ MonoBehaviour:
   RollSpeed: 5
   TechSpeed: 5
   StrikeHitBoxDistance: 1
-  StrikeHitBoxSize: {x: 1.75, y: 1}
+  StrikeHitBoxSize: {x: 1.8, y: 1}
   GrabHitBoxDistance: 1
-  GrabHitBoxSize: {x: 1.75, y: 1}
+  GrabHitBoxSize: {x: 1.8, y: 1}
   PlayerIndex: 0
   StateTimers:
   - key: StrikeStartup
-    time: 0.3
+    time: 0.2
   - key: StrikeActive
     time: 0.1
   - key: StrikeRecovery
     time: 0.6
   - key: GrabStartup
-    time: 0.3
+    time: 0.2
   - key: GrabActive
     time: 0.1
   - key: GrabRecovery
@@ -71,19 +71,27 @@ MonoBehaviour:
     time: 0.1
   - key: BlockRecovery
     time: 0.4
-  - key: FallActive
-    time: 0.7
-  - key: Rolling
-    time: 0.6
-  - key: GetUp
-    time: 0.8
-  - key: TechRolling
-    time: 0.8
-  - key: TechUp
-    time: 0.8
   - key: FallStartup
+    time: 0.4
+  - key: FallActive
     time: 0.2
   - key: FallRecovery
+    time: 0.2
+  - key: GetUp
+    time: 0.4
+  - key: TechUp
+    time: 0.4
+  - key: RollStartup
+    time: 0.1
+  - key: RollActive
+    time: 0.7
+  - key: RollRecovery
+    time: 0.2
+  - key: TechRollStartup
+    time: 0.1
+  - key: TechRollActive
+    time: 0.7
+  - key: TechRollRecovery
     time: 0.2
   - key: CounterStartup
     time: 0.1
