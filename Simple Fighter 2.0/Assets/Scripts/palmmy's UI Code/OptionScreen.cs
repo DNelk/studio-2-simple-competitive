@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OptionScreen : MonoBehaviour
 {
+
+    public GameObject SceneTransition;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,7 @@ public class OptionScreen : MonoBehaviour
 
     public void selfDestroy()
     {
+        Instantiate(SceneTransition);
         Destroy(gameObject);
     }
 }

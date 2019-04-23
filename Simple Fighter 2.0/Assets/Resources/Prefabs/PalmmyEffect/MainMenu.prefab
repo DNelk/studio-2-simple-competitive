@@ -586,7 +586,7 @@ RectTransform:
   m_GameObject: {fileID: 3346313302386090880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.335, y: 0.335, z: 1}
   m_Children:
   - {fileID: 3346313303683990673}
   - {fileID: 1885038284185140847}
@@ -1554,6 +1554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84459ff5874ce5a40baf4792f86398cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneTransition: {fileID: 6086444742504698324, guid: 13fb00e0f5785cb49ab3c51fb1fb0f90,
+    type: 3}
 --- !u!1 &6713821626724174096
 GameObject:
   m_ObjectHideFlags: 0
