@@ -113,7 +113,10 @@ public class PlayerModel : MonoBehaviour
             currentStateType == typeof(FallStartup) ||
             currentStateType == typeof(FallActive)||
             currentStateType == typeof(FallRecovery)||
-            currentStateType == typeof(Rolling) || 
+            currentStateType == typeof(RollStartup) ||
+            currentStateType == typeof(RollActive)||
+            currentStateType == typeof(TechRollStartup)||
+            currentStateType == typeof(TechRollActive)||
             currentStateType == typeof(GetUp))
         {
             Debug.Log("dont hit me");
@@ -558,7 +561,7 @@ public class PlayerModel : MonoBehaviour
                     if (!hasPressed)
                     {
                         Context.rollDir = value;
-                        TransitionTo<TechRolling>();
+                        TransitionTo<TechRollStartup>();
                     }
                     break;
                 case PlayerController.InputState.GetUp:
@@ -602,7 +605,7 @@ public class PlayerModel : MonoBehaviour
             {
                 case PlayerController.InputState.Roll:
                     Context.rollDir = value;
-                    TransitionTo<Rolling>();
+                    TransitionTo<RollStartup>();
                     break;
                 case PlayerController.InputState.GetUp:
                     TransitionTo<GetUp>();
@@ -611,19 +614,36 @@ public class PlayerModel : MonoBehaviour
         }
     }
 
-    private class Rolling : PlayerState
+    private class RollStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["RollStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
+            EventManager.Instance.Fire(new ToggleCollider(true));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<RollActive>();
+        }
+    }
+
+    private class RollActive : PlayerState
     {
         public override void Init()
         {
             base.Init();
         }
-        
+
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = Context.stateTimers["Rolling"];
-            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
-            EventManager.Instance.Fire(new ToggleCollider(true));
+            timer = Context.stateTimers["RollActive"];
         }
 
         public override void Update()
@@ -632,17 +652,48 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.RollSpeed, Context.PlayerIndex));
             timer -= Time.deltaTime;
             if(timer <= 0)
-                TransitionTo<Idle>();
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            EventManager.Instance.Fire(new ToggleCollider(false));
+                TransitionTo<RollRecovery>();
         }
     }
 
-    private class TechRolling : PlayerState
+    private class RollRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["RollRecovery"];
+            EventManager.Instance.Fire(new ToggleCollider(false));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Idle>();
+        }
+    }
+
+    private class TechRollStartup : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            timer = Context.stateTimers["TechRollStartup"];
+            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
+            EventManager.Instance.Fire(new ToggleCollider(true));
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<TechRollActive>();
+        }
+    }
+
+    private class TechRollActive : PlayerState
     {
         public override void Init()
         {
@@ -652,9 +703,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            timer = Context.stateTimers["TechRolling"];
-            EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
-            EventManager.Instance.Fire(new ToggleCollider(true));
+            timer = Context.stateTimers["TechRollActive"];
         }
 
         public override void Update()
@@ -663,13 +712,25 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.TechSpeed, Context.PlayerIndex));
             timer -= Time.deltaTime;
             if(timer <= 0)
-                TransitionTo<Idle>();
+                TransitionTo<TechRollRecovery>();
+        }
+    }
+
+    private class TechRollRecovery : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new ToggleCollider(false));
+            timer = Context.stateTimers["TechRollRecovery"];
         }
 
-        public override void OnExit()
+        public override void Update()
         {
-            base.OnExit();
-            EventManager.Instance.Fire(new ToggleCollider(false));
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<Idle>();
         }
     }
 
