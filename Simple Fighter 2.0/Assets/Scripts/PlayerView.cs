@@ -125,12 +125,12 @@ public class PlayerView : MonoBehaviour
         float speed = evt.Speed;
         float oldX = transform.position.x; //Our old position
 
-        RaycastHit2D oppCol =
-            Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
+        //RaycastHit2D oppCol =
+            //Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
         RaycastHit2D wallCol = Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance,
             LayerMask.GetMask("Bounds"));
 
-        if (!oppCol && !wallCol)
+        if (!wallCol)
         {
             transform.position += Vector3.right * amount * Time.deltaTime * speed;
         }
