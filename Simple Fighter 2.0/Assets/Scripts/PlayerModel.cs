@@ -54,7 +54,6 @@ public class PlayerModel : MonoBehaviour
         }
         
         Init();
-        
     }
 
     //Init our variables
@@ -124,13 +123,15 @@ public class PlayerModel : MonoBehaviour
             //No hit
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
-        else if (currentStateType == typeof(BlockActive) && evt.IsStrike)
+        else if (currentStateType == typeof(BlockActive) && evt.HitType == "Strike")
         {
             //no hit and counter starts
+            //successful block
             stateMachine.TransitionTo<CounterStartup>();
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
+            EventManager.Instance.Fire(new PlayParticle(PlayerIndex, "Block", currentHitPoints));
         }
-        else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
+        else if (currentStateType == typeof(StrikeActive) && evt.HitType == "Grab")
         {
             //no hit
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
@@ -142,10 +143,22 @@ public class PlayerModel : MonoBehaviour
             currentHitPoints--;
             canHeal = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
-            if(evt.IsStrike)
+            if (evt.HitType == "Strike")
+            {      
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
-            else
+                EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
+            }
+            else if (evt.HitType == "Grab")
+            {
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
+                EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
+            }
+            else if (evt.HitType == "Counter")
+            {
+                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
+                EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
+            }
+
             StartCoroutine(HitStop(HitDelay));
         }
     }
@@ -278,7 +291,7 @@ public class PlayerModel : MonoBehaviour
             base.Update();
             //Turn on hitbox
             if (!Context.hasHit)
-                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, "Strike"));
             
             //Countdown to recovery
             timer -= Time.deltaTime * Context.stopTime;     
@@ -339,7 +352,7 @@ public class PlayerModel : MonoBehaviour
             base.Update();
             //Turn on hitbox
             if (!Context.hasHit)
-                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
+                EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, "Counter"));
             
             //Countdown to recovery
             timer -= Time.deltaTime * Context.stopTime;     
@@ -489,7 +502,7 @@ public class PlayerModel : MonoBehaviour
             timer -= Time.deltaTime * Context.stopTime;
             //Active
             if (!Context.hasHit)
-                EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex, false));
+                EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex, "Grab"));
             if(timer <= 0)
                 TransitionTo<GrabRecovery>();
         }
@@ -689,6 +702,7 @@ public class PlayerModel : MonoBehaviour
             timer = Context.stateTimers["TechRollStartup"];
             EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
             EventManager.Instance.Fire(new ToggleCollider(true));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
         }
 
         public override void Update()
