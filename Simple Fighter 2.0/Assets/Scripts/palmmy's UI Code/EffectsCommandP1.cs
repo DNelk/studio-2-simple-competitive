@@ -49,6 +49,7 @@ public class EffectsCommandP1 : MonoBehaviour
         effectAttack();
         effectGuard();
         effectCounter();
+        effectTechRp();
     }
 
     void effectAttack()
@@ -176,6 +177,14 @@ public class EffectsCommandP1 : MonoBehaviour
             opponentIsActive = false;
             opponent.sprite = opponentStartUP;
             opponentCooldown = 0;
+        }
+    }
+
+    private void effectTechRp()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            GameObject TechRoll = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/TechRoll"), transform) as GameObject;
         }
     }
 }
