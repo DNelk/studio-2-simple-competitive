@@ -46,6 +46,9 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<HitBoxActive>(OnHitBoxActive);
         EventManager.Instance.AddHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.AddHandler<TurnAround>(OnTurnAround);
+        EventManager.Instance.AddHandler<RestartTime>(OnRestartTime);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.AddHandler<PlayParticle>(OnPlayParticle);
         transform.localScale *= 0.15844f;
         
         //Assign sprite and animator
@@ -92,6 +95,70 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.RemoveHandler<HitBoxActive>(OnHitBoxActive);
         EventManager.Instance.RemoveHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.RemoveHandler<TurnAround>(OnTurnAround);
+        EventManager.Instance.RemoveHandler<RestartTime>(OnRestartTime);
+        EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.RemoveHandler<PlayParticle>(OnPlayParticle);
+    }
+    
+    //Play the correct particle
+    public void OnPlayParticle(PlayParticle evt)
+    {
+        if (evt.PlayerIndex == PlayerIndex)
+        {
+            if (evt.ParticleType == "Block")
+            {
+                //play the block effect
+            }
+            else if (evt.ParticleType == "Tech")
+            {
+                //play the tech effect
+            }
+        }
+        else if (evt.ParticleType == "Strike")
+        {
+            if (evt.Health % 2 == 0)
+            {
+                //Play the strike break effect
+            }
+            else
+            {
+                //Play the strike damage effect
+            }
+        }
+        else if (evt.ParticleType == "Grab")
+        {
+            if (evt.Health % 2 == 0)
+            {
+                //Play the grab/kick break effect
+            }
+            else
+            {
+                //Play the grab/kick damage effect
+            }   
+        }
+        else if (evt.ParticleType == "Counter")
+        {
+            if (evt.Health % 2 == 0)
+            {
+                //Play the counter break effect
+            }
+            else
+            {
+                //Play the counter damage effect
+            }
+        }
+    }
+    
+    //Stop animations when damage is registered for hitstop
+    public void OnHealthChanged(HealthChanged evt)
+    {
+        animator.speed = 0;
+    }
+    
+    //Start animations back up when time restarts
+    public void OnRestartTime(RestartTime evt)
+    {
+        animator.speed = 1;
     }
     
     //Allows us to toggle collider off while rolling
@@ -159,7 +226,7 @@ public class PlayerView : MonoBehaviour
 
         if (hitCol)
         {
-            EventManager.Instance.Fire(new HitOpponent(PlayerIndex, evt.IsStrike));
+            EventManager.Instance.Fire(new HitOpponent(PlayerIndex, evt.HitType));
         }
     }
     #region Tools
