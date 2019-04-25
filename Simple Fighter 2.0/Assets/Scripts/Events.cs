@@ -131,6 +131,9 @@ public class Events : MonoBehaviour
         }
     }
     
+    //Restart Time Event
+    public class RestartTime : GameEvent {}
+    
     //Game End Event
     public class GameEnd : GameEvent {}
     

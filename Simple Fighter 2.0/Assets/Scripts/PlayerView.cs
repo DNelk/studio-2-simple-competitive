@@ -46,6 +46,8 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<HitBoxActive>(OnHitBoxActive);
         EventManager.Instance.AddHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.AddHandler<TurnAround>(OnTurnAround);
+        EventManager.Instance.AddHandler<RestartTime>(OnRestartTime);
+        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         transform.localScale *= 0.15844f;
         
         //Assign sprite and animator
@@ -92,6 +94,20 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.RemoveHandler<HitBoxActive>(OnHitBoxActive);
         EventManager.Instance.RemoveHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.RemoveHandler<TurnAround>(OnTurnAround);
+        EventManager.Instance.RemoveHandler<RestartTime>(OnRestartTime);
+        EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
+    }
+    
+    //Stop animations when damage is registered for hitstop
+    public void OnHealthChanged(HealthChanged evt)
+    {
+        animator.speed = 0;
+    }
+    
+    //Start animations back up when time restarts
+    public void OnRestartTime(RestartTime evt)
+    {
+        animator.speed = 1;
     }
     
     //Allows us to toggle collider off while rolling

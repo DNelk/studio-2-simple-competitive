@@ -17,6 +17,7 @@ public class PlayerModel : MonoBehaviour
     private float rollDir;
     private bool canHeal;
     private float healthTimer;
+    private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
     #endregion
 
@@ -31,6 +32,7 @@ public class PlayerModel : MonoBehaviour
     public Vector2 StrikeHitBoxSize = new Vector2(1.75f, 1f);
     public float GrabHitBoxDistance = 1;
     public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
+    public float HitDelay = .2f;
     public int PlayerIndex;
     public StateTimers[] StateTimers; //this is where you put the timers for each state
     private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
@@ -119,37 +121,42 @@ public class PlayerModel : MonoBehaviour
             currentStateType == typeof(TechRollActive)||
             currentStateType == typeof(GetUp))
         {
-            Debug.Log("dont hit me");
+            //No hit
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else if (currentStateType == typeof(BlockActive) && evt.IsStrike)
         {
-            Debug.Log("I am blocking, no hit");
-            //if we're opposite directions, successful block
+            //no hit and counter starts
             stateMachine.TransitionTo<CounterStartup>();
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
         }
         else if (currentStateType == typeof(StrikeActive) && !evt.IsStrike)
         {
-            //if we're opposite directions, they got us
+            //no hit
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
+            //hit
             stateMachine.TransitionTo<FallStartup>();
             currentHitPoints--;
-            Debug.Log(PlayerIndex + " health = " + currentHitPoints);
             canHeal = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
             if(evt.IsStrike)
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
             else
                 EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
-
+            StartCoroutine(HitStop(HitDelay));
         }
-       
-        
-        //
+    }
+    
+    //Hit Stop Coroutine
+    IEnumerator HitStop(float hitDelay)
+    {
+        stopTime = 0;
+        yield return new WaitForSeconds(hitDelay);
+        stopTime = 1;
+        EventManager.Instance.Fire(new RestartTime());
     }
     
     #region States
@@ -176,7 +183,7 @@ public class PlayerModel : MonoBehaviour
             base.Update();
             if (Context.canHeal)
             {
-                Context.healthTimer -= Time.deltaTime;
+                Context.healthTimer -= Time.deltaTime * Context.stopTime;
                 if (Context.healthTimer <= 0)
                 {
                     Context.canHeal = false;
@@ -212,7 +219,7 @@ public class PlayerModel : MonoBehaviour
             switch (input)
             {
                 case PlayerController.InputState.Walk:
-                    EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed, Context.PlayerIndex));
+                    EventManager.Instance.Fire(new TranslatePos(value, Context.MoveSpeed * Context.stopTime, Context.PlayerIndex));
                     break;
                 case PlayerController.InputState.EndWalk:
                     TransitionTo<Idle>();
@@ -248,7 +255,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
             {
                 TransitionTo<StrikeActive>();
@@ -274,7 +281,7 @@ public class PlayerModel : MonoBehaviour
                 EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
             
             //Countdown to recovery
-            timer -= Time.deltaTime;     
+            timer -= Time.deltaTime * Context.stopTime;     
             if(timer <= 0)
                 TransitionTo<StrikeRecovery>();
         }
@@ -292,7 +299,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -310,7 +317,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
             {
                 TransitionTo<CounterActive>();
@@ -335,7 +342,7 @@ public class PlayerModel : MonoBehaviour
                 EventManager.Instance.Fire(new HitBoxActive(Context.StrikeHitBoxDistance, Context.StrikeHitBoxSize, Context.PlayerIndex, true));
             
             //Countdown to recovery
-            timer -= Time.deltaTime;     
+            timer -= Time.deltaTime * Context.stopTime;     
             if(timer <= 0)
                 TransitionTo<CounterRecovery>();
         }
@@ -352,7 +359,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -376,7 +383,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<BlockActive>();
         }
@@ -438,7 +445,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime; 
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -461,7 +468,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<GrabActive>();
         }
@@ -479,7 +486,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             //Active
             if (!Context.hasHit)
                 EventManager.Instance.Fire(new HitBoxActive(Context.GrabHitBoxDistance, Context.GrabHitBoxSize, Context.PlayerIndex, false));
@@ -500,7 +507,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -518,7 +525,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<FallActive>();
         }
@@ -544,7 +551,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<FallRecovery>();
         }
@@ -583,7 +590,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Grounded>();
         }
@@ -627,7 +634,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<RollActive>();
         }
@@ -650,7 +657,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.Update();
             EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.RollSpeed, Context.PlayerIndex));
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<RollRecovery>();
         }
@@ -668,7 +675,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -687,7 +694,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<TechRollActive>();
         }
@@ -710,7 +717,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.Update();
             EventManager.Instance.Fire(new TranslatePos(Context.rollDir, Context.TechSpeed, Context.PlayerIndex));
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<TechRollRecovery>();
         }
@@ -728,7 +735,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -751,7 +758,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
         }
@@ -774,7 +781,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
-            timer -= Time.deltaTime;
+            timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
         }
