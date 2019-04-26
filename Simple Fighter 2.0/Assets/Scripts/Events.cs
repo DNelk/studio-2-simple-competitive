@@ -62,14 +62,14 @@ public class Events : MonoBehaviour
         public float HitBoxDistance { get; }
         public Vector2 HitBoxSize { get; }
         public int PlayerIndex { get; }
-        public bool IsStrike { get; }
+        public string HitType { get; }
         
-        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize, int playerIndex, bool isStrike)
+        public HitBoxActive(float hitBoxDistance, Vector2 hitBoxSize, int playerIndex, string hitType)
         {
             HitBoxDistance = hitBoxDistance;
             HitBoxSize = hitBoxSize;
             PlayerIndex = playerIndex;
-            IsStrike = isStrike;
+            HitType = hitType;
         }   
     }
     
@@ -77,12 +77,12 @@ public class Events : MonoBehaviour
     public class HitOpponent : GameEvent
     {
         public int PlayerIndex { get; }
-        public bool IsStrike { get; }
+        public string HitType { get; }
         
-        public HitOpponent(int playerIndex, bool isStrike)
+        public HitOpponent(int playerIndex, string hitType)
         {
             PlayerIndex = playerIndex;
-            IsStrike = isStrike;
+            HitType = hitType;
         }
     }
     
@@ -130,6 +130,24 @@ public class Events : MonoBehaviour
             IsOn = isOn;
         }
     }
+    
+    //Play particle event
+    public class PlayParticle : GameEvent
+    {
+        public string ParticleType { get; }
+        public int PlayerIndex { get; }
+        public int Health { get; }
+
+        public PlayParticle(int playerIndex, string particleType, int health)
+        {
+            PlayerIndex = playerIndex;
+            ParticleType = particleType;
+            Health = health;
+        }
+    }
+    
+    //Restart Time Event
+    public class RestartTime : GameEvent {}
     
     //Game End Event
     public class GameEnd : GameEvent {}
