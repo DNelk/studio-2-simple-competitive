@@ -107,44 +107,45 @@ public class PlayerView : MonoBehaviour
         {
             if (evt.ParticleType == "Block")
             {
-                //play the block effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard"),transform);
             }
             else if (evt.ParticleType == "Tech")
             {
-                //play the tech effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/TechRoll"),transform);
             }
         }
         else if (evt.ParticleType == "Strike")
         {
             if (evt.Health % 2 == 0)
             {
-                //Play the strike break effect
-            }
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Attacks_Break"),transform);
+            } 
             else
             {
-                //Play the strike damage effect
+                Debug.Log("playParticle");
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Attacks_Normal"),transform);
             }
         }
         else if (evt.ParticleType == "Grab")
         {
             if (evt.Health % 2 == 0)
             {
-                //Play the grab/kick break effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Kick_Break"),transform);
             }
             else
             {
-                //Play the grab/kick damage effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Kick_Normal"),transform);
             }   
         }
         else if (evt.ParticleType == "Counter")
         {
             if (evt.Health % 2 == 0)
             {
-                //Play the counter break effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Counter_Break"),transform);
             }
             else
             {
-                //Play the counter damage effect
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Counter_Normal"),transform);
             }
         }
     }
