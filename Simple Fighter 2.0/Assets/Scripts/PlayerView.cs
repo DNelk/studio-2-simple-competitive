@@ -107,7 +107,7 @@ public class PlayerView : MonoBehaviour
         {
             if (evt.ParticleType == "Block")
             {
-                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard"),transform);
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard_Counter"),transform);
             }
             else if (evt.ParticleType == "Tech")
             {
