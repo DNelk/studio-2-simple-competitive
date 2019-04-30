@@ -17,6 +17,7 @@ public class PlayerModel : MonoBehaviour
     private float rollDir;
     private bool canHeal;
     private bool isHit;
+    private bool isCounter;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -64,6 +65,7 @@ public class PlayerModel : MonoBehaviour
         stateMachine.TransitionTo<Idle>();
         hasHit = false;
         isHit = false;
+        isCounter = false;
     }
     
     private void OnDestroy()
@@ -131,7 +133,7 @@ public class PlayerModel : MonoBehaviour
         {
             //no hit and counter starts
             //successful block
-            stateMachine.TransitionTo<CounterStartup>();
+            isCounter = true;
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
             EventManager.Instance.Fire(new PlayParticle(PlayerIndex, "Block", currentHitPoints));
         }
@@ -414,6 +416,7 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new AnimationChange("Player_BlockStartup", Context.PlayerIndex));
             timer = Context.stateTimers["BlockStartup"];
             Context.isBlocking = true;
+            Context.isCounter = false;
         }
 
         public override void Update()
@@ -458,6 +461,12 @@ public class PlayerModel : MonoBehaviour
                 return;
             }
             base.Update();
+            if (Context.isCounter)
+            {
+                Context.isCounter = false;
+                TransitionTo<CounterStartup>();
+                return;
+            }
             if (!Context.isBlocking)
                 TransitionTo<BlockRecovery>();
         }
