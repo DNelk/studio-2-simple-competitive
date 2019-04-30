@@ -22,6 +22,7 @@ public class TextCaller : MonoBehaviour
         callRecover();
         callOneDown();
         callTwoDown();
+        callKO();
     }
 
     private void callCounter()
@@ -74,6 +75,19 @@ public class TextCaller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             GameObject TwoDownP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/P2DownTwoText"),transform) as GameObject;
+        }
+    }
+
+    private void callKO()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            GameObject KO =Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"),transform.parent) as GameObject;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GameObject Perfect =Instantiate(Resources.Load("Prefabs/PalmmyEffect/PERFECT"),transform.parent) as GameObject;
         }
     }
 
