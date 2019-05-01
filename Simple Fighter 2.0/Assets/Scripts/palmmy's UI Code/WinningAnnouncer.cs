@@ -29,4 +29,9 @@ public class WinningAnnouncer : MonoBehaviour
         myAnim.SetBool("P1Win", false);
         myAnim.SetBool("P2Win", false);
     }
+
+    private void toNewRound()
+    {
+        GameManager.Instance.StartRound();
+    }
 }

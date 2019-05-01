@@ -146,10 +146,18 @@ public class GameManager : MonoBehaviour
                     //Check if we timed out
                     if (timer.GetComponent<Timer>().TimerRaw <= 0)
                     {
-                        if(playerHealthCached[0] > playerHealthCached[1])
+                        if (playerHealthCached[0] > playerHealthCached[1])
+                        {
                             EndRound(1);
-                        else if(playerHealthCached[1] > playerHealthCached[0])
-                            EndRound(0);
+                            /*GameObject KO = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                            KO.GetComponent<EndRound>().playerIndex = 1;*/
+                        }
+                        else if (playerHealthCached[1] > playerHealthCached[0])
+                        {
+                            EndRound(2);
+                            /*GameObject KO = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                            KO.GetComponent<EndRound>().playerIndex = 0;*/
+                        }
                         else
                         {
                             //Uh oh... time out with no winners.. need a solution for this
@@ -168,10 +176,35 @@ public class GameManager : MonoBehaviour
         int newHealth = evt.NewHealth;
         HealthBar healthBar = healthBars[index].GetComponent<HealthBar>();
         healthBar.UpdateHealth(newHealth);
-        if (newHealth <= 0)
-            EndRound(index);
+
+        //get the other player index
+        int opponentIndex = 0;
+        for(int i = 0; i < playerHealthCached.Length; i++)
+        {
+            if(i != index){
+                opponentIndex = i;
+            }
+        }
+        
         //Cache health in case we time out
         playerHealthCached[index] = newHealth;
+        
+        //when a player lose
+        if (newHealth <= 0)
+        {
+            GameObject result = null;
+            if (playerHealthCached[opponentIndex] >= 6)
+            {
+                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
+            }        
+            else if (playerHealthCached[opponentIndex] < 6)
+            {
+                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+            }
+            result.GetComponent<EndRound>().losingPlayer = index;
+            playerHealthCached[index] = 6;
+            playerHealthCached[opponentIndex] = 6;
+        }
     }
 
     private void OnInput(ProcessInput evt)
@@ -180,7 +213,7 @@ public class GameManager : MonoBehaviour
         {
                 case ManagerState.RoundOver:
                     if(evt.NewInput == PlayerController.InputState.Confirm)
-                        StartRound();
+                        announcer.GetComponent<WinningAnnouncer>().ResetBool();
                     break;
         }
     }
@@ -189,7 +222,7 @@ public class GameManager : MonoBehaviour
     #region Round Management
 
     //End the current round
-    private void EndRound(int losingPlayerIndex)
+    public void EndRound(int losingPlayerIndex)
     {
         for (int i = 0; i < players.Length ; i++)
         {
@@ -221,7 +254,7 @@ public class GameManager : MonoBehaviour
     }
 
     //Start a new round
-    private void StartRound()
+    public void StartRound()
     {
         for(int i = 0; i < players.Length; i++)
         {
@@ -237,7 +270,6 @@ public class GameManager : MonoBehaviour
         //reset the timer
         CurrentManagerState = ManagerState.Start;
         timer.GetComponent<Timer>().RoundUpdate();
-        announcer.GetComponent<WinningAnnouncer>().ResetBool();
     }
     #endregion
 }

@@ -29,12 +29,12 @@ public class TextCaller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            GameObject counterP1 = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/P1CounterText"),transform) as GameObject;
+            GameObject counterP1 = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/CounterText"),transform) as GameObject;
         }
         
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GameObject counterP2 = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/P2CounterText"),transform) as GameObject;
+            GameObject counterP2 = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/CounterText"),transform) as GameObject;
         }
 
     }
@@ -43,12 +43,12 @@ public class TextCaller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            GameObject recoverP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/P1RecoverText"),transform) as GameObject;
+            GameObject recoverP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/RecoverText"),transform) as GameObject;
         }
         
         if (Input.GetKeyDown(KeyCode.J))
         {
-            GameObject recoverP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/P2RecoverText"),transform) as GameObject;
+            GameObject recoverP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/RecoverText"),transform) as GameObject;
         }
     }
 
@@ -56,12 +56,12 @@ public class TextCaller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            GameObject OneDownP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/P1DownOneText"),transform) as GameObject;
+            GameObject OneDownP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/DownOneText"),transform) as GameObject;
         }
         
         if (Input.GetKeyDown(KeyCode.H))
         {
-            GameObject OneDownP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/P2DownOneText"),transform) as GameObject;
+            GameObject OneDownP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/DownOneText"),transform) as GameObject;
         }
     }
     
@@ -69,12 +69,12 @@ public class TextCaller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            GameObject TwoDownP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/P1DownTwoText"),transform) as GameObject;
+            GameObject TwoDownP1 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player1/DownTwoText"),transform) as GameObject;
         }
         
         if (Input.GetKeyDown(KeyCode.G))
         {
-            GameObject TwoDownP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/P2DownTwoText"),transform) as GameObject;
+            GameObject TwoDownP2 =Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player2/DownTwoText"),transform) as GameObject;
         }
     }
 
