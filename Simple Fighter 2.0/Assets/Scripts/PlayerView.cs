@@ -14,6 +14,7 @@ public class PlayerView : MonoBehaviour
     private BoxCollider2D col;
     private int direction;
     private int opponentLayer;
+    private GameObject blockBubble; //holds the block bubble game object for blocking
         
     #endregion
     
@@ -113,6 +114,17 @@ public class PlayerView : MonoBehaviour
             {
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/TechRoll"),transform);
             }
+            else if (evt.ParticleType == "BlockBubble")
+            {
+                if (blockBubble == null)
+                {
+                    //blockParticle = Instantiate...
+                }
+                else
+                {
+                    Destroy(blockBubble);
+                }
+            }
         }
         else if (evt.ParticleType == "Strike")
         {
@@ -122,7 +134,6 @@ public class PlayerView : MonoBehaviour
             } 
             else
             {
-                Debug.Log("playParticle");
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Attacks_Normal"),transform);
             }
         }

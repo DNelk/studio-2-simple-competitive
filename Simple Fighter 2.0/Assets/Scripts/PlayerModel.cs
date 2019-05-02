@@ -453,6 +453,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
         }
 
         public override void Update()
@@ -496,6 +497,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockRecovery", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
             timer = Context.stateTimers["BlockRecovery"];
         }
 
