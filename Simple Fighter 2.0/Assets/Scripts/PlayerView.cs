@@ -15,6 +15,7 @@ public class PlayerView : MonoBehaviour
     private int direction;
     private int opponentLayer;
     private GameObject blockBubble; //holds the block bubble game object for blocking
+    private GameObject UIcanvas;
         
     #endregion
     
@@ -87,6 +88,9 @@ public class PlayerView : MonoBehaviour
         {
             Debug.Log("LAYER NOT SET FOR VIEW " + PlayerIndex);
         }
+        
+        //set canvas to call textEffect
+        UIcanvas = GameObject.Find("Canvas");
     }
 
     private void OnDestroy()
@@ -108,7 +112,7 @@ public class PlayerView : MonoBehaviour
         {
             if (evt.ParticleType == "Block")
             {
-                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard"),transform);
+                Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard_Counter"),transform);
             }
             else if (evt.ParticleType == "Tech")
             {
@@ -158,6 +162,7 @@ public class PlayerView : MonoBehaviour
             {
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Counter_Normal"),transform);
             }
+            Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/CounterText"),UIcanvas.transform);
         }
     }
     
