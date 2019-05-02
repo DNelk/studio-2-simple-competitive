@@ -152,12 +152,32 @@ public class Events : MonoBehaviour
     //Restart Time Event
     public class RestartTime : GameEvent {}
     
-    //Game End Event
-    public class GameEnd : GameEvent {}
+    //Round End Event
+    //Used when someone is KOed at the end of a round
+    public class RoundEnd : GameEvent
+    {
+        public int WinnerIndex;
+        public int LoserIndex;
+
+        public RoundEnd(int winnerIndex, int loserIndex)
+        {
+            WinnerIndex = winnerIndex;
+            LoserIndex = loserIndex;
+        }
+    } 
     
-    public class TimeOut : GameEvent {}
+    //used for when someone times out at the end of a round
+    public class TimeOut : GameEvent
+    {
+        public int WinnerIndex;
+        public int LoserIndex;
+
+        public TimeOut(int winnerIndex, int loserIndex)
+        {
+            WinnerIndex = winnerIndex;
+            LoserIndex = loserIndex;
+        }
+    } 
     
     public class Pause : GameEvent {}
-    
-    
 }

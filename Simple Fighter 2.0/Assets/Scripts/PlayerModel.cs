@@ -18,6 +18,9 @@ public class PlayerModel : MonoBehaviour
     private bool canHeal;
     private bool isHit;
     private bool isCounter;
+    private bool hasWon;
+    private bool isKOed;
+    private bool hasTimeOut;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -66,6 +69,9 @@ public class PlayerModel : MonoBehaviour
         hasHit = false;
         isHit = false;
         isCounter = false;
+        hasWon = false;
+        isKOed = false;
+        hasTimeOut = false;
     }
     
     private void OnDestroy()
@@ -169,6 +175,18 @@ public class PlayerModel : MonoBehaviour
         }
     }
     
+    //Called when the round is over from KO
+    public void OnRoundEnd(RoundEnd evt)
+    {
+        
+    }
+    
+    //Called when round is over from Time
+    public void OnTimeOut(TimeOut evt)
+    {
+        
+    }
+    
     //Hit Stop Coroutine
     IEnumerator HitStop(float hitDelay)
     {
@@ -201,6 +219,7 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
+            //Healing
             if (Context.canHeal)
             {
                 Context.healthTimer -= Time.deltaTime * Context.stopTime;
@@ -948,8 +967,18 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             //need victory anim
-            animationTrigger = "isGettingUp";
+            
         }
+    }
+
+    private class KO : PlayerState
+    {
+        
+    }
+
+    private class TimeLose : PlayerState
+    {
+        
     }
     #endregion
 }
