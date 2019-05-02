@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour
     private void LateUpdate()
     {
         //Don't Track if we're not fighting
-        if (GameManager.Instance.CurrentManagerState != ManagerState.Fighting)
+        if (GameManager.Instance.CurrentManagerState != ManagerState.Fighting && GameManager.Instance.CurrentManagerState != ManagerState.End)
         {
             cam.orthographicSize = orthoDefault;
             transform.position = defaultPos;

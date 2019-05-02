@@ -148,15 +148,15 @@ public class GameManager : MonoBehaviour
                     {
                         if (playerHealthCached[0] > playerHealthCached[1])
                         {
-                            EndRound(1);
-                            /*GameObject KO = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
-                            KO.GetComponent<EndRound>().playerIndex = 1;*/
+                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            TimeUp.GetComponent<EndRound>().losingPlayer = 1;
+                            CurrentManagerState = ManagerState.End;
                         }
                         else if (playerHealthCached[1] > playerHealthCached[0])
                         {
-                            EndRound(2);
-                            /*GameObject KO = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
-                            KO.GetComponent<EndRound>().playerIndex = 0;*/
+                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            TimeUp.GetComponent<EndRound>().losingPlayer = 0;
+                            CurrentManagerState = ManagerState.End;
                         }
                         else
                         {
@@ -204,6 +204,7 @@ public class GameManager : MonoBehaviour
             result.GetComponent<EndRound>().losingPlayer = index;
             playerHealthCached[index] = 6;
             playerHealthCached[opponentIndex] = 6;
+            CurrentManagerState = ManagerState.End;
         }
     }
 
@@ -324,6 +325,7 @@ public enum ManagerState
 {
     Start,
     Fighting,
+    End,
     RoundOver,
     SetOver,
     Menu

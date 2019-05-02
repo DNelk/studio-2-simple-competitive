@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6681369589243110095}
   - component: {fileID: 263386020652824410}
   m_Layer: 5
-  m_Name: P1DownTwoText
+  m_Name: DownTwoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 2161379909760724532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children:
   - {fileID: 8135170193796731513}
   m_Father: {fileID: 0}

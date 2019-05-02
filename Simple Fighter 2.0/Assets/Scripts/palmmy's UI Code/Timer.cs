@@ -52,11 +52,12 @@ public class Timer : MonoBehaviour
 
     public void RoundUpdate()
     {
+        LeftOne.text = 0.ToString();
+        RightOne.text = 0.ToString();
         TimerRaw = 60;
         RoundNumber++;
         GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
         newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
         RoundSprite.sprite = RoundList[RoundNumber - 1];
     }
-    
 }

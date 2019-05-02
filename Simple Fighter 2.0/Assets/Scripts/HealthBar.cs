@@ -32,7 +32,7 @@ public class HealthBar : MonoBehaviour
             }
             else //Destroy the bar
             {
-                DestroyChild();
+                DestroyChild(newHealth);
             }
         }
         else//If our new health is odd we are in a "pending damage state"
@@ -46,6 +46,7 @@ public class HealthBar : MonoBehaviour
     private void RebuildChild()
     {
         Children[currentChild].Recover();
+        Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/RecoverText"), transform.parent);
     }
     
     private void DamageChild()
@@ -53,9 +54,14 @@ public class HealthBar : MonoBehaviour
         Children[currentChild].Crack();
     }
     
-    private void DestroyChild()
+    private void DestroyChild(int newHealth)
     {
         Children[currentChild].Shatter();
         currentChild++;
+
+        if (newHealth == 4)
+            Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/DownOneText"), transform.parent);
+        if (newHealth == 2)
+            Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/DownTwoText"), transform.parent);
     }
 }

@@ -9,6 +9,7 @@ public class WinningAnnouncer : MonoBehaviour
     private void Start()
     {
         myAnim = GetComponent<Animator>();
+        
     }
 
     public void PlayerWin(int playerIndex)
@@ -22,6 +23,8 @@ public class WinningAnnouncer : MonoBehaviour
                 myAnim.SetBool("P2Win", true);
                 break;
         }
+        
+        transform.SetAsLastSibling();
     }
 
     public void ResetBool()
