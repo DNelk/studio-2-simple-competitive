@@ -683,6 +683,15 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
             EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
+            timer = Context.stateTimers["GroundedMax"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<GetUp>();
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
