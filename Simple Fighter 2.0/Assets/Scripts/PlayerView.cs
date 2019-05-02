@@ -167,11 +167,11 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.IsOn)
         {
-            GetComponent<Collider2D>().isTrigger = true;
+            GetComponent<Collider2D>().enabled = false;
         }
         else if (!evt.IsOn)
         {
-            GetComponent<Collider2D>().isTrigger = false;
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 
@@ -193,8 +193,8 @@ public class PlayerView : MonoBehaviour
         float speed = evt.Speed;
         float oldX = transform.position.x; //Our old position
 
-        //RaycastHit2D oppCol =
-            //Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
+        RaycastHit2D oppCol =
+            Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
         RaycastHit2D wallCol = Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance,
             LayerMask.GetMask("Bounds"));
 

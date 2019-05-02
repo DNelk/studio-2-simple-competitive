@@ -224,6 +224,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void Update()
@@ -894,6 +895,7 @@ public class PlayerModel : MonoBehaviour
                 Context.healthTimer = 1f;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
 
         public override void Update()
