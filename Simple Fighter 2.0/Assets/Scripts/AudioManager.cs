@@ -57,8 +57,7 @@ public class AudioManager : MonoBehaviour
         //
         int indexAudio = Random.Range(0, audioClips.Length);
         whichClip = audioClips[indexAudio];
-        audioSource.clip = whichClip;
-        audioSource.Play();
+        audioSource.PlayOneShot(whichClip);
         //
 
     }
