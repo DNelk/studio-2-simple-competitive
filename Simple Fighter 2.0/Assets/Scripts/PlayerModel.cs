@@ -224,6 +224,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void Update()
@@ -452,6 +453,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
         }
 
         public override void Update()
@@ -495,6 +497,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockRecovery", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
             timer = Context.stateTimers["BlockRecovery"];
         }
 
@@ -894,6 +897,7 @@ public class PlayerModel : MonoBehaviour
                 Context.healthTimer = 1f;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
 
         public override void Update()

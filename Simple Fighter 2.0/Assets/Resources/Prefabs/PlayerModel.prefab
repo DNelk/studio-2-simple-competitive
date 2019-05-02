@@ -51,6 +51,7 @@ MonoBehaviour:
   StrikeHitBoxSize: {x: 1.8, y: 1}
   GrabHitBoxDistance: 1
   GrabHitBoxSize: {x: 1.8, y: 1}
+  HitDelay: 0.2
   PlayerIndex: 0
   StateTimers:
   - key: StrikeStartup
@@ -66,7 +67,7 @@ MonoBehaviour:
   - key: GrabRecovery
     time: 0.6
   - key: BlockStartup
-    time: 0.2
+    time: 0.1
   - key: BlockActive
     time: 0.1
   - key: BlockRecovery

@@ -14,6 +14,7 @@ public class PlayerView : MonoBehaviour
     private BoxCollider2D col;
     private int direction;
     private int opponentLayer;
+    private GameObject blockBubble; //holds the block bubble game object for blocking
     private GameObject UIcanvas;
         
     #endregion
@@ -117,6 +118,17 @@ public class PlayerView : MonoBehaviour
             {
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/TechRoll"),transform);
             }
+            else if (evt.ParticleType == "BlockBubble")
+            {
+                if (blockBubble == null)
+                {
+                    //blockParticle = Instantiate...
+                }
+                else
+                {
+                    Destroy(blockBubble);
+                }
+            }
         }
         else if (evt.ParticleType == "Strike")
         {
@@ -126,7 +138,6 @@ public class PlayerView : MonoBehaviour
             } 
             else
             {
-                Debug.Log("playParticle");
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Attacks_Normal"),transform);
             }
         }
@@ -172,11 +183,11 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.IsOn)
         {
-            GetComponent<Collider2D>().isTrigger = true;
+            GetComponent<Collider2D>().enabled = false;
         }
         else if (!evt.IsOn)
         {
-            GetComponent<Collider2D>().isTrigger = false;
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 
@@ -198,8 +209,8 @@ public class PlayerView : MonoBehaviour
         float speed = evt.Speed;
         float oldX = transform.position.x; //Our old position
 
-        //RaycastHit2D oppCol =
-            //Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
+        RaycastHit2D oppCol =
+            Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance, opponentLayer);
         RaycastHit2D wallCol = Physics2D.Raycast(transform.position, Vector2.right * amount, MoveCastDistance,
             LayerMask.GetMask("Bounds"));
 
