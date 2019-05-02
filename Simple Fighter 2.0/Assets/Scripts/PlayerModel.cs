@@ -173,6 +173,7 @@ public class PlayerModel : MonoBehaviour
     IEnumerator HitStop(float hitDelay)
     {
         stopTime = 0;
+        EventManager.Instance.Fire(new StopTime());
         yield return new WaitForSeconds(hitDelay);
         stopTime = 1;
         EventManager.Instance.Fire(new RestartTime());

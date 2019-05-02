@@ -47,7 +47,7 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.AddHandler<TurnAround>(OnTurnAround);
         EventManager.Instance.AddHandler<RestartTime>(OnRestartTime);
-        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.AddHandler<StopTime>(OnStopTime);
         EventManager.Instance.AddHandler<PlayParticle>(OnPlayParticle);
         transform.localScale *= 0.15844f;
         
@@ -96,7 +96,7 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.RemoveHandler<ToggleCollider>(OnToggleCollider);
         EventManager.Instance.RemoveHandler<TurnAround>(OnTurnAround);
         EventManager.Instance.RemoveHandler<RestartTime>(OnRestartTime);
-        EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
+        EventManager.Instance.RemoveHandler<StopTime>(OnStopTime);
         EventManager.Instance.RemoveHandler<PlayParticle>(OnPlayParticle);
     }
     
@@ -151,7 +151,7 @@ public class PlayerView : MonoBehaviour
     }
     
     //Stop animations when damage is registered for hitstop
-    public void OnHealthChanged(HealthChanged evt)
+    public void OnStopTime(StopTime evt)
     {
         animator.speed = 0;
     }
