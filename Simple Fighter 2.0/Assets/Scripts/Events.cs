@@ -146,6 +146,9 @@ public class Events : MonoBehaviour
         }
     }
     
+    //Stop Time Event
+    public class StopTime : GameEvent {}
+    
     //Restart Time Event
     public class RestartTime : GameEvent {}
     
