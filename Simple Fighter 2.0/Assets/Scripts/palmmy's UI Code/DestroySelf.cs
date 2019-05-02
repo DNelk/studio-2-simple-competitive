@@ -18,7 +18,6 @@ public class DestroySelf : MonoBehaviour
 
     public void selfDestruct()
     {
-        print("Palmmy");
         Destroy(gameObject);
     }
 }
