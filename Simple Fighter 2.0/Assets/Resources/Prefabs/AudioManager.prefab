@@ -70,6 +70,34 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 14f410a2d6b45b5489e53948ee13c0f8, type: 3}
   - {fileID: 8300000, guid: ca7d9d8dd8659d04ebc9b714c4d0f976, type: 3}
   - {fileID: 8300000, guid: 3a2332d5db1990f40ae0acccdc4b2ed9, type: 3}
+  WhooshAudioClips:
+  - {fileID: 8300000, guid: cb4ab2dff1470e4409117d7492ba4bc6, type: 3}
+  - {fileID: 8300000, guid: 6a1c48e59b13cde4cafce54712972716, type: 3}
+  - {fileID: 8300000, guid: 586b8b1ec952cc147aeef167a8a68f99, type: 3}
+  WinAudioClips:
+  - {fileID: 8300000, guid: 428d133c329eea9458b2ac064f31a593, type: 3}
+  - {fileID: 8300000, guid: bcb0e39cd150ff74ba4df8380d7d180e, type: 3}
+  - {fileID: 8300000, guid: 24c6127757a49de4bbe388eb8936e27e, type: 3}
+  - {fileID: 8300000, guid: b9dabecd9b7b8d14a9f386266f444b25, type: 3}
+  - {fileID: 8300000, guid: 6ca6141d7c29f3549bfdf75e2eaa9782, type: 3}
+  - {fileID: 8300000, guid: 2fb14d77a603a6b4f8688179d2b4c492, type: 3}
+  - {fileID: 8300000, guid: 8f19ce7461eb24544b9a5b9cc932ecda, type: 3}
+  WinnerAudioClips:
+  - {fileID: 8300000, guid: 28b0bb446bd3eff489ee96e2a67411e4, type: 3}
+  - {fileID: 8300000, guid: 4e410bec31b919b4b81ea39abe6ffa32, type: 3}
+  - {fileID: 8300000, guid: f5e489a707d86f04b8bfc28135421427, type: 3}
+  - {fileID: 8300000, guid: 1984fde8f1933324eae736d9b1806c9b, type: 3}
+  - {fileID: 8300000, guid: 2b6852bc79a5ece48b7d8f26d8bf41d1, type: 3}
+  HPShatterAudioClips:
+  - {fileID: 8300000, guid: c3afd045b06cb5a46a6538491e0766b5, type: 3}
+  TickAudioClips:
+  - {fileID: 8300000, guid: e0020dbda1299dd4eb2f534fd3e6cecc, type: 3}
+  TimeoutAudioClips:
+  - {fileID: 8300000, guid: 3921d90536658024d8e735f5b02b7f68, type: 3}
+  KOAudioClips:
+  - {fileID: 8300000, guid: fcf552d8d1c627a419dd543530a9677b, type: 3}
+  PerfectAudioClips:
+  - {fileID: 8300000, guid: b36e4b44a697245498fdc52cf26830f7, type: 3}
 --- !u!82 &4734451538182886069
 AudioSource:
   m_ObjectHideFlags: 0

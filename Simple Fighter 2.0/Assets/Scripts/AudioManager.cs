@@ -32,6 +32,30 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] CrowdAudioClips = new AudioClip[3];
     private AudioClip crowdAudioClip;
 
+    public AudioClip[] WhooshAudioClips = new AudioClip[3];
+    private AudioClip whooshAudioClip;
+
+    public AudioClip[] WinAudioClips = new AudioClip[7];
+    private AudioClip winAudioClip;
+
+    public AudioClip[] WinnerAudioClips = new AudioClip[5];
+    private AudioClip winnerAudioClip;
+    
+    public AudioClip[] HPShatterAudioClips = new AudioClip[1];
+    private AudioClip hpshatterAudioClip;
+    
+    public AudioClip[] TickAudioClips = new AudioClip[1];
+    private AudioClip tickAudioClip;
+    
+    public AudioClip[] TimeoutAudioClips = new AudioClip[1];
+    private AudioClip timeoutAudioClip;
+    
+    public AudioClip[] KOAudioClips = new AudioClip[1];
+    private AudioClip koAudioClip;
+    
+    public AudioClip[] PerfectAudioClips = new AudioClip[1];
+    private AudioClip perfectAudioClip;
+    
     private AudioClip pickedClip;
 
     public static AudioManager Instance;
