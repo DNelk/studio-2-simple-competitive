@@ -874,6 +874,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["TechUp"];
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
         }
 
         public override void Update()
