@@ -127,20 +127,23 @@ public class PlayerModel : MonoBehaviour
             currentStateType == typeof(TechUp))
         {
             //No hit
-            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.WhiffAudioClips);
+            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else if (currentStateType == typeof(BlockActive) && evt.HitType == "Strike")
         {
             //no hit and counter starts
             //successful block
             isCounter = true;
-            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.BlockedAudioClips);
+            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
             EventManager.Instance.Fire(new PlayParticle(PlayerIndex, "Block", currentHitPoints));
         }
         else if (currentStateType == typeof(StrikeActive) && evt.HitType == "Grab")
         {
             //no hit
-            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.WhiffAudioClips);
+            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
@@ -151,17 +154,20 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
             if (evt.HitType == "Strike")
             {      
-                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
+                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Grab")
             {
-                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.GrabbedAudioClips);
+                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Counter")
             {
-                EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
+                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
 
@@ -224,6 +230,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
         
         public override void Update()
@@ -452,6 +459,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockActive", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
         }
 
         public override void Update()
@@ -495,6 +503,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_BlockRecovery", Context.PlayerIndex));
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
             timer = Context.stateTimers["BlockRecovery"];
         }
 
@@ -678,8 +687,10 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
-            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
-            EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.LandingAudioClips);
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.CrowdAudioClips);
+            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
+            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
@@ -863,6 +874,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["TechUp"];
+            EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
         }
 
         public override void Update()
@@ -894,6 +906,7 @@ public class PlayerModel : MonoBehaviour
                 Context.healthTimer = 1f;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
+            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
         }
 
         public override void Update()
