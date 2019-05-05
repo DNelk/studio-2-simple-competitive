@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModeSelecter : MonoBehaviour
+public class ModeSelecter_BackCircling : MonoBehaviour
 {
     public int clockSpeed;
     
