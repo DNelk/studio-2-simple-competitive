@@ -19,8 +19,8 @@ public class PlayerModel : MonoBehaviour
     private bool isHit;
     private bool isCounter;
     private bool hasWon;
-    private bool isKOed;
-    private bool hasTimeOut;
+    private bool hasLost;
+    private bool hasDraw;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -71,8 +71,8 @@ public class PlayerModel : MonoBehaviour
         isHit = false;
         isCounter = false;
         hasWon = false;
-        isKOed = false;
-        hasTimeOut = false;
+        hasLost = false;
+        hasDraw = false;
     }
     
     private void OnDestroy()
@@ -182,16 +182,19 @@ public class PlayerModel : MonoBehaviour
         }
     }
     
-    //Called when the round is over from KO
+    //Called when the round is over
     public void OnRoundEnd(RoundEnd evt)
     {
-        
-    }
-    
-    //Called when round is over from Time
-    public void OnTimeOut(TimeOut evt)
-    {
-        
+        if (evt.WinnerIndex == PlayerIndex)
+            hasWon = true;
+        else if (evt.Draw)
+            hasDraw = true;
+        else if (evt.LoserIndex == PlayerIndex && evt.TimeOut)
+            hasDraw = true;
+        else if (evt.LoserIndex == PlayerIndex)
+        {
+            hasLost = true;
+        }
     }
     
     //Hit Stop Coroutine
@@ -226,6 +229,24 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
+            //Round End Checking
+            if (Context.hasWon)
+            {
+                TransitionTo<Victory>();
+                return;
+            }
+            if (Context.hasLost)
+            {
+                TransitionTo<Loss>();
+                return;
+            }
+
+            if (Context.hasDraw)
+            {
+                TransitionTo<Draw>();
+                return;
+            }
+
             //Healing
             if (Context.canHeal)
             {
@@ -977,18 +998,40 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             //need victory anim
-            
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Win", Context.PlayerIndex));
         }
     }
 
-    private class KO : PlayerState
+    private class Loss : PlayerState
     {
-        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("KO", Context.PlayerIndex));
+        }
     }
 
     private class TimeLose : PlayerState
     {
-        
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("TimeLoss", Context.PlayerIndex));
+        }
+    }
+
+    private class Draw : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Idle", Context.PlayerIndex));
+        }
     }
     #endregion
 }

@@ -150,12 +150,14 @@ public class GameManager : MonoBehaviour
                         {
                             GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
                             TimeUp.GetComponent<EndRound>().losingPlayer = 1;
+                            EventManager.Instance.Fire(new RoundEnd(0, 1, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else if (playerHealthCached[1] > playerHealthCached[0])
                         {
                             GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
                             TimeUp.GetComponent<EndRound>().losingPlayer = 0;
+                            EventManager.Instance.Fire(new RoundEnd(1, 0, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else
@@ -204,6 +206,7 @@ public class GameManager : MonoBehaviour
             result.GetComponent<EndRound>().losingPlayer = index;
             playerHealthCached[index] = 6;
             playerHealthCached[opponentIndex] = 6;
+            EventManager.Instance.Fire(new RoundEnd(opponentIndex, index, false, false));
             CurrentManagerState = ManagerState.End;
         }
     }

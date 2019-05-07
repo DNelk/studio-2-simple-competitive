@@ -158,26 +158,23 @@ public class Events : MonoBehaviour
     {
         public int WinnerIndex;
         public int LoserIndex;
+        public bool TimeOut;
+        public bool Draw;
 
-        public RoundEnd(int winnerIndex, int loserIndex)
+        public RoundEnd(int winnerIndex, int loserIndex, bool timeOut, bool draw)
         {
             WinnerIndex = winnerIndex;
             LoserIndex = loserIndex;
+            TimeOut = timeOut;
+            Draw = draw;
         }
-    } 
+    }
     
-    //used for when someone times out at the end of a round
-    public class TimeOut : GameEvent
+    //Match End
+    public class MatchEnd : GameEvent
     {
-        public int WinnerIndex;
-        public int LoserIndex;
-
-        public TimeOut(int winnerIndex, int loserIndex)
-        {
-            WinnerIndex = winnerIndex;
-            LoserIndex = loserIndex;
-        }
-    } 
+        
+    }
     
     public class Pause : GameEvent {}
 }
