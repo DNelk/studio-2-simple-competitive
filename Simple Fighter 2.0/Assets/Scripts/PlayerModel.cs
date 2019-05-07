@@ -31,6 +31,7 @@ public class PlayerModel : MonoBehaviour
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
     [Range(1, 50)] public float MoveSpeed = 10;
+    public float RegenSpeed = 5;
     public float RollSpeed = 10;
     public float TechSpeed = 15;
     public float StrikeHitBoxDistance = 1;
@@ -931,7 +932,7 @@ public class PlayerModel : MonoBehaviour
             else if (Context.canHeal == false)
             {
                 Context.canHeal = true;
-                Context.healthTimer = 1f;
+                Context.healthTimer = Context.RegenSpeed;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
