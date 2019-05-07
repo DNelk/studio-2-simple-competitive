@@ -52,8 +52,9 @@ public class SceneTransition : MonoBehaviour
 
     private void Title()
     {
-        if (rewiredPlayer1.GetButtonDown("ConfirmP1") || rewiredPlayer2.GetButtonDown("ConfirmP2"))
+        if (rewiredPlayer1.GetButtonDown("Confirm") || rewiredPlayer2.GetButtonDown("Confirm"))
         {
+            Debug.Log("confirm");
             Instantiate(Resources.Load("Prefabs/PalmmyEffect/TitleAnimation"), transform.parent);
             _state = ScreenState.Cracked;
         }
@@ -68,7 +69,7 @@ public class SceneTransition : MonoBehaviour
     {
         if (rewiredPlayer1.GetButtonDown("Confirm") || rewiredPlayer2.GetButtonDown("Confirm"))
         {
-            StartCoroutine(LoadYourAsyncScene());
+            //StartCoroutine(LoadYourAsyncScene());
         }
     }
     
