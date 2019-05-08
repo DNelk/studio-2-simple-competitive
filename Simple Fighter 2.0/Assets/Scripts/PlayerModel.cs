@@ -18,6 +18,9 @@ public class PlayerModel : MonoBehaviour
     private bool canHeal;
     private bool isHit;
     private bool isCounter;
+    private bool hasWon;
+    private bool hasLost;
+    private bool hasDraw;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -28,6 +31,7 @@ public class PlayerModel : MonoBehaviour
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
     [Range(1, 50)] public float MoveSpeed = 10;
+    public float RegenSpeed = 5;
     public float RollSpeed = 10;
     public float TechSpeed = 15;
     public float StrikeHitBoxDistance = 1;
@@ -66,6 +70,9 @@ public class PlayerModel : MonoBehaviour
         hasHit = false;
         isHit = false;
         isCounter = false;
+        hasWon = false;
+        hasLost = false;
+        hasDraw = false;
     }
     
     private void OnDestroy()
@@ -175,6 +182,21 @@ public class PlayerModel : MonoBehaviour
         }
     }
     
+    //Called when the round is over
+    public void OnRoundEnd(RoundEnd evt)
+    {
+        if (evt.WinnerIndex == PlayerIndex)
+            hasWon = true;
+        else if (evt.Draw)
+            hasDraw = true;
+        else if (evt.LoserIndex == PlayerIndex && evt.TimeOut)
+            hasDraw = true;
+        else if (evt.LoserIndex == PlayerIndex)
+        {
+            hasLost = true;
+        }
+    }
+    
     //Hit Stop Coroutine
     IEnumerator HitStop(float hitDelay)
     {
@@ -207,6 +229,25 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
+            //Round End Checking
+            if (Context.hasWon)
+            {
+                TransitionTo<Victory>();
+                return;
+            }
+            if (Context.hasLost)
+            {
+                TransitionTo<Loss>();
+                return;
+            }
+
+            if (Context.hasDraw)
+            {
+                TransitionTo<Draw>();
+                return;
+            }
+
+            //Healing
             if (Context.canHeal)
             {
                 Context.healthTimer -= Time.deltaTime * Context.stopTime;
@@ -691,6 +732,15 @@ public class PlayerModel : MonoBehaviour
             AudioManager.Instance.PlayAudio(AudioManager.Instance.CrowdAudioClips);
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
+            timer = Context.stateTimers["GroundedMax"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<GetUp>();
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
@@ -903,7 +953,7 @@ public class PlayerModel : MonoBehaviour
             else if (Context.canHeal == false)
             {
                 Context.canHeal = true;
-                Context.healthTimer = 1f;
+                Context.healthTimer = Context.RegenSpeed;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
@@ -948,7 +998,39 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             //need victory anim
-            animationTrigger = "isGettingUp";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Win", Context.PlayerIndex));
+        }
+    }
+
+    private class Loss : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("KO", Context.PlayerIndex));
+        }
+    }
+
+    private class TimeLose : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("TimeLoss", Context.PlayerIndex));
+        }
+    }
+
+    private class Draw : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Idle", Context.PlayerIndex));
         }
     }
     #endregion

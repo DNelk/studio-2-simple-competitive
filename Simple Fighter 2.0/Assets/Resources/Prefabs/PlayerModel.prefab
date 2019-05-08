@@ -100,3 +100,5 @@ MonoBehaviour:
     time: 0.1
   - key: CounterRecovery
     time: 0.1
+  - key: GroundedMax
+    time: 2
