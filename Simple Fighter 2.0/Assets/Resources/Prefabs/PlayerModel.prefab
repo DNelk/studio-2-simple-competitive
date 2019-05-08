@@ -73,7 +73,7 @@ MonoBehaviour:
   - key: BlockRecovery
     time: 0.2
   - key: FallStartup
-    time: 0.4
+    time: 0.3
   - key: FallActive
     time: 0.2
   - key: FallRecovery
@@ -87,13 +87,13 @@ MonoBehaviour:
   - key: RollActive
     time: 0.7
   - key: RollRecovery
-    time: 0.2
+    time: 0.1
   - key: TechRollStartup
     time: 0.1
   - key: TechRollActive
     time: 0.7
   - key: TechRollRecovery
-    time: 0.2
+    time: 0.1
   - key: CounterStartup
     time: 0.1
   - key: CounterActive
