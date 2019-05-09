@@ -1034,7 +1034,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Idle", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
     }
     #endregion

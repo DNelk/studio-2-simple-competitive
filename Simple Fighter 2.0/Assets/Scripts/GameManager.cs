@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         else if (Instance != this)
             Destroy(gameObject);
         
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         healthBars = new GameObject[2];
@@ -196,6 +196,9 @@ public class GameManager : MonoBehaviour
                             CurrentManagerState = ManagerState.End;
                         }
                     }
+                    break;
+                case ManagerState.SetOver:
+                    
                     break;
         }
         
@@ -375,6 +378,14 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.PlayAudio(AudioManager.Instance.WinAudioClips);
 
         StartCoroutine(WhooshAudio());
+    }
+
+    public void StartMatch()
+    {
+        roundNum = 0;
+        playerWins = new int[2];
+        StartRound();
+        
     }
 
     IEnumerator WhooshAudio()
