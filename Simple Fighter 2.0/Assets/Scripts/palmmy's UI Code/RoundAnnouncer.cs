@@ -17,7 +17,7 @@ public class RoundAnnouncer : MonoBehaviour
     }
 
     void RoundUpdate()
-    {
+    {   
         roundText.sprite = roundSprite[roundNumber - 1];
     }
     
