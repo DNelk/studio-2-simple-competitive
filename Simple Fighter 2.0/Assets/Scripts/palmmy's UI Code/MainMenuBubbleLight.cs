@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Rewired.Utils.Platforms.Windows;
+using Rewired.Utils.Platforms;
 using UnityEngine;
 using UnityEngine.UI;
 
