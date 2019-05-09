@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         roundNum = 1;
         CurrentManagerState = ManagerState.Start;
         Init();
+        
+        StartCoroutine(WhooshAudio());
     }
 
     //Set up variables
@@ -144,8 +146,10 @@ public class GameManager : MonoBehaviour
         {
                 case ManagerState.Fighting:
                     //Check if we timed out
+
                     if (timer.GetComponent<Timer>().TimerRaw <= 0)
                     {
+                        AudioManager.Instance.PlayAudio(AudioManager.Instance.TimeoutAudioClips); // Timeout Audio
                         if (playerHealthCached[0] > playerHealthCached[1])
                         {
                             GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
@@ -198,11 +202,15 @@ public class GameManager : MonoBehaviour
             if (playerHealthCached[opponentIndex] >= 6)
             {
                 result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
-            }        
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.PerfectAudioClips); // Perfect Audio
+            }
             else if (playerHealthCached[opponentIndex] < 6)
             {
                 result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.KOAudioClips); // KO Audio
+                
             }
+            StartCoroutine(WhooshAudio()); // Whoosh audio
             result.GetComponent<EndRound>().losingPlayer = index;
             playerHealthCached[index] = 6;
             playerHealthCached[opponentIndex] = 6;
@@ -243,8 +251,10 @@ public class GameManager : MonoBehaviour
                     for (int j = 0; j < playerWins[i]; j++)
                     {
                         Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+                        AudioManager.Instance.PlayAudio(AudioManager.Instance.WinnerAudioClips); // Winner Audio
                     }
                     //End the set somehow lol
+                    
                 }
                 else
                 {
@@ -274,7 +284,20 @@ public class GameManager : MonoBehaviour
         //reset the timer
         CurrentManagerState = ManagerState.Start;
         timer.GetComponent<Timer>().RoundUpdate();
+        
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WinAudioClips); // Win Audio - may need to adjust the timing of this
+
+        StartCoroutine(WhooshAudio());
     }
+
+    IEnumerator WhooshAudio()
+    {
+        yield return new WaitForSeconds(1.0f);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WhooshAudioClips); // Whoosh Audio
+        yield return new WaitForSeconds(1.8f);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WhooshAudioClips); // Whoosh Audio
+    }
+    
     #endregion
 }
 
