@@ -160,7 +160,9 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            //Uh oh... time out with no winners.. need a solution for this
+                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            TimeUp.GetComponent<EndRound>().losingPlayer = 0;
+                            CurrentManagerState = ManagerState.End;
                         }
                     }
                     break;

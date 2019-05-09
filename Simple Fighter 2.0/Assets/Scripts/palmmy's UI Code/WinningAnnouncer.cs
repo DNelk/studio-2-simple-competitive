@@ -22,6 +22,9 @@ public class WinningAnnouncer : MonoBehaviour
             case 1:
                 myAnim.SetBool("P2Win", true);
                 break;
+            case 2:
+                myAnim.SetBool("Draw", true);
+                break;
         }
         
         transform.SetAsLastSibling();
@@ -31,6 +34,7 @@ public class WinningAnnouncer : MonoBehaviour
     {
         myAnim.SetBool("P1Win", false);
         myAnim.SetBool("P2Win", false);
+        myAnim.SetBool("Draw", false);
     }
 
     private void toNewRound()
