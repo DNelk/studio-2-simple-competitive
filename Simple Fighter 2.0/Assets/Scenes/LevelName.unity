@@ -2301,5 +2301,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[3]._elementIdentifierId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.data[7]._keyboardKeyCode
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[2].actionElementMaps.Array.data[7]._keyboardKeyCode
+      value: 44
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248a265dfa41cf4418d05182db6bb808, type: 3}
