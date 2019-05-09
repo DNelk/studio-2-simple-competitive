@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -54,6 +53,7 @@ public class GameManager : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
+        EventManager.Instance.AddHandler<Rematch>(OnRematch);
         healthBars = new GameObject[2];
         roundNum = 1;
         CurrentManagerState = ManagerState.Start;
@@ -131,6 +131,12 @@ public class GameManager : MonoBehaviour
     {
         EventManager.Instance.RemoveHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
+        EventManager.Instance.RemoveHandler<Rematch>(OnRematch);
+    }
+
+    private void OnRematch(Rematch evt)
+    {
+        SceneManager.LoadScene("LevelName");
     }
     
     #endregion
@@ -139,7 +145,7 @@ public class GameManager : MonoBehaviour
     {
         //Test reset
         if (Input.GetKeyDown("r")){
-            SceneManager.LoadScene("LevelName");
+            Application.Quit();
         }
 
         switch (CurrentManagerState)

@@ -52,7 +52,7 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<StopTime>(OnStopTime);
         EventManager.Instance.AddHandler<PlayParticle>(OnPlayParticle);
         transform.localScale *= 0.15844f;
-        transform.position -= Vector3.forward * 5;
+        transform.position -= Vector3.forward * 9;
         
         //Assign sprite and animator
         spriteRen.sprite = Resources.Load<Sprite>("Textures/NormalStance");
