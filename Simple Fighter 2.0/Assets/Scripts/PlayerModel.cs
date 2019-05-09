@@ -52,6 +52,7 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        EventManager.Instance.AddHandler<RoundEnd>(OnRoundEnd);
         
         //Setup dictionary for stateTimers        
         foreach (StateTimers st in StateTimers)
@@ -80,6 +81,7 @@ public class PlayerModel : MonoBehaviour
         //Unhookup the Event Manager
         EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
         EventManager.Instance.RemoveHandler<HitOpponent>(OnHit);
+        EventManager.Instance.RemoveHandler<RoundEnd>(OnRoundEnd);
     }
     
     // Update is called once per frame
