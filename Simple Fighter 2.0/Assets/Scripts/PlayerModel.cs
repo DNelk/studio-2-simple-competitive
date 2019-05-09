@@ -1009,6 +1009,16 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Win", Context.PlayerIndex));
         }
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Confirm:
+                    EventManager.Instance.Fire(new Rematch());
+                    break;
+            }
+        }
     }
 
     private class Loss : PlayerState
@@ -1017,6 +1027,16 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+        }
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Confirm:
+                    EventManager.Instance.Fire(new Rematch());
+                    break;
+            }
         }
     }
 
@@ -1027,6 +1047,16 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_KO", Context.PlayerIndex));
         }
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Confirm:
+                    EventManager.Instance.Fire(new Rematch());
+                    break;
+            }
+        }
     }
 
     private class Draw : PlayerState
@@ -1035,6 +1065,17 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
+        }
+
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                    case PlayerController.InputState.Confirm:
+                        EventManager.Instance.Fire(new Rematch());
+                        break;
+            }
         }
     }
     #endregion

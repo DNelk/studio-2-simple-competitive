@@ -177,4 +177,8 @@ public class Events : MonoBehaviour
     }
     
     public class Pause : GameEvent {}
+
+    public class Rematch : GameEvent
+    {
+    }
 }
