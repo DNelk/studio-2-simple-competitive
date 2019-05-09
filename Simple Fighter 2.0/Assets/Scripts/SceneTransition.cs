@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
-using UnityEditor;
 using UnityEngine.SceneManagement;
 
 //When someone presses the spacebar or a select button, move from title scene to LevelName
