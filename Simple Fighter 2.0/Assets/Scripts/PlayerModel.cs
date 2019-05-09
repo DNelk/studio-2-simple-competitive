@@ -21,6 +21,7 @@ public class PlayerModel : MonoBehaviour
     private bool hasWon;
     private bool hasLost;
     private bool hasDraw;
+    private bool hasTimeLost;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -52,6 +53,7 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        EventManager.Instance.AddHandler<RoundEnd>(OnRoundEnd);
         
         //Setup dictionary for stateTimers        
         foreach (StateTimers st in StateTimers)
@@ -80,6 +82,7 @@ public class PlayerModel : MonoBehaviour
         //Unhookup the Event Manager
         EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
         EventManager.Instance.RemoveHandler<HitOpponent>(OnHit);
+        EventManager.Instance.RemoveHandler<RoundEnd>(OnRoundEnd);
     }
     
     // Update is called once per frame
@@ -185,7 +188,7 @@ public class PlayerModel : MonoBehaviour
         else if (evt.Draw)
             hasDraw = true;
         else if (evt.LoserIndex == PlayerIndex && evt.TimeOut)
-            hasDraw = true;
+            hasLost = true;
         else if (evt.LoserIndex == PlayerIndex)
         {
             hasLost = true;
@@ -239,6 +242,12 @@ public class PlayerModel : MonoBehaviour
             if (Context.hasDraw)
             {
                 TransitionTo<Draw>();
+                return;
+            }
+
+            if (Context.hasTimeLost)
+            {
+                TransitionTo<TimeLose>();
                 return;
             }
 
@@ -998,7 +1007,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Win", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_Win", Context.PlayerIndex));
         }
     }
 
@@ -1007,7 +1016,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("KO", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
         }
     }
 
@@ -1016,7 +1025,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("TimeLoss", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_KO", Context.PlayerIndex));
         }
     }
 
@@ -1025,7 +1034,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            EventManager.Instance.Fire(new AnimationChange("Idle", Context.PlayerIndex));
+            EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
     }
     #endregion

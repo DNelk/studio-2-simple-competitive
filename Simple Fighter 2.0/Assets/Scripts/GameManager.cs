@@ -51,14 +51,15 @@ public class GameManager : MonoBehaviour
         else if (Instance != this)
             Destroy(gameObject);
         
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
-        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         healthBars = new GameObject[2];
         roundNum = 1;
         CurrentManagerState = ManagerState.Start;
         Init();
+
+        StartCoroutine(WhooshAudio());
     }
 
     //Set up variables
@@ -147,6 +148,7 @@ public class GameManager : MonoBehaviour
                     //Check if we timed out
                     if (timer.GetComponent<Timer>().TimerRaw <= 0)
                     {
+                        AudioManager.Instance.PlayAudio(AudioManager.Instance.TimeoutAudioClips); //Timeout Audio
                         GameObject result = null;
                         if (playerHealthCached[0] > playerHealthCached[1])
                         {
@@ -159,7 +161,7 @@ public class GameManager : MonoBehaviour
                                 result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
                             }
                             result.GetComponent<EndRound>().winningPlayer = 0;
-                            //EventManager.Instance.Fire(new RoundEnd(0, 1, false, false));
+                            EventManager.Instance.Fire(new RoundEnd(0, 1, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else if (playerHealthCached[1] > playerHealthCached[0])
@@ -173,7 +175,7 @@ public class GameManager : MonoBehaviour
                                 result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
                             }
                             result.GetComponent<EndRound>().winningPlayer = 1;
-                            //EventManager.Instance.Fire(new RoundEnd(1, 0, false, false));
+                            EventManager.Instance.Fire(new RoundEnd(1, 0, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else
@@ -194,6 +196,9 @@ public class GameManager : MonoBehaviour
                             CurrentManagerState = ManagerState.End;
                         }
                     }
+                    break;
+                case ManagerState.SetOver:
+                    
                     break;
         }
         
@@ -228,24 +233,27 @@ public class GameManager : MonoBehaviour
             //if opponent already has 2 point(gonna win)
             if (playerWins[opponentIndex] >= TotalRounds - 1)
             {
-                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;
+                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;           
             }
             else //if they are still not gonna win
             {
                 if (playerHealthCached[opponentIndex] >= 6)
                 {
                     result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
+                    AudioManager.Instance.PlayAudio(AudioManager.Instance.PerfectAudioClips); 
                 }        
                 else if (playerHealthCached[opponentIndex] < 6)
                 {
                     result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                    AudioManager.Instance.PlayAudio(AudioManager.Instance.KOAudioClips); 
                 } 
             }
-               
+
+            StartCoroutine(WhooshAudio());
             result.GetComponent<EndRound>().winningPlayer = opponentIndex;
             playerHealthCached[index] = 6;
             playerHealthCached[opponentIndex] = 6;
-            //EventManager.Instance.Fire(new RoundEnd(opponentIndex, index, false, false));
+            EventManager.Instance.Fire(new RoundEnd(opponentIndex, index, false, false));
             CurrentManagerState = ManagerState.End;
         }
     }
@@ -283,6 +291,7 @@ public class GameManager : MonoBehaviour
                     for (int j = 0; j < playerWins[i]; j++)
                     {
                         Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+                        AudioManager.Instance.PlayAudio(AudioManager.Instance.WinnerAudioClips); 
                     }
                     Instantiate(Resources.Load("Prefabs/PalmmyEffect/P" + (i+1) + "WinTheMatch"), uiCanvas.transform);
                     //End the set somehow lol
@@ -366,7 +375,27 @@ public class GameManager : MonoBehaviour
         //reset the timer
         CurrentManagerState = ManagerState.Start;
         timer.GetComponent<Timer>().RoundUpdate();
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WinAudioClips);
+
+        StartCoroutine(WhooshAudio());
     }
+
+    public void StartMatch()
+    {
+        roundNum = 0;
+        playerWins = new int[2];
+        StartRound();
+        
+    }
+
+    IEnumerator WhooshAudio()
+    {
+        yield return new WaitForSeconds(1.0f);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WhooshAudioClips); 
+        yield return new WaitForSeconds(1.8f);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.WhooshAudioClips); 
+    }
+    
     #endregion
 }
 
