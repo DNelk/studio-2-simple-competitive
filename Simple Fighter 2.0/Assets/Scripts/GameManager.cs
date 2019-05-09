@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
-        EventManager.Instance.AddHandler<HealthChanged>(OnHealthChanged);
         healthBars = new GameObject[2];
         roundNum = 1;
         CurrentManagerState = ManagerState.Start;
