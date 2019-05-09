@@ -19,6 +19,15 @@ public class ModeSelector_CenterRotation: MonoBehaviour
         swapDamper();
     }
 
+    private void Update()
+    {
+        if (MainMenu.Instance.currentMenuState == MainMenu.MenuState.ToVersus)
+        {
+            GetComponent<Animator>().SetBool("toVersus",true);
+            transform.SetAsLastSibling();
+        }
+    }
+
     public void circlingDown()
     {
        GetComponent<Animator>().SetBool("circlingDown",true);
@@ -84,5 +93,16 @@ public class ModeSelector_CenterRotation: MonoBehaviour
                 modeSelector1[1].sprite = quit[1];
                 break;
         }
+    }
+
+    private void transitionToVersus()
+    {
+        transform.parent = transform.parent.transform.parent;
+        Destroy(MainMenu.Instance.gameObject);
+    }
+
+    private void selfDestroy()
+    {
+        Destroy(gameObject);
     }
 }

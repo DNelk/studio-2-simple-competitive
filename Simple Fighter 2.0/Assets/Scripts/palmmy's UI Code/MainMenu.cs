@@ -160,7 +160,7 @@ public class MainMenu : MonoBehaviour
         switch (currentMenuState)
         {
             case MenuState.VersusSelected:
-                StartCoroutine(LoadYourAsyncScene());
+                currentMenuState = MenuState.ToVersus;
                 break;
             case MenuState.ArcadeSelected:
                 callNotice();
@@ -179,7 +179,8 @@ public class MainMenu : MonoBehaviour
     {
         VersusSelected,
         ArcadeSelected,
-        QuitSelected
+        QuitSelected,
+        ToVersus        
     }
 
     #endregion
