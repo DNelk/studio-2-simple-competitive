@@ -37,7 +37,7 @@ public class PlayerView : MonoBehaviour
         rb.isKinematic = false;
         rb.freezeRotation = true;
         
-        col = gameObject.AddComponent<BoxCollider2D>();
+        col = gameObject.AddComponent<BoxCollider2D>();       
     }
     
     // Start is called before the first frame update
@@ -52,6 +52,7 @@ public class PlayerView : MonoBehaviour
         EventManager.Instance.AddHandler<StopTime>(OnStopTime);
         EventManager.Instance.AddHandler<PlayParticle>(OnPlayParticle);
         transform.localScale *= 0.15844f;
+        transform.position -= Vector3.forward * 5;
         
         //Assign sprite and animator
         spriteRen.sprite = Resources.Load<Sprite>("Textures/NormalStance");
@@ -73,16 +74,18 @@ public class PlayerView : MonoBehaviour
         else
             Debug.Log("error: direction not found");
         
-        //Set View layer for Hit Detection
+        //Set View layer for Hit Detection, also apply material
         if (PlayerIndex == 0)
         {
             gameObject.layer = LayerMask.NameToLayer("1PBox");
             opponentLayer = LayerMask.GetMask("2PBox");
+            GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Standard_Diffuse");
         }
         else if (PlayerIndex == 1)
         {
             gameObject.layer = LayerMask.NameToLayer("2PBox");
             opponentLayer = LayerMask.GetMask("1PBox");
+            GetComponent<Renderer>().material = Resources.Load<Material>("Materials/PaletteSwap");
         }
         else
         {
