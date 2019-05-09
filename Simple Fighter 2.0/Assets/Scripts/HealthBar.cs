@@ -63,5 +63,6 @@ public class HealthBar : MonoBehaviour
             Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/DownOneText"), transform.parent);
         if (newHealth == 2)
             Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/DownTwoText"), transform.parent);
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.HPShatterAudioClips); // HPShatter Audio
     }
 }

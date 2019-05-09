@@ -105,4 +105,9 @@ public class ModeSelector_CenterRotation: MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    private void callVersusScreen()
+    {
+        Instantiate(Resources.Load("Prefabs/PalmmyEffect/VersusScreen"), transform.parent);
+    }
 }

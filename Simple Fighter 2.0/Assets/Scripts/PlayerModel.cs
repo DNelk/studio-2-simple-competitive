@@ -143,14 +143,12 @@ public class PlayerModel : MonoBehaviour
             //successful block
             isCounter = true;
             AudioManager.Instance.PlayAudio(AudioManager.Instance.BlockedAudioClips);
-            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
             EventManager.Instance.Fire(new PlayParticle(PlayerIndex, "Block", currentHitPoints));
         }
         else if (currentStateType == typeof(StrikeActive) && evt.HitType == "Grab")
         {
             //no hit
             AudioManager.Instance.PlayAudio(AudioManager.Instance.WhiffAudioClips);
-            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
@@ -162,19 +160,16 @@ public class PlayerModel : MonoBehaviour
             if (evt.HitType == "Strike")
             {      
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Grab")
             {
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.GrabbedAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Counter")
             {
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
 
