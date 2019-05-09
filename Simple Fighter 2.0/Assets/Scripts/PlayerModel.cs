@@ -512,6 +512,7 @@ public class PlayerModel : MonoBehaviour
             if (Context.isHit)
             {
                 TransitionTo<FallStartup>();
+                EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "BlockBubble", Context.currentHitPoints));
                 return;
             }
             base.Update();
