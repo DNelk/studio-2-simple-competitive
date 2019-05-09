@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -146,24 +147,50 @@ public class GameManager : MonoBehaviour
                     //Check if we timed out
                     if (timer.GetComponent<Timer>().TimerRaw <= 0)
                     {
+                        GameObject result = null;
                         if (playerHealthCached[0] > playerHealthCached[1])
                         {
-                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
-                            TimeUp.GetComponent<EndRound>().losingPlayer = 1;
-                            EventManager.Instance.Fire(new RoundEnd(0, 1, false, false));
+                            if (playerWins[0] >= TotalRounds - 1)
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;
+                            }
+                            else
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            }
+                            result.GetComponent<EndRound>().winningPlayer = 0;
+                            //EventManager.Instance.Fire(new RoundEnd(0, 1, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else if (playerHealthCached[1] > playerHealthCached[0])
                         {
-                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
-                            TimeUp.GetComponent<EndRound>().losingPlayer = 0;
-                            EventManager.Instance.Fire(new RoundEnd(1, 0, false, false));
+                            if (playerWins[1] >= TotalRounds - 1)
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;
+                            }
+                            else
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            }
+                            result.GetComponent<EndRound>().winningPlayer = 1;
+                            //EventManager.Instance.Fire(new RoundEnd(1, 0, false, false));
                             CurrentManagerState = ManagerState.End;
                         }
                         else
                         {
-                            GameObject TimeUp = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
-                            TimeUp.GetComponent<EndRound>().losingPlayer = 0;
+                            if (playerWins[0] >= TotalRounds - 1 && playerWins[1] >= TotalRounds - 1)
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            }
+                            else if(playerWins[0] >= TotalRounds - 1 || playerWins[1] >= TotalRounds - 1)
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;
+                            }
+                            else
+                            {
+                                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Time'sUp"), uiCanvas.transform) as GameObject;
+                            }
+                            result.GetComponent<EndRound>().winningPlayer = 2;
                             CurrentManagerState = ManagerState.End;
                         }
                     }
@@ -197,18 +224,28 @@ public class GameManager : MonoBehaviour
         if (newHealth <= 0)
         {
             GameObject result = null;
-            if (playerHealthCached[opponentIndex] >= 6)
+            
+            //if opponent already has 2 point(gonna win)
+            if (playerWins[opponentIndex] >= TotalRounds - 1)
             {
-                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
-            }        
-            else if (playerHealthCached[opponentIndex] < 6)
-            {
-                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/MatchEnd"), uiCanvas.transform) as GameObject;
             }
-            result.GetComponent<EndRound>().losingPlayer = index;
+            else //if they are still not gonna win
+            {
+                if (playerHealthCached[opponentIndex] >= 6)
+                {
+                    result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
+                }        
+                else if (playerHealthCached[opponentIndex] < 6)
+                {
+                    result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                } 
+            }
+               
+            result.GetComponent<EndRound>().winningPlayer = opponentIndex;
             playerHealthCached[index] = 6;
             playerHealthCached[opponentIndex] = 6;
-            EventManager.Instance.Fire(new RoundEnd(opponentIndex, index, false, false));
+            //EventManager.Instance.Fire(new RoundEnd(opponentIndex, index, false, false));
             CurrentManagerState = ManagerState.End;
         }
     }
@@ -228,16 +265,17 @@ public class GameManager : MonoBehaviour
     #region Round Management
 
     //End the current round
-    public void EndRound(int losingPlayerIndex)
+    public void EndRound(int winningPlayerIndex)
     {
+        //do this when someone really win
         for (int i = 0; i < players.Length ; i++)
         {
-            if (i != losingPlayerIndex)
+            if (i == winningPlayerIndex)
             {
                // Debug.Log("player " + (i + 1) + " wins");
                 players[i].Model.WinRound();
-                announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
                 playerWins[i]++;
+                //check if match end or not
                 if (playerWins[i] >= TotalRounds)
                 {
                     //stop the timer
@@ -246,15 +284,67 @@ public class GameManager : MonoBehaviour
                     {
                         Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
                     }
+                    Instantiate(Resources.Load("Prefabs/PalmmyEffect/P" + (i+1) + "WinTheMatch"), uiCanvas.transform);
                     //End the set somehow lol
                 }
-                else
+                else //if match not end
                 {
+                    //tell announcer to announce the winner
+                    announcer.GetComponent<WinningAnnouncer>().PlayerWin(i);
                     //stop the timer
                     CurrentManagerState = ManagerState.RoundOver;
                 }
             }
         }
+           
+        //below is Palmmy improvise code
+        //do this when completely draw with time's up
+        if (winningPlayerIndex >= players.Length)
+        {
+            if (playerWins[0] == TotalRounds-1 && playerWins[1] == TotalRounds-1)
+            {
+                //play another round
+                announcer.GetComponent<WinningAnnouncer>().PlayerWin(winningPlayerIndex);
+                CurrentManagerState = ManagerState.RoundOver;
+            }
+            
+            else if (playerWins[0] == TotalRounds - 1 || playerWins[1] == TotalRounds - 1)
+            {
+                //the one who in the lead win
+                for (int i = 0; i < players.Length; i++)
+                {
+                    players[i].Model.WinRound();
+                    playerWins[i]++;
+                    
+                    if (playerWins[i] >= TotalRounds)
+                    {
+                        //stop the timer
+                        CurrentManagerState = ManagerState.SetOver;
+                        for (int j = 0; j < playerWins[i]; j++)
+                        {
+                            Instantiate(Resources.Load("Prefabs/PalmmyEffect/Winpoint"), healthBars[i].GetComponent<HealthBar>().WinCounter[j].transform);
+                        }
+                        Instantiate(Resources.Load("Prefabs/PalmmyEffect/P" + (i+1) + "WinTheMatch"), uiCanvas.transform);
+                        //End the set somehow lol
+                    }
+                }
+                CurrentManagerState = ManagerState.SetOver;
+            }
+
+            else
+            {
+                //both get one point
+                announcer.GetComponent<WinningAnnouncer>().PlayerWin(winningPlayerIndex);
+                CurrentManagerState = ManagerState.RoundOver;
+                
+                for (int i = 0; i < players.Length; i++)
+                {
+                    players[i].Model.WinRound();
+                    playerWins[i]++;
+                }
+            }
+        }
+        
         
         CameraManager.Instance.ClearViews();
     }
