@@ -116,6 +116,7 @@ public class PlayerView : MonoBehaviour
             if (evt.ParticleType == "Block")
             {
                 Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard_Counter"),transform);
+                Destroy(blockBubble);
             }
             else if (evt.ParticleType == "Tech")
             {
@@ -125,7 +126,7 @@ public class PlayerView : MonoBehaviour
             {
                 if (blockBubble == null)
                 {
-                    //blockParticle = Instantiate...
+                    blockBubble = Instantiate(Resources.Load("Prefabs/PalmmyEffect/BattleEffect/Player" + (PlayerIndex + 1) + "/Guard"),transform) as GameObject;
                 }
                 else
                 {

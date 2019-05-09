@@ -18,6 +18,10 @@ public class PlayerModel : MonoBehaviour
     private bool canHeal;
     private bool isHit;
     private bool isCounter;
+    private bool hasWon;
+    private bool hasLost;
+    private bool hasDraw;
+    private bool hasTimeLost;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -28,6 +32,7 @@ public class PlayerModel : MonoBehaviour
     //Character Statistics
     [Range(1, 6)] public int MaxHitPoints = 6;
     [Range(1, 50)] public float MoveSpeed = 10;
+    public float RegenSpeed = 5;
     public float RollSpeed = 10;
     public float TechSpeed = 15;
     public float StrikeHitBoxDistance = 1;
@@ -48,6 +53,7 @@ public class PlayerModel : MonoBehaviour
         //Initialize event manager
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
+        EventManager.Instance.AddHandler<RoundEnd>(OnRoundEnd);
         
         //Setup dictionary for stateTimers        
         foreach (StateTimers st in StateTimers)
@@ -66,6 +72,9 @@ public class PlayerModel : MonoBehaviour
         hasHit = false;
         isHit = false;
         isCounter = false;
+        hasWon = false;
+        hasLost = false;
+        hasDraw = false;
     }
     
     private void OnDestroy()
@@ -73,6 +82,7 @@ public class PlayerModel : MonoBehaviour
         //Unhookup the Event Manager
         EventManager.Instance.RemoveHandler<ProcessInput>(OnInput);
         EventManager.Instance.RemoveHandler<HitOpponent>(OnHit);
+        EventManager.Instance.RemoveHandler<RoundEnd>(OnRoundEnd);
     }
     
     // Update is called once per frame
@@ -136,14 +146,12 @@ public class PlayerModel : MonoBehaviour
             //successful block
             isCounter = true;
             AudioManager.Instance.PlayAudio(AudioManager.Instance.BlockedAudioClips);
-            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.BlockedAudioClips));
             EventManager.Instance.Fire(new PlayParticle(PlayerIndex, "Block", currentHitPoints));
         }
         else if (currentStateType == typeof(StrikeActive) && evt.HitType == "Grab")
         {
             //no hit
             AudioManager.Instance.PlayAudio(AudioManager.Instance.WhiffAudioClips);
-            //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.WhiffAudioClips));
         }
         else
         {
@@ -155,23 +163,35 @@ public class PlayerModel : MonoBehaviour
             if (evt.HitType == "Strike")
             {      
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Grab")
             {
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.GrabbedAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.GrabbedAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
             else if (evt.HitType == "Counter")
             {
                 AudioManager.Instance.PlayAudio(AudioManager.Instance.StrikeAudioClips);
-                //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.StrikeAudioClips));
                 EventManager.Instance.Fire(new PlayParticle(PlayerIndex, evt.HitType, currentHitPoints));
             }
 
             StartCoroutine(HitStop(HitDelay));
+        }
+    }
+    
+    //Called when the round is over
+    public void OnRoundEnd(RoundEnd evt)
+    {
+        if (evt.WinnerIndex == PlayerIndex)
+            hasWon = true;
+        else if (evt.Draw)
+            hasDraw = true;
+        else if (evt.LoserIndex == PlayerIndex && evt.TimeOut)
+            hasLost = true;
+        else if (evt.LoserIndex == PlayerIndex)
+        {
+            hasLost = true;
         }
     }
     
@@ -207,6 +227,31 @@ public class PlayerModel : MonoBehaviour
         public override void Update()
         {
             base.Update();
+            //Round End Checking
+            if (Context.hasWon)
+            {
+                TransitionTo<Victory>();
+                return;
+            }
+            if (Context.hasLost)
+            {
+                TransitionTo<Loss>();
+                return;
+            }
+
+            if (Context.hasDraw)
+            {
+                TransitionTo<Draw>();
+                return;
+            }
+
+            if (Context.hasTimeLost)
+            {
+                TransitionTo<TimeLose>();
+                return;
+            }
+
+            //Healing
             if (Context.canHeal)
             {
                 Context.healthTimer -= Time.deltaTime * Context.stopTime;
@@ -691,6 +736,15 @@ public class PlayerModel : MonoBehaviour
             AudioManager.Instance.PlayAudio(AudioManager.Instance.CrowdAudioClips);
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
+            timer = Context.stateTimers["GroundedMax"];
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+                TransitionTo<GetUp>();
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
         {
@@ -903,7 +957,7 @@ public class PlayerModel : MonoBehaviour
             else if (Context.canHeal == false)
             {
                 Context.canHeal = true;
-                Context.healthTimer = 1f;
+                Context.healthTimer = Context.RegenSpeed;
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
@@ -948,7 +1002,39 @@ public class PlayerModel : MonoBehaviour
         {
             base.Init();
             //need victory anim
-            animationTrigger = "isGettingUp";
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Win", Context.PlayerIndex));
+        }
+    }
+
+    private class Loss : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
+        }
+    }
+
+    private class TimeLose : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_KO", Context.PlayerIndex));
+        }
+    }
+
+    private class Draw : PlayerState
+    {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
     }
     #endregion

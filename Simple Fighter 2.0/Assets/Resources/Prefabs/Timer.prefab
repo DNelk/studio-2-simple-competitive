@@ -143,11 +143,11 @@ MonoBehaviour:
   RoundSprite: {fileID: 4993207660773864910}
   RoundNumber: 1
   RoundList:
-  - {fileID: 21300000, guid: 4b058addd8e00cd4eb66cc2a654ceaa2, type: 3}
-  - {fileID: 21300000, guid: ffde442db9cba374bb52d65a3e192675, type: 3}
-  - {fileID: 21300000, guid: 3de1ed4796db974448b1cca3279c6bd4, type: 3}
-  - {fileID: 21300000, guid: e65d2d2c298fd2d4eabb955c4b1ee18c, type: 3}
-  - {fileID: 21300000, guid: 47a637fada4f34f4981b36157ae62a2f, type: 3}
+  - {fileID: 21300000, guid: 042ca8bd3c6036546bf4fc215404151f, type: 3}
+  - {fileID: 21300000, guid: 0e088134e0500ba459475504a54fa3c0, type: 3}
+  - {fileID: 21300000, guid: 735f3ef50d7613549b6e8d9341b08924, type: 3}
+  - {fileID: 21300000, guid: 0230e01560d11ef40a02bdcf8ac117dd, type: 3}
+  - {fileID: 21300000, guid: 1da59c572ccf8ad49a8482c023be820a, type: 3}
 --- !u!1 &4993207662022281840
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,9 +226,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '6
-
-'
+  m_Text: 0
 --- !u!1 &4993207662336543088
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +305,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4
+  m_Text: 6
 --- !u!1 &4993207662588931113
 GameObject:
   m_ObjectHideFlags: 0

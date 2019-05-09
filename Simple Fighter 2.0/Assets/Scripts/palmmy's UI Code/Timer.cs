@@ -10,8 +10,9 @@ public class Timer : MonoBehaviour
     
     public float TimerRaw = 60f;
     public string TimeString;
-
+    
     public Image RoundSprite;
+    public int totalRoundNumber = 5;
     public int RoundNumber = 1;
     public Sprite[] RoundList;
 
@@ -55,7 +56,10 @@ public class Timer : MonoBehaviour
         LeftOne.text = 0.ToString();
         RightOne.text = 0.ToString();
         TimerRaw = 60;
-        RoundNumber++;
+        
+        if (RoundNumber < totalRoundNumber)
+            RoundNumber++;
+        
         GameObject newRoundAnnouncer = Instantiate(Resources.Load("Prefabs/PalmmyEffect/RoundAnnouncer"), canvas.transform) as GameObject;
         newRoundAnnouncer.GetComponent<RoundAnnouncer>().roundNumber = RoundNumber;
         RoundSprite.sprite = RoundList[RoundNumber - 1];

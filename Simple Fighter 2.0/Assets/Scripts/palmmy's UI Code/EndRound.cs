@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EndRound : MonoBehaviour
 {
-    public int losingPlayer;
+    public int winningPlayer;
     
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,6 @@ public class EndRound : MonoBehaviour
 
     private void endRound()
     {
-        GameManager.Instance.EndRound(losingPlayer);
+        GameManager.Instance.EndRound(winningPlayer);
     }
 }

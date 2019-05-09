@@ -6,10 +6,12 @@ public class WinningAnnouncer : MonoBehaviour
 {
     private Animator myAnim;
 
+    private GameObject player;
+
     private void Start()
     {
         myAnim = GetComponent<Animator>();
-        
+
     }
 
     public void PlayerWin(int playerIndex)
@@ -22,6 +24,9 @@ public class WinningAnnouncer : MonoBehaviour
             case 1:
                 myAnim.SetBool("P2Win", true);
                 break;
+            case 2:
+                myAnim.SetBool("Draw", true);
+                break;
         }
         
         transform.SetAsLastSibling();
@@ -31,10 +36,24 @@ public class WinningAnnouncer : MonoBehaviour
     {
         myAnim.SetBool("P1Win", false);
         myAnim.SetBool("P2Win", false);
+        myAnim.SetBool("Draw", false);
     }
 
     private void toNewRound()
     {
         GameManager.Instance.StartRound();
     }
+
+    private void callWinningPoseLight_P1()
+    {
+        player = GameObject.Find("Player1");
+        Instantiate(Resources.Load("Prefabs/PalmmyEffect/WinningLight"), player.transform);
+
+    }
+
+    private void callWinningPoseLight_P2()
+    {
+        player = GameObject.Find("Player2");
+        Instantiate(Resources.Load("Prefabs/PalmmyEffect/WinningLight"), player.transform);
+    }    
 }
