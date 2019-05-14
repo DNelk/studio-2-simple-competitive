@@ -272,6 +272,12 @@ public class GameManager : MonoBehaviour
                     if(evt.NewInput == PlayerController.InputState.Confirm)
                         announcer.GetComponent<WinningAnnouncer>().ResetBool();
                     break;
+                 case ManagerState.SetOver:
+                    if(evt.NewInput == PlayerController.InputState.Confirm)
+                           EventManager.Instance.Fire(new Rematch());
+                     if(evt.NewInput == PlayerController.InputState.Quit)
+                         Application.Quit();
+                    break;
         }
     }
     #endregion
