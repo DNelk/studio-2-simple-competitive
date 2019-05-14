@@ -259,6 +259,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Intro_Control
       objectReference: {fileID: 0}
+    - target: {fileID: 7698304165559471469, guid: 4c4e61c353a8a624f9b8744ca4e898b7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 542667548701004626, guid: 4c4e61c353a8a624f9b8744ca4e898b7,
         type: 3}
       propertyPath: m_LocalPosition.x
