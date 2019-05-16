@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
         Roll,
         GetUp,
         MoveRelease,
-        Confirm
+        Confirm,
+        Quit
     }
 
     #region Public Variables
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         GetUpCheck();
         MoveReleaseCheck();
         ConfirmCheck();
+        QuitCheck();
     }
     
     //Called from the GameManager to set which player profile to use
@@ -141,6 +143,14 @@ public class PlayerController : MonoBehaviour
         {
             //switch to Grab
             SendInput(InputState.Confirm, 0f);
+        }
+    }
+
+    private void QuitCheck()
+    {
+        if (rewiredPlayer.GetButtonDown("Quite"))
+        {
+            SendInput(InputState.Quit, 0f);
         }
     }
     #endregion
