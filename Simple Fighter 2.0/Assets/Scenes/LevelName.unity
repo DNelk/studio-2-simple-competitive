@@ -396,7 +396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377302630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000043827, y: -4.9, z: 12.2}
+  m_LocalPosition: {x: 0.000000043827, y: -4.33, z: 12.2}
   m_LocalScale: {x: 0.2724321, y: 0.2724321, z: 0.2724321}
   m_Children: []
   m_Father: {fileID: 681991251}
@@ -554,7 +554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411446171}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0027160645, y: -6.51, z: 9.991777}
+  m_LocalPosition: {x: 0.0027160645, y: -6.1900005, z: 9.991777}
   m_LocalScale: {x: 0.32877332, y: 0.32877332, z: 0.32877332}
   m_Children: []
   m_Father: {fileID: 681991251}
@@ -702,8 +702,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471621714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000054784, y: -4, z: 11.4}
-  m_LocalScale: {x: 0.19351582, y: 0.19351582, z: 0.19351582}
+  m_LocalPosition: {x: 0.000000054784, y: -3.43, z: 11.4}
+  m_LocalScale: {x: 0.17643224, y: 0.17643224, z: 0.17643224}
   m_Children: []
   m_Father: {fileID: 681991251}
   m_RootOrder: 11
@@ -2233,7 +2233,7 @@ Transform:
   m_GameObject: {fileID: 1653699753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.326538, y: 4.3, z: 9.991777}
-  m_LocalScale: {x: 0.67, y: 0.67, z: 0.67}
+  m_LocalScale: {x: 0.4701524, y: 0.4701524, z: 0.4701524}
   m_Children: []
   m_Father: {fileID: 681991251}
   m_RootOrder: 7
@@ -2311,7 +2311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806051668}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.6}
+  m_LocalPosition: {x: 0, y: 2.91, z: 3.6}
   m_LocalScale: {x: 0.29084, y: 0.29084, z: 0.29084}
   m_Children: []
   m_Father: {fileID: 681991251}
@@ -2391,7 +2391,7 @@ Transform:
   m_GameObject: {fileID: 2021497770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.006134, y: 4.3, z: 9.991777}
-  m_LocalScale: {x: 0.67, y: 0.67, z: 0.67}
+  m_LocalScale: {x: 0.4701524, y: 0.4701524, z: 0.4701524}
   m_Children: []
   m_Father: {fileID: 681991251}
   m_RootOrder: 6
@@ -2543,6 +2543,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
         type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actionCategoryMap.list.Array.data[0].actionIds.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
       propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[3]._elementIdentifierId
       value: 4
       objectReference: {fileID: 0}
@@ -2555,6 +2575,76 @@ PrefabInstance:
         type: 3}
       propertyPath: _userData.keyboardMaps.Array.data[2].actionElementMaps.Array.data[7]._keyboardKeyCode
       value: 44
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[8]._actionId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[8]._elementType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[8]._elementIdentifierId
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[6]._id
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[6]._name
+      value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[6]._type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[6]._descriptiveName
+      value: Quits the game
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[6]._userAssignable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actionCategoryMap.list.Array.data[0].actionIds.Array.data[6]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.actionIdCounter
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.data[8]._actionId
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.data[8]._elementType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.data[8]._elementIdentifierId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.keyboardMaps.Array.data[1].actionElementMaps.Array.data[8]._keyboardKeyCode
+      value: 113
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248a265dfa41cf4418d05182db6bb808, type: 3}
