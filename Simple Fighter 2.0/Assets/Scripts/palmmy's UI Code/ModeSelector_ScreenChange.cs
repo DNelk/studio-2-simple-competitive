@@ -15,13 +15,13 @@ public class ModeSelector_ScreenChange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        changeModeScreen();        
+        changeModeScreen(MainMenu.MenuState.VersusSelected);        
     }
 
     
-    public void changeModeScreen()
+    public void changeModeScreen(MainMenu.MenuState goToState)
     {
-        switch (MainMenu.Instance.currentMenuState)
+        switch (goToState)
         {
             case MainMenu.MenuState.VersusSelected:
                 colorChange(0);

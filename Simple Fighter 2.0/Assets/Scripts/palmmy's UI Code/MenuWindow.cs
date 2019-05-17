@@ -17,12 +17,12 @@ public class MenuWindow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        changeMenu();
+        changeMenu(MainMenu.MenuState.VersusSelected);
     }
 
-    public void changeMenu()
+    public void changeMenu(MainMenu.MenuState goToState)
     {
-        switch (MainMenu.Instance.currentMenuState)
+        switch (goToState)
         {
             case MainMenu.MenuState.VersusSelected:
                 transition(0);
