@@ -1008,6 +1008,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Win", Context.PlayerIndex));
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -1027,6 +1028,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
         }
     }
@@ -1036,6 +1038,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_KO", Context.PlayerIndex));
         }
     }
@@ -1045,6 +1048,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
     }
