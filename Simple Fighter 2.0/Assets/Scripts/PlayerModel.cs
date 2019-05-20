@@ -212,6 +212,7 @@ public class PlayerModel : MonoBehaviour
     {
         protected float timer;
         protected string animationTrigger;
+        protected PlayerController.InputState bufferState = PlayerController.InputState.Empty;
         
         public virtual void CooldownAnimationEnded(){}
 
@@ -394,6 +395,23 @@ public class PlayerModel : MonoBehaviour
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
+
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
+        }
     }
 
     private class CounterStartup : PlayerState
@@ -453,6 +471,23 @@ public class PlayerModel : MonoBehaviour
             timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
+        }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
         }
     }
 
@@ -565,6 +600,23 @@ public class PlayerModel : MonoBehaviour
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
+        }
     }
 
     private class GrabStartup : PlayerState
@@ -641,6 +693,23 @@ public class PlayerModel : MonoBehaviour
             timer -= Time.deltaTime * Context.stopTime;
             if (timer <= 0)
                 TransitionTo<Idle>();
+        }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
         }
     }
 
@@ -826,6 +895,23 @@ public class PlayerModel : MonoBehaviour
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
+        }
     }
 
     private class TechRollStartup : PlayerState
@@ -892,6 +978,23 @@ public class PlayerModel : MonoBehaviour
             if (timer <= 0)
                 TransitionTo<Idle>();
         }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
+        }
     }
 
     private class GetUp : PlayerState
@@ -914,6 +1017,23 @@ public class PlayerModel : MonoBehaviour
             timer -= Time.deltaTime * Context.stopTime;
             if(timer <= 0)
                 TransitionTo<Idle>();
+        }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
         }
     }
 
@@ -939,6 +1059,23 @@ public class PlayerModel : MonoBehaviour
             if(timer <= 0)
                 TransitionTo<Idle>();
         }
+        
+        public override void ProcessInput(PlayerController.InputState input, float value)
+        {
+            base.ProcessInput(input, value);
+            switch (input)
+            {
+                case PlayerController.InputState.Strike:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Grab:
+                    bufferState = input;
+                    break;
+                case PlayerController.InputState.Block:
+                    bufferState = input;
+                    break;
+            }
+        }
     }
     
     private class Idle : PlayerState
@@ -951,6 +1088,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            
             if (Context.currentHitPoints % 2 == 0)
             {
                 Context.canHeal = false;
@@ -962,6 +1100,25 @@ public class PlayerModel : MonoBehaviour
             }
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            
+            if (bufferState != PlayerController.InputState.Empty)
+            {
+                switch (bufferState)
+                {
+                    case PlayerController.InputState.Strike:
+                        TransitionTo<StrikeStartup>();
+                        bufferState = PlayerController.InputState.Empty;
+                        return;
+                    case PlayerController.InputState.Block:
+                        TransitionTo<BlockStartup>();
+                        bufferState = PlayerController.InputState.Empty;
+                        return;
+                    case PlayerController.InputState.Grab:
+                        TransitionTo<GrabStartup>();
+                        bufferState = PlayerController.InputState.Empty;
+                        return;
+                }
+            }
         }
 
         public override void Update()
@@ -1008,6 +1165,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Win", Context.PlayerIndex));
         }
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -1027,6 +1185,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
         }
     }
@@ -1036,6 +1195,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_KO", Context.PlayerIndex));
         }
     }
@@ -1045,6 +1205,7 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
+            Context.canHeal = false;
             EventManager.Instance.Fire(new AnimationChange("Player_Idle", Context.PlayerIndex));
         }
     }
