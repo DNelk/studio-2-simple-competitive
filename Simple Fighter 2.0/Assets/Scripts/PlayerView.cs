@@ -187,11 +187,13 @@ public class PlayerView : MonoBehaviour
     {
         if (evt.IsOn)
         {
-            GetComponent<Collider2D>().enabled = false;
+            //GetComponent<Collider2D>().enabled = false;
+            GetComponent<Collider2D>().isTrigger = true;
         }
         else if (!evt.IsOn)
         {
-            GetComponent<Collider2D>().enabled = true;
+            //GetComponent<Collider2D>().enabled = true;
+            GetComponent<Collider2D>().isTrigger = false;
         }
     }
 

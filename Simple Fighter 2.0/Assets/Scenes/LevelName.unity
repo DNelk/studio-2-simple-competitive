@@ -1452,7 +1452,6 @@ GameObject:
   m_Component:
   - component: {fileID: 757645313}
   - component: {fileID: 757645315}
-  - component: {fileID: 757645314}
   m_Layer: 0
   m_Name: RTCam
   m_TagString: Untagged
@@ -1475,14 +1474,6 @@ Transform:
   m_Father: {fileID: 1074130508}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &757645314
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 757645312}
-  m_Enabled: 1
 --- !u!20 &757645315
 Camera:
   m_ObjectHideFlags: 0
@@ -2540,6 +2531,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[2]._elementIdentifierId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[3]._elementIdentifierId
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 19044006359301136, guid: 248a265dfa41cf4418d05182db6bb808,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[4]._elementIdentifierId
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 248a265dfa41cf4418d05182db6bb808, type: 3}

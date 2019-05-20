@@ -22,6 +22,7 @@ public class PlayerModel : MonoBehaviour
     private bool hasLost;
     private bool hasDraw;
     private bool hasTimeLost;
+    private bool hasTurned;
     private float healthTimer;
     private float stopTime = 1; //This is for hitstop set it to 0 when hitstop happens. Do not touch otherwise.
     private StateMachine<PlayerModel> stateMachine;
@@ -40,6 +41,7 @@ public class PlayerModel : MonoBehaviour
     public float GrabHitBoxDistance = 1;
     public Vector2 GrabHitBoxSize = new Vector2(0.5f, 1f);
     public float HitDelay = .2f;
+    public float TurnTime = 1f;
     public int PlayerIndex;
     public StateTimers[] StateTimers; //this is where you put the timers for each state
     private Dictionary<string, float> stateTimers = new Dictionary<string, float>(); //This is where that is read
@@ -213,6 +215,8 @@ public class PlayerModel : MonoBehaviour
         protected float timer;
         protected string animationTrigger;
         protected PlayerController.InputState bufferState = PlayerController.InputState.Empty;
+        protected bool hasTurned = false;
+        protected float turnTimer;
         
         public virtual void CooldownAnimationEnded(){}
 
@@ -222,7 +226,6 @@ public class PlayerModel : MonoBehaviour
         public override void OnEnter()
         {
             base.OnEnter();
-            
         }
 
         public override void Update()
@@ -277,6 +280,8 @@ public class PlayerModel : MonoBehaviour
         {
             EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            hasTurned = false;
+            turnTimer = Context.TurnTime;
         }
         
         public override void Update()
@@ -287,7 +292,20 @@ public class PlayerModel : MonoBehaviour
                 return;
             }
             base.Update();
-            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            if (!hasTurned)
+            {
+                hasTurned = true;
+                EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            }
+            else
+            {
+                turnTimer -= Time.deltaTime;
+                if (turnTimer <= 0)
+                {
+                    turnTimer = Context.TurnTime;
+                    hasTurned = false;
+                }
+            }
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
@@ -1129,7 +1147,20 @@ public class PlayerModel : MonoBehaviour
                 return;
             }
             base.Update();
-            EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            if (!hasTurned)
+            {
+                hasTurned = true;
+                EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
+            }
+            else
+            {
+                turnTimer -= Time.deltaTime;
+                if (turnTimer <= 0)
+                {
+                    turnTimer = Context.TurnTime;
+                    hasTurned = false;
+                }
+            }
         }
         
         public override void ProcessInput(PlayerController.InputState input, float value)
