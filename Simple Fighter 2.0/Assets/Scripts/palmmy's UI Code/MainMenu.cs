@@ -132,7 +132,7 @@ public class MainMenu : MonoBehaviour
                 menuWindow.changeMenu(upperMenu);
                 modeSelector_screen.changeModeScreen(upperMenu);
                 bubbleChange = true;
-
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.MenuMoveClips);
             }
 
             if (rewiredPlayer1.GetAxisRaw("MoveVertical") <= -0.5f || rewiredPlayer2.GetAxisRaw("MoveVertical") <= -0.5f)
@@ -143,6 +143,7 @@ public class MainMenu : MonoBehaviour
                 menuWindow.changeMenu(lowerMenu);
                 modeSelector_screen.changeModeScreen(lowerMenu);
                 bubbleChange = true;
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.MenuMoveClips);
             }
         }
         else
@@ -160,6 +161,7 @@ public class MainMenu : MonoBehaviour
         {
             case MenuState.VersusSelected:
                 currentMenuState = MenuState.ToVersus;
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.MenuSelectClips);
                 break;
             case MenuState.ArcadeSelected:
                 callNotice();

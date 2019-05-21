@@ -169,6 +169,20 @@ public class GameManager : MonoBehaviour
             
         }
 
+        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManager.LoadScene("TitleScreen");
+        }
+
+        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.Q))
+        {
+            Application.Quit();
+        }
+
+        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("LevelName");
+        }
         switch (CurrentManagerState)
         {
                 case ManagerState.Fighting:
