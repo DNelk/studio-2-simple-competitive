@@ -957,6 +957,7 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new AnimationChange("Player_Roll", Context.PlayerIndex));
             EventManager.Instance.Fire(new ToggleCollider(true));
             EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.TechAudioClips);
         }
 
         public override void Update()
@@ -1087,6 +1088,7 @@ public class PlayerModel : MonoBehaviour
             timer = Context.stateTimers["TechUp"];
             EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
             GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.TechAudioClips);
         }
 
         public override void Update()

@@ -25,6 +25,9 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip[] LandingAudioClips = new AudioClip[3];
     private AudioClip landingAudioClip;
+    
+    public AudioClip[] TechAudioClips = new AudioClip[1];
+    private AudioClip techAudioClip;
 
     public AudioClip[] WhiffAudioClips = new AudioClip[5];
     private AudioClip whiffAudioClip;

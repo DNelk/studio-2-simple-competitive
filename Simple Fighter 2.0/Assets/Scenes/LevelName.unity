@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465767, g: 0.49641162, b: 0.57481784, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657755, g: 0.4964127, b: 0.57481825, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -846,6 +846,21 @@ PrefabInstance:
       propertyPath: Loop
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7581405647749245174, guid: 3dd3f28206d4344e98313554e2342b34,
+        type: 3}
+      propertyPath: BlockedAudioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7581405647749245174, guid: 3dd3f28206d4344e98313554e2342b34,
+        type: 3}
+      propertyPath: BlockedAudioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: abf44776ef337204ebee8357c1019fe6, type: 3}
+    - target: {fileID: 7581405647749245174, guid: 3dd3f28206d4344e98313554e2342b34,
+        type: 3}
+      propertyPath: TechAudioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e3343ef40a427f4cba5a04ff3e3337c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd3f28206d4344e98313554e2342b34, type: 3}
 --- !u!1 &681991250
