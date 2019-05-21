@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3299771750472600791
 RectTransform:
   m_ObjectHideFlags: 0
@@ -618,16 +618,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3559925110930702876, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -170.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3559925110930702876, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 394
-      objectReference: {fileID: 0}
     - target: {fileID: 3559925109407353167, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -637,6 +627,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 389.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3559925110930702876, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -170.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3559925110930702876, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 394
       objectReference: {fileID: 0}
     - target: {fileID: 3559925109593741004, guid: ea21bc4c2889c4396abaf3ff5878eaf1,
         type: 3}
