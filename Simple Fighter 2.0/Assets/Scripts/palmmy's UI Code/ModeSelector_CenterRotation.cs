@@ -9,6 +9,8 @@ public class ModeSelector_CenterRotation: MonoBehaviour
     public Image[] modeSelector2;
     public Image[] modeSelector3;
 
+    private MainMenu.MenuState GoToState;
+
     public Sprite[] versus;
     public Sprite[] arcade;
     public Sprite[] quit;
@@ -28,11 +30,11 @@ public class ModeSelector_CenterRotation: MonoBehaviour
         }
     }
 
-    public void circlingDown()
+    public void circlingDown(MainMenu.MenuState goToState)
     {
        GetComponent<Animator>().SetBool("circlingDown",true);
        
-       switch (MainMenu.Instance.currentMenuState)
+       switch (goToState)
        {
            case MainMenu.MenuState.VersusSelected:
                modeSelector2[0].sprite = versus[0];
@@ -47,13 +49,15 @@ public class ModeSelector_CenterRotation: MonoBehaviour
                modeSelector2[1].sprite = quit[1];
                break;
        }
+
+       GoToState = goToState;
     }
     
-    public void circlingUp()
+    public void circlingUp(MainMenu.MenuState goToState)
     {
         GetComponent<Animator>().SetBool("circlingUp",true);
        
-        switch (MainMenu.Instance.currentMenuState)
+        switch (goToState)
         {
             case MainMenu.MenuState.VersusSelected:
                 modeSelector3[0].sprite = versus[0];
@@ -68,17 +72,20 @@ public class ModeSelector_CenterRotation: MonoBehaviour
                 modeSelector3[1].sprite = quit[1];
                 break;
         }
+
+        GoToState = goToState;
     }
 
     void swapSelector()
     {
         GetComponent<Animator>().SetBool("circlingDown", false);
         GetComponent<Animator>().SetBool("circlingUp", false);
+        MainMenu.Instance.currentMenuState = GoToState;
     }
 
     void swapDamper()
     {
-        switch (MainMenu.Instance.currentMenuState)
+        switch (GoToState)
         {
             case MainMenu.MenuState.VersusSelected:
                 modeSelector1[0].sprite = versus[0];

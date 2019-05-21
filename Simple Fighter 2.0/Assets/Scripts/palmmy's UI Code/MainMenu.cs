@@ -126,22 +126,22 @@ public class MainMenu : MonoBehaviour
         {
             if (rewiredPlayer1.GetAxisRaw("MoveVertical") >= 0.5f || rewiredPlayer2.GetAxisRaw("MoveVertical") >= 0.5f)
             {
-                currentMenuState = upperMenu;
+                currentMenuState = MenuState.Rotating;
                 DpadPressing = true;
-                modeSelecter_Circle.circlingUp();
-                menuWindow.changeMenu();
-                modeSelector_screen.changeModeScreen();
+                modeSelecter_Circle.circlingUp(upperMenu);
+                menuWindow.changeMenu(upperMenu);
+                modeSelector_screen.changeModeScreen(upperMenu);
                 bubbleChange = true;
 
             }
 
             if (rewiredPlayer1.GetAxisRaw("MoveVertical") <= -0.5f || rewiredPlayer2.GetAxisRaw("MoveVertical") <= -0.5f)
             {
-                currentMenuState = lowerMenu;
+                currentMenuState = MenuState.Rotating;
                 DpadPressing = true;
-                modeSelecter_Circle.circlingDown();
-                menuWindow.changeMenu();
-                modeSelector_screen.changeModeScreen();
+                modeSelecter_Circle.circlingDown(lowerMenu);
+                menuWindow.changeMenu(lowerMenu);
+                modeSelector_screen.changeModeScreen(lowerMenu);
                 bubbleChange = true;
             }
         }
@@ -179,6 +179,7 @@ public class MainMenu : MonoBehaviour
         VersusSelected,
         ArcadeSelected,
         QuitSelected,
+        Rotating,
         ToVersus        
     }
 
