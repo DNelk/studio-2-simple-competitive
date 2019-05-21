@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] healthBars;
     private GameObject timer;
     private GameObject announcer;
+    private Light statusLight;
     #endregion
     
     
@@ -81,6 +83,8 @@ public class GameManager : MonoBehaviour
         
         timer = Instantiate(Resources.Load<GameObject>("Prefabs/Timer"));
         timer.transform.SetParent(uiCanvas.transform, false);
+
+        statusLight = GameObject.FindWithTag("StatusLight").GetComponent<Light>();
     }
     
     //Create our player objects and their fields
@@ -145,7 +149,23 @@ public class GameManager : MonoBehaviour
     {
         //Test reset
         if (Input.GetKeyDown("r")){
-            Application.Quit();
+           // Application.Quit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            switch (CurrentManagerState)
+            {
+                    case ManagerState.Fighting:
+                        CurrentManagerState = ManagerState.Paused;
+                        EventManager.Instance.Fire(new StopTime());
+                        break;
+                    case ManagerState.Paused:
+                        CurrentManagerState = ManagerState.Fighting;
+                        EventManager.Instance.Fire(new RestartTime());
+                        break;
+            }
+            
         }
 
         switch (CurrentManagerState)
@@ -155,6 +175,7 @@ public class GameManager : MonoBehaviour
                     if (timer.GetComponent<Timer>().TimerRaw <= 0)
                     {
                         AudioManager.Instance.PlayAudio(AudioManager.Instance.TimeoutAudioClips); //Timeout Audio
+                        GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
                         GameObject result = null;
                         if (playerHealthCached[0] > playerHealthCached[1])
                         {
@@ -246,11 +267,13 @@ public class GameManager : MonoBehaviour
                 if (playerHealthCached[opponentIndex] >= 6)
                 {
                     result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/Perfect"), uiCanvas.transform) as GameObject;
+                    ChangeLightColor(Color.green, 0.2f);
                     AudioManager.Instance.PlayAudio(AudioManager.Instance.PerfectAudioClips); 
                 }        
                 else if (playerHealthCached[opponentIndex] < 6)
                 {
                     result = Instantiate(Resources.Load("Prefabs/PalmmyEffect/KO"), uiCanvas.transform) as GameObject;
+                    ChangeLightColor(Color.white, 0.2f);
                     AudioManager.Instance.PlayAudio(AudioManager.Instance.KOAudioClips); 
                 } 
             }
@@ -373,6 +396,8 @@ public class GameManager : MonoBehaviour
     //Start a new round
     public void StartRound()
     {
+        statusLight.color = Color.white;
+   
         for(int i = 0; i < players.Length; i++)
         {
             Destroy(players[i].Model.gameObject);
@@ -408,6 +433,22 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.PlayAudio(AudioManager.Instance.WhooshAudioClips); 
     }
     
+    #endregion
+
+    #region Utilities and Misc.
+
+    //Changes the color of the big spotlight
+    public void ChangeLightColor(Color color, float time, bool flash = false)
+    {
+        if(CurrentManagerState != ManagerState.Fighting)
+            return;
+        Tween colorChange = statusLight.DOColor(color, time);
+        if (flash)
+        {
+            colorChange.OnComplete(() => statusLight.DOColor(Color.white, time));
+        }
+    }
+
     #endregion
 }
 
@@ -464,5 +505,6 @@ public enum ManagerState
     End,
     RoundOver,
     SetOver,
-    Menu
+    Menu,
+    Paused
 }

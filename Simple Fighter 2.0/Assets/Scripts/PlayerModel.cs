@@ -56,7 +56,6 @@ public class PlayerModel : MonoBehaviour
         EventManager.Instance.AddHandler<ProcessInput>(OnInput);
         EventManager.Instance.AddHandler<HitOpponent>(OnHit);
         EventManager.Instance.AddHandler<RoundEnd>(OnRoundEnd);
-        
         //Setup dictionary for stateTimers        
         foreach (StateTimers st in StateTimers)
         {
@@ -203,10 +202,10 @@ public class PlayerModel : MonoBehaviour
         stopTime = 0;
         EventManager.Instance.Fire(new StopTime());
         yield return new WaitForSeconds(hitDelay);
+        
         stopTime = 1;
         EventManager.Instance.Fire(new RestartTime());
     }
-    
     #region States
 
     //Base Player State
@@ -345,6 +344,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = Context.stateTimers["StrikeStartup"];
             EventManager.Instance.Fire(new AnimationChange("Player_Strike", Context.PlayerIndex));
+            GameManager.Instance.ChangeLightColor(Color.red, 0.1f, true);
         }
 
         public override void Update()
@@ -523,6 +523,7 @@ public class PlayerModel : MonoBehaviour
             timer = Context.stateTimers["BlockStartup"];
             Context.isBlocking = true;
             Context.isCounter = false;
+            GameManager.Instance.ChangeLightColor(Color.green, 0.1f, true);
         }
 
         public override void Update()
@@ -649,6 +650,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grab", Context.PlayerIndex));
             timer = Context.stateTimers["GrabStartup"];
+            GameManager.Instance.ChangeLightColor(Color.blue, 0.1f, true);
         }
 
         public override void Update()
@@ -738,6 +740,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_GetStriked", Context.PlayerIndex));
             timer = Context.stateTimers["FallStartup"];
+            GameManager.Instance.ChangeLightColor(Color.red, 0.2f);
         }
 
         public override void Update()
@@ -899,6 +902,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             timer = Context.stateTimers["RollRecovery"];
             EventManager.Instance.Fire(new ToggleCollider(false));
+            GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
         }
 
         public override void Update()
@@ -982,6 +986,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new ToggleCollider(false));
             timer = Context.stateTimers["TechRollRecovery"];
+            GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
         }
 
         public override void Update()
@@ -1027,6 +1032,7 @@ public class PlayerModel : MonoBehaviour
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["GetUp"];
+            GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
         }
 
         public override void Update()
@@ -1068,6 +1074,7 @@ public class PlayerModel : MonoBehaviour
             EventManager.Instance.Fire(new AnimationChange("Player_GetUp", Context.PlayerIndex));
             timer = Context.stateTimers["TechUp"];
             EventManager.Instance.Fire(new PlayParticle(Context.PlayerIndex, "Tech", Context.currentHitPoints));
+            GameManager.Instance.ChangeLightColor(Color.white, 0.2f);
         }
 
         public override void Update()
