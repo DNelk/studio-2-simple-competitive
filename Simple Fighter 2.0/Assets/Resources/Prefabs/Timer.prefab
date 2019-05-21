@@ -141,6 +141,7 @@ MonoBehaviour:
   TimerRaw: 60
   TimeString: 
   RoundSprite: {fileID: 4993207660773864910}
+  totalRoundNumber: 5
   RoundNumber: 1
   RoundList:
   - {fileID: 21300000, guid: 042ca8bd3c6036546bf4fc215404151f, type: 3}
