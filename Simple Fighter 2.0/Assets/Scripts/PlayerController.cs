@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
         GetUp,
         MoveRelease,
         Confirm,
-        Quit
+        Quit,
+        Empty
     }
 
     #region Public Variables
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     private void QuitCheck()
     {
-        if (rewiredPlayer.GetButtonDown("Quite"))
+        if (rewiredPlayer.GetButtonDown("Quit"))
         {
             SendInput(InputState.Quit, 0f);
         }
