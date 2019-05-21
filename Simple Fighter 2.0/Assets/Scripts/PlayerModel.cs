@@ -196,6 +196,18 @@ public class PlayerModel : MonoBehaviour
         }
     }
     
+    //Public function called from GameManager to pause the states
+    public void PauseStates()
+    {
+        stopTime = 0;
+    }
+
+    //Called from GameManager to restart the states
+    public void RestartStates()
+    {
+        stopTime = 1;
+    }
+    
     //Hit Stop Coroutine
     IEnumerator HitStop(float hitDelay)
     {

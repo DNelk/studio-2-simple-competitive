@@ -158,10 +158,14 @@ public class GameManager : MonoBehaviour
             {
                     case ManagerState.Fighting:
                         CurrentManagerState = ManagerState.Paused;
+                        players[0].Model.PauseStates();
+                        players[1].Model.PauseStates();
                         EventManager.Instance.Fire(new StopTime());
                         break;
                     case ManagerState.Paused:
                         CurrentManagerState = ManagerState.Fighting;
+                        players[0].Model.RestartStates();
+                        players[1].Model.RestartStates();
                         EventManager.Instance.Fire(new RestartTime());
                         break;
             }
