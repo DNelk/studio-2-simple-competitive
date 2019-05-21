@@ -52,12 +52,23 @@ public class AudioManager : MonoBehaviour
     
     public AudioClip[] TimeoutAudioClips = new AudioClip[1];
     private AudioClip timeoutAudioClip;
-    
+
+    public AudioClip [] HealAudioClips = new AudioClip[1];
+
     public AudioClip[] KOAudioClips = new AudioClip[1];
     private AudioClip koAudioClip;
     
     public AudioClip[] PerfectAudioClips = new AudioClip[1];
     private AudioClip perfectAudioClip;
+    
+    public AudioClip[] TitleAppearsClips = new AudioClip[1];
+    private AudioClip titleAppearsClip;
+    
+    public AudioClip[] TitleImpactClips = new AudioClip[1];
+    
+    public AudioClip[] MenuMoveClips = new AudioClip[1];
+    
+    public AudioClip[] MenuSelectClips = new AudioClip[1];
     
     private AudioClip pickedClip;
 

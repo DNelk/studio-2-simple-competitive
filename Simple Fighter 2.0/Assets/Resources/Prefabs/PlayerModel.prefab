@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHitPoints: 6
   MoveSpeed: 4
-  RegenSpeed: 5
+  RegenSpeed: 4
   RollSpeed: 5
   TechSpeed: 5
   StrikeHitBoxDistance: 1

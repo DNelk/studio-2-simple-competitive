@@ -274,6 +274,7 @@ public class PlayerModel : MonoBehaviour
                 {
                     Context.canHeal = false;
                     Context.currentHitPoints++;
+                    AudioManager.Instance.PlayAudio(AudioManager.Instance.HealAudioClips);
                     EventManager.Instance.Fire(new HealthChanged(Context.currentHitPoints, Context.PlayerIndex));
                 }
             }
@@ -818,6 +819,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             timer = Context.stateTimers["FallRecovery"];
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.LandingAudioClips);
         }
 
         public override void Update()
@@ -835,7 +837,7 @@ public class PlayerModel : MonoBehaviour
         {
             base.OnEnter();
             EventManager.Instance.Fire(new AnimationChange("Player_Grounded", Context.PlayerIndex));
-            AudioManager.Instance.PlayAudio(AudioManager.Instance.LandingAudioClips);
+            
             AudioManager.Instance.PlayAudio(AudioManager.Instance.CrowdAudioClips);
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.LandingAudioClips));
             //EventManager.Instance.Fire(new PlaySoundEffect(AudioManager.Instance.CrowdAudioClips));
