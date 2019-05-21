@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHitPoints: 6
   MoveSpeed: 4
+  RegenSpeed: 5
   RollSpeed: 5
   TechSpeed: 5
   StrikeHitBoxDistance: 1
@@ -52,6 +53,7 @@ MonoBehaviour:
   GrabHitBoxDistance: 1
   GrabHitBoxSize: {x: 1.8, y: 1}
   HitDelay: 0.2
+  TurnTime: 0.5
   PlayerIndex: 0
   StateTimers:
   - key: StrikeStartup
