@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public int PlayerIndex;
     #endregion
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         MoveReleaseCheck();
         ConfirmCheck();
         QuitCheck();
+        PauseGame();
     }
     
     //Called from the GameManager to set which player profile to use
@@ -152,6 +154,15 @@ public class PlayerController : MonoBehaviour
         if (rewiredPlayer.GetButtonDown("Quit"))
         {
             SendInput(InputState.Quit, 0f);
+        }
+    }
+
+    private void PauseGame()
+    {
+        if (rewiredPlayer.GetButtonDown("Pause"))
+        {
+            if (GameManager.Instance.CurrentManagerState == ManagerState.Fighting)
+                GameManager.Instance.pauseMenu(PlayerIndex);
         }
     }
     #endregion
