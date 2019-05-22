@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class MainMenuBubbleLight : MonoBehaviour
 {
     private float glowingSpeed;
-    private float moveSpeed;
     private GameObject spawner;
     private Color current_Color;
     private Color glowing = new Color(0,0,0,0);
@@ -80,9 +79,7 @@ public class MainMenuBubbleLight : MonoBehaviour
     }
 
     void changingColor()
-    {
-        int lerpSpeed = 1;
-        
+    {   
         switch (MainMenu.Instance.currentMenuState)
         {
             case MainMenu.MenuState.VersusSelected:
@@ -124,12 +121,5 @@ public class MainMenuBubbleLight : MonoBehaviour
             spawner.GetComponent<MainMenuLight>().lightCount--;
             Destroy(gameObject);
         }
-    }
-
-    void moving()
-    {
-        Vector2 pos = GetComponent<RectTransform>().anchoredPosition;
-        pos.x += moveSpeed;
-        GetComponent<RectTransform>().anchoredPosition = pos;
     }
 }

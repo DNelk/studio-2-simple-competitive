@@ -149,40 +149,6 @@ public class GameManager : MonoBehaviour
            // Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            switch (CurrentManagerState)
-            {
-                    case ManagerState.Fighting:
-                        CurrentManagerState = ManagerState.Paused;
-                        players[0].Model.PauseStates();
-                        players[1].Model.PauseStates();
-                        EventManager.Instance.Fire(new StopTime());
-                        break;
-                    case ManagerState.Paused:
-                        CurrentManagerState = ManagerState.Fighting;
-                        players[0].Model.RestartStates();
-                        players[1].Model.RestartStates();
-                        EventManager.Instance.Fire(new RestartTime());
-                        break;
-            }
-            
-        }
-
-        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.T))
-        {
-            SceneManager.LoadScene("TitleScreen");
-        }
-
-        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.Q))
-        {
-            Application.Quit();
-        }
-
-        if (CurrentManagerState == ManagerState.Paused && Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene("LevelName");
-        }
         switch (CurrentManagerState)
         {
                 case ManagerState.Fighting:
@@ -452,7 +418,30 @@ public class GameManager : MonoBehaviour
 
     #region Utilities and Misc.
 
-    
+
+    public void pauseMenu(int playerIndex)
+    {
+        switch (CurrentManagerState)
+        {
+            case ManagerState.Fighting:
+                CurrentManagerState = ManagerState.Paused;
+                players[0].Model.PauseStates();
+                players[1].Model.PauseStates();
+                EventManager.Instance.Fire(new StopTime());
+                GameObject pauseMenu = Instantiate(Resources.Load("Prefabs/PalmmyEffect/PauseMenu"), uiCanvas.transform) as GameObject;
+                pauseMenu.GetComponent<PauseMenu>().playerIndex = playerIndex;
+                Debug.Log("open");
+                break;
+            case ManagerState.Paused:
+                CurrentManagerState = ManagerState.Fighting;
+                players[0].Model.RestartStates();
+                players[1].Model.RestartStates();
+                EventManager.Instance.Fire(new RestartTime());
+                Debug.Log("close");
+                break;
+        }
+    }
+
     #endregion
 }
 
