@@ -21,6 +21,7 @@ public class IntroControl : MonoBehaviour
         if (rewiredPlayer1.GetButtonDown("Confirm") || rewiredPlayer2.GetButtonDown("Confirm"))
         {
             Instantiate(Resources.Load("Prefabs/PalmmyEffect/IntroScreen"), transform.parent);
+            AudioManager.Instance.GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
     }

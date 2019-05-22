@@ -53,13 +53,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5369e3d672933c44dafa2b11c6c43d47, type: 3}
   - {fileID: 8300000, guid: 4a20375837535d74cac643763508105d, type: 3}
   BlockedAudioClips:
-  - {fileID: 8300000, guid: 9e0c94abe56c45d4bb18e251f260c69c, type: 3}
-  - {fileID: 8300000, guid: 49ed4871284944344b7a0cd07145dc4e, type: 3}
-  - {fileID: 8300000, guid: b1879be99e359a24d9643df8332c54bd, type: 3}
+  - {fileID: 8300000, guid: abf44776ef337204ebee8357c1019fe6, type: 3}
   LandingAudioClips:
   - {fileID: 8300000, guid: 71f5ed9f6da000746b72c4fb64ff94a6, type: 3}
   - {fileID: 8300000, guid: 16735b3588b66bc498dc5aa4564072ac, type: 3}
   - {fileID: 8300000, guid: 6cf82ad4107c8a845a2f013ea967735c, type: 3}
+  TechAudioClips:
+  - {fileID: 8300000, guid: 0e3343ef40a427f4cba5a04ff3e3337c, type: 3}
   WhiffAudioClips:
   - {fileID: 8300000, guid: d9244202f41889349820eb42edade13d, type: 3}
   - {fileID: 8300000, guid: 49f32bd04331cfd46933a988c3b1be65, type: 3}
@@ -68,8 +68,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4045e119196bba541a7d2af03ef1f634, type: 3}
   CrowdAudioClips:
   - {fileID: 8300000, guid: 14f410a2d6b45b5489e53948ee13c0f8, type: 3}
-  - {fileID: 8300000, guid: ca7d9d8dd8659d04ebc9b714c4d0f976, type: 3}
-  - {fileID: 8300000, guid: 3a2332d5db1990f40ae0acccdc4b2ed9, type: 3}
+  - {fileID: 8300000, guid: 24f992806e501974abc73111c461cde0, type: 3}
+  - {fileID: 8300000, guid: 9303e5e879504b64f8fa74be5e5d8f64, type: 3}
   WhooshAudioClips:
   - {fileID: 8300000, guid: cb4ab2dff1470e4409117d7492ba4bc6, type: 3}
   - {fileID: 8300000, guid: 6a1c48e59b13cde4cafce54712972716, type: 3}
@@ -94,10 +94,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e0020dbda1299dd4eb2f534fd3e6cecc, type: 3}
   TimeoutAudioClips:
   - {fileID: 8300000, guid: 3921d90536658024d8e735f5b02b7f68, type: 3}
+  HealAudioClips:
+  - {fileID: 8300000, guid: 9dd494b3b0326c842b7c5866be8fa5c3, type: 3}
   KOAudioClips:
   - {fileID: 8300000, guid: fcf552d8d1c627a419dd543530a9677b, type: 3}
   PerfectAudioClips:
   - {fileID: 8300000, guid: b36e4b44a697245498fdc52cf26830f7, type: 3}
+  TitleAppearsClips:
+  - {fileID: 8300000, guid: 28b0bb446bd3eff489ee96e2a67411e4, type: 3}
+  TitleImpactClips:
+  - {fileID: 8300000, guid: 9ce58ca43911fb342b004f040ab49436, type: 3}
+  MenuMoveClips:
+  - {fileID: 8300000, guid: 586b8b1ec952cc147aeef167a8a68f99, type: 3}
+  MenuSelectClips:
+  - {fileID: 8300000, guid: 943469dd844cf5d4093244b2f72baf2c, type: 3}
 --- !u!82 &4734451538182886069
 AudioSource:
   m_ObjectHideFlags: 0
@@ -108,11 +118,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 569420cbcbb40a44da0cfd626495268f, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -13,6 +13,7 @@ public class Title : MonoBehaviour
     {
         rewiredPlayer1 = ReInput.players.GetPlayer(0);
         rewiredPlayer2 = ReInput.players.GetPlayer(1);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.TitleAppearsClips);
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class Title : MonoBehaviour
         if (rewiredPlayer1.GetButtonDown("Confirm") || rewiredPlayer2.GetButtonDown("Confirm"))
         {
             Instantiate(Resources.Load("Prefabs/PalmmyEffect/TitleAnimation"), transform.parent);
+            AudioManager.Instance.PlayAudio(AudioManager.Instance.TitleImpactClips);
             Destroy(gameObject);
         }
     }
