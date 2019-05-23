@@ -428,6 +428,7 @@ public class GameManager : MonoBehaviour
                 players[0].Model.PauseStates();
                 players[1].Model.PauseStates();
                 EventManager.Instance.Fire(new StopTime());
+                Time.timeScale = 0;
                 GameObject pauseMenu = Instantiate(Resources.Load("Prefabs/PalmmyEffect/PauseMenu"), uiCanvas.transform) as GameObject;
                 pauseMenu.GetComponent<PauseMenu>().playerIndex = playerIndex;
                 Debug.Log("open");
@@ -437,6 +438,7 @@ public class GameManager : MonoBehaviour
                 players[0].Model.RestartStates();
                 players[1].Model.RestartStates();
                 EventManager.Instance.Fire(new RestartTime());
+                Time.timeScale = 1;
                 Debug.Log("close");
                 break;
         }
