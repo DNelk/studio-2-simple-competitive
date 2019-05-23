@@ -213,7 +213,8 @@ public class PlayerModel : MonoBehaviour
     {
         stopTime = 0;
         EventManager.Instance.Fire(new StopTime());
-        yield return new WaitForSeconds(hitDelay);
+        if(GameManager.Instance.CurrentManagerState != ManagerState.Paused)
+            yield return new WaitForSeconds(hitDelay);
         
         stopTime = 1;
         EventManager.Instance.Fire(new RestartTime());
