@@ -22,6 +22,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject controlWindow;
     public Image controlWindow_Outline;
 
+    public Animator anim;
+    private string destinationScene = "Empty";
+
     private Rewired.Player rewiredPlayer;
     private bool DpadPressing = false;
     
@@ -46,6 +49,9 @@ public class PauseMenu : MonoBehaviour
             playerNumber.sprite = player[1];
             playerSelection.sprite = PlayerSelectionSprite[1];
         }
+        
+        //set animator
+        anim = GetComponent<Animator>();
         
         //set controller
         rewiredPlayer = ReInput.players.GetPlayer(playerIndex);
@@ -128,13 +134,17 @@ public class PauseMenu : MonoBehaviour
             }
             else if (menuOrder == 3)
             {
-                GameManager.Instance.pauseMenu(playerIndex);
                 currentPauseState = PauseState.restartingMatch;
-                StartCoroutine(LoadYourAsyncScene());
+                destinationScene = "LevelName";
+                anim.SetBool("Reset", true);
+                //StartCoroutine(LoadYourAsyncScene());
             }
             else if (menuOrder == 4)
             {
-                Application.Quit();
+                currentPauseState = PauseState.ReturningToMainMenu;
+                destinationScene = "TitleScreen";
+                anim.SetBool("Reset", true);
+                //StartCoroutine(LoadYourAsyncScene());
             }
         }
         
@@ -159,14 +169,15 @@ public class PauseMenu : MonoBehaviour
         }
     }
     
-    IEnumerator LoadYourAsyncScene()
+    public IEnumerator LoadYourAsyncScene()
     {
         // The Application loads the Scene in the background as the current Scene runs.
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LevelName");
+        GameManager.Instance.pauseMenu(playerIndex);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(destinationScene);
+        Debug.Log("Load");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -179,7 +190,8 @@ public class PauseMenu : MonoBehaviour
     {
         selectionWindow,
         control,
-        restartingMatch
+        restartingMatch,
+        ReturningToMainMenu
     }
   
 }

@@ -217,7 +217,7 @@ public class PlayerModel : MonoBehaviour
         {
             yield return new WaitForSeconds(hitDelay);
         }
-
+        
         stopTime = 1;
         EventManager.Instance.Fire(new RestartTime());
     }

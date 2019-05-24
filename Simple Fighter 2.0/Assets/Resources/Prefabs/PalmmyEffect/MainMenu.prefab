@@ -783,6 +783,7 @@ MonoBehaviour:
   currentNoticeState: 0
   noticeScreen: {fileID: 0}
   generalNotice: 1
+  bubbleChange: 0
 --- !u!1 &3346313302500376523
 GameObject:
   m_ObjectHideFlags: 0
