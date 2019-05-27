@@ -121,6 +121,7 @@ public class PlayerModel : MonoBehaviour
         if (PlayerIndex == evt.PlayerIndex)//The event is fired from the OTHER player, so if it is our own player index, we do not act on this
         {
             hasHit = true;
+            hasTurned = false;
             return;
         }
         //if not blocking && not grounded && not getup && not rolling// make it a bool that is only true when actually in active frames
@@ -160,6 +161,7 @@ public class PlayerModel : MonoBehaviour
             isHit = true;
             currentHitPoints--;
             canHeal = false;
+            hasTurned = false;
             EventManager.Instance.Fire(new HealthChanged(currentHitPoints, PlayerIndex));
             if (evt.HitType == "Strike")
             {      
@@ -229,7 +231,6 @@ public class PlayerModel : MonoBehaviour
         protected float timer;
         protected string animationTrigger;
         protected PlayerController.InputState bufferState = PlayerController.InputState.Empty;
-        protected bool hasTurned = false;
         protected float turnTimer;
         
         public virtual void CooldownAnimationEnded(){}
@@ -295,7 +296,7 @@ public class PlayerModel : MonoBehaviour
         {
             EventManager.Instance.Fire(new AnimationChange("Player_Walking", Context.PlayerIndex));
             EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
-            hasTurned = false;
+            Context.hasTurned = false;
             turnTimer = Context.TurnTime;
         }
         
@@ -307,19 +308,10 @@ public class PlayerModel : MonoBehaviour
                 return;
             }
             base.Update();
-            if (!hasTurned)
+            if (!Context.hasTurned)
             {
-                hasTurned = true;
+                Context.hasTurned = true;
                 EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
-            }
-            else
-            {
-                turnTimer -= Time.deltaTime;
-                if (turnTimer <= 0)
-                {
-                    turnTimer = Context.TurnTime;
-                    hasTurned = false;
-                }
             }
         }
         
@@ -1173,19 +1165,10 @@ public class PlayerModel : MonoBehaviour
                 return;
             }
             base.Update();
-            if (!hasTurned)
+            if (!Context.hasTurned)
             {
-                hasTurned = true;
+                Context.hasTurned = true;
                 EventManager.Instance.Fire(new TurnAround(Context.PlayerIndex));
-            }
-            else
-            {
-                turnTimer -= Time.deltaTime;
-                if (turnTimer <= 0)
-                {
-                    turnTimer = Context.TurnTime;
-                    hasTurned = false;
-                }
             }
         }
         
