@@ -277,10 +277,10 @@ public class GameManager : MonoBehaviour
                         announcer.GetComponent<WinningAnnouncer>().ResetBool();
                     break;
                  case ManagerState.SetOver:
-                    if(evt.NewInput == PlayerController.InputState.Confirm)
-                           EventManager.Instance.Fire(new Rematch());
-                     if(evt.NewInput == PlayerController.InputState.Quit)
-                         Application.Quit();
+                    //if(evt.NewInput == PlayerController.InputState.Confirm)
+                    //     EventManager.Instance.Fire(new Rematch());
+                    //if(evt.NewInput == PlayerController.InputState.Quit)
+                    //     Application.Quit();
                     break;
         }
     }
@@ -445,6 +445,11 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+    
+    public void rematch()
+    {
+        EventManager.Instance.Fire(new Rematch());
+    }
 }
 
 //Object that holds a player's model, view and controller for referencing as a group
