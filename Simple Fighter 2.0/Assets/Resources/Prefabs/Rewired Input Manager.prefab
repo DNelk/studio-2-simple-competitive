@@ -382,7 +382,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 1
         _elementType: 1
-        _elementIdentifierId: 4
+        _elementIdentifierId: 7
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 3
         _elementType: 1
-        _elementIdentifierId: 5
+        _elementIdentifierId: 4
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 2
         _elementType: 1
-        _elementIdentifierId: 13
+        _elementIdentifierId: 5
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
